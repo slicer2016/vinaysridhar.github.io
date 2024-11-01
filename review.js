@@ -23,6 +23,7 @@ fetch('books.json')
         
         if (book) {
             // Populate the HTML with book details
+            document.title = book.title;
             document.getElementById('book-title').textContent = book.title;
             document.getElementById('author').textContent = `by ${book.author}`;
             document.getElementById('date-read').textContent = `Read on: ${book.dateRead}`;
