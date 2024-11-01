@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 1em;
+            margin-top: 2em;
+            margin-bottom: 0.75em;
+            font-weight: bold;
+            color: #000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 2em;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        a {
+            color: #000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: #666;
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 1em;
+            flex-shrink: 0;
+        }
+
+        .book-link {
+            color: rgb(85, 26, 139);
+            flex-grow: 1;
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book Reviews</h1>
+    <p>This is a collection of my book reviews, written right after I completed the book. They're pretty raw and capture what I was thinking at the time, versus what I think now. </p>
+    <script>
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const date = new Date(dateStr);
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${months[date.getMonth()]}, ${date.getFullYear()}`;
+            } catch (e) {
+                return '';
+            }
+        }
+
+        fetch('books.json')
+            .then(response => response.json())
+            .then(books => {
+                // Group books by category
+                const booksByCategory = books.reduce((acc, book) => {
+                    if (!acc[book.category]) {
+                        acc[book.category] = [];
+                    }
+                    acc[book.category].push(book);
+                    return acc;
+                }, {});
+
+                // Sort categories
+                const sortedCategories = Object.keys(booksByCategory).sort();
+
+                // Create HTML for each category
+                sortedCategories.forEach(category => {
+                    // Create category header
+                    const categoryHeader = document.createElement('h2');
+                    categoryHeader.textContent = category;
+                    document.body.appendChild(categoryHeader);
+
+                    // Create book list
+                    const bookList = document.createElement('ul');
+                    
+                    // Sort books alphabetically within category
+                    booksByCategory[category]
+                    .sort((a, b) => {
+                        const dateA = a.dateRead ? new Date(a.dateRead) : new Date(0);
+                        const dateB = b.dateRead ? new Date(b.dateRead) : new Date(0);
+                        return dateB - dateA;
+                    })
+        .forEach(book => {
+                            const li = document.createElement('li');
+                            
+                            // Create link
+                            const a = document.createElement('a');
+                            a.href = `review.html?id=${books.indexOf(book)}`;
+                            a.textContent = book.title;
+                            a.className = 'book-link';
+                            
+                            // Create date span
+                            const dateSpan = document.createElement('span');
+                            dateSpan.className = 'date';
+                            dateSpan.textContent = formatDate(book.dateRead);
+                            
+                            li.appendChild(a);
+                            li.appendChild(dateSpan);
+                            bookList.appendChild(li);
+                        });
+
+                    document.body.appendChild(bookList);
+                });
+            })
+            .catch(error => console.error('Error loading books:', error));
+    </script>
+</body>
+</html>
