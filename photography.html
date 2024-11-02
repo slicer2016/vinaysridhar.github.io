@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .photo-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .photo-item img:hover {
+            opacity: 0.9;
+        }
+
+        .photo-description {
+            color: #666;
+            font-style: italic;
+            font-size: 0.8em;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 2rem;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            margin: auto;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .close-button {
+            position: absolute;
+            top: -2rem;
+            right: 0;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Photography</h1>
+
+    <p>These are some of the photographs I've taken over the years. I typically use a Fuji XT-1 with a 50mm f/1.8 lens. </p>
+    <br> </br>
+
+    <div class="photo-grid">
+        <div class="photo-item">
+            <img src="/images/1_Dancers.jpeg" 
+                 alt="Bharatnatyam dancers" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Guruvayur, Kerala</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/2_Humayun.jpeg" 
+                 alt="Humayun's Tomb" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Humayun's Tomb, New Delhi</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/3_Cat.jpg" 
+                 alt="Greek Cat" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Santorini, Greece</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/4_Sparklers.jpg" 
+                 alt="Sparklers" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Asheville, North Carolina</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/5_Harvard.jpg" 
+                 alt="Music" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Harvard Square, Boston</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/6_Palace.jpg" 
+                 alt="Sparklers" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Bangalore Palace, Karnataka</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/7_Pollination.JPG" 
+                 alt="Pollination" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Smoky Mountains, Tennessee</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/8_Maine.jpg" 
+                 alt="Maine" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Portland, Maine</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/9_Yosemite.JPG" 
+                 alt="Yosemite" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Yosemite National Park, California</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/10_HBS.JPG" 
+                 alt="HBS" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Cambridge, Massachussetts</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/11_Light.JPG" 
+                 alt="Light" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Bangalore Palace, Karnataka</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/12_Traders.JPG" 
+                 alt="Traders" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">KR Market, Bangalore</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <img class="modal-image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalImage = document.querySelector('.modal-image');
+
+        function openModal(imgSrc) {
+            modal.style.display = 'flex';
+            modalImage.src = imgSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Prevent modal from closing when clicking on the image itself
+        document.querySelector('.modal-content').onclick = function(event) {
+            event.stopPropagation();
+        };
+    </script>
+</body>
+</html>

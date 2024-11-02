@@ -31,14 +31,20 @@
             margin: 0;
             margin-bottom: 2em;
         }
-
         li {
             margin-bottom: 0.5em;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+            padding-left: 0.5em;
+            position: relative;
         }
 
+/* Add bullet points with proper spacing */
+        li:before {
+            content: none;
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+   
         a {
             color: cornflowerblue;
             text-decoration: underline;
@@ -69,29 +75,33 @@
     <h2>About Me</h2>
 
     <section class="intro">
-        <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I am currently a Product Manager at Reddit. Over the years, I have worked in media, consulting and government in India and the US. I studied ocean engineering at IIT Madras and business at Harvard University. See my <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more details on my professional life. </p>
-        <p>In my free time, I write book reviews, take photographs, consume a lot of content, compete in trivia tournaments, collect art and cook South Indian meals. I also help advise a non-profit called <a href="https://righttolive.org/">Right To Live</a> in Bangalore, India. </p>
+        <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I am currently a Product Manager at Reddit. Over the years, I have worked in media, consulting and government in India and the US. I studied ocean engineering at IIT Madras and business at Harvard University. See my <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my professional life. </p>
+        <p>In my free time, I consume all kinds of content, write book reviews, take photographs, compete in trivia tournaments, collect art and cook South Indian food. I also advise a non-profit called <a href="https://righttolive.org/">Right To Live</a> in Bangalore, India. </p>
     </section>
     
-    <h2>Writing</h2>
+    <h2>Thoughts</h2>
     <section class="content">
-        <p>Go <a href="bookindex.html">here</a> to see some of my book reviews. More coming on my photography, ideas and principles. </p>
+        <p>Go <a href="bookindex.html">here</a> to see some of my book reviews. Go <a href="photography.html">here</a> to see photographs I've taken. </p>
+        
+        <p>I also try and write about ideas I've explored. A few have been published in the Indian press (<a href="articles_1.html">on Indian politics</a>, <a href="articles_2.html"> on Indian business leaders</a>), but the majority are on my Notes app. More on this coming. </p>
+       
+
     </section>
 
     <h2>Interests</h2>
     <section class="content">
-        <p>I tend to get curious about a lot of things, and develop quick, often incorrect, and loosely-held opinions. An incomplete list of themes that recur over the years:</p>
+        <p>I tend to get curious about a lot of things, and develop quick, sometimes incorrect, and loosely-held opinions. An incomplete list of themes that recur over the years:</p>
         <ul>
-            <li>&#8226; The politics of science and scientific progress</li>
-            <li>&#8226; Happiness, satisfaction and ambition</li>
-            <li>&#8226; Gen Z and Gen Alpha lingo</li>
-            <li>&#8226; The lives of wealthy Indians</li>
-            <li>&#8226; Contemporary art, especially from Indian artists</li>
-            <li>&#8226; Nature and our relationship with the wild</li>
-            <li>&#8226; Memoirs of individuals who've pursued excellence</li>
-            <li>&#8226; The business of consumer and media technology</li>
-            <li>&#8226; Irish history and its transition into a liberal society</li>
-            <li>&#8226; Religion, morality and its interaction with society</li>
+            <li>  Happiness, satisfaction and ambition</li>
+            <li>  The politics of science and scientific progress</li>
+            <li>  The lives of wealthy Indians</li>
+            <li>  Gen Z and Gen Alpha lingo</li>
+            <li>  Contemporary art, especially from Indian artists</li>
+            <li>  Nature and our relationship with the wild</li>
+            <li>  Memoirs of individuals who've pursued excellence</li>
+            <li>  The business of consumer and media technology</li>
+            <li>  Irish history and its transition into a liberal society</li>
+            <li>  Religion, morality and its interaction with society</li>
             
         </ul>    
     </section>    
