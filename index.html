@@ -11,18 +11,20 @@
             margin: 40px auto;
             padding: 0 20px;
             line-height: 1.6;
+            color: #333333;
         }
         h1 {
             font-size: 2em;
             margin-bottom: 1.5em;
             font-weight: bold;
+            
         }
 
         h2 {
             font-size: 1em;
             margin-top: 2em;
             font-weight: bold;
-            color: #000;
+            color: #333333;
         }
 
         ul {
@@ -67,64 +69,177 @@
             flex-grow: 1;
             margin-right: 1em;
         }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 40px;
+            padding: 0 20px;
+            align-items: flex-start; /* This ensures alignment at the top */
+        }
+
+        .left-rail {
+            width: 200px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            margin-top: 7.5em; /* This aligns with the main heading */
+        }
+
+        .left-rail ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .left-rail li {
+            margin-bottom: 8px;
+        }
+
+        .left-rail a {
+            font-size: 1em;
+            margin-top: 2em;
+            font-weight: 500;
+            color: #000;
+            transition: color 0.2s ease;
+        }
+
+        .left-rail a:hover {
+            color: #357abd;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        html {
+           scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .left-rail {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .left-rail ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .left-rail li {
+                margin-bottom: 0;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <h1>Vinay Sridhar</h1>
-    <h2>About Me</h2>
-
-    <section class="intro">
-        <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I am currently a Product Manager at Reddit. Over the years, I have worked in media, consulting and government in India and the US. I studied engineering at IIT Madras and and business at Harvard University. See my <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my professional life. </p>
-        <p>In my free time, I consume all kinds of content, write book reviews, take photographs, compete in trivia tournaments, collect art and cook South Indian food. I also advise a non-profit called <a href="https://righttolive.org/">Right To Live</a> in Bangalore, India. </p>
-    </section>
+    <div class="container">
+        <nav class="left-rail">
+            <ul>
+                <li><a href="#thoughts">Thoughts</a></li>
+                <li><a href="#interests">Interests</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="principles.html">Principles</a></li>
+                <li><a href="bookindex.html">Book Reviews</a></li>
+                <li><a href="photography.html">Photography</a></li>
+            </ul>
+        </nav>
     
-    <h2>Thoughts</h2>
-    <section class="content">
-        <p>Go <a href="bookindex.html">here</a> to read my book reviews and <a href="photography.html">here</a> for a collection of my photographs. </p>
-        
-        <p>I also write about ideas I've explored. A few have been published in the Indian press (<a href="articles_1.html">on Indian politics</a>, <a href="articles_2.html"> on Indian business leaders</a>), but the majority are on my Notes app. More on this coming. </p>
-       
-
-    </section>
-
-    <h2>Interests</h2>
-    <section class="content">
-        <p>I tend to have brief obsessions about a range of things, and develop quick, sometimes incorrect, and loosely-held opinions. This is an incomplete list of my <a href ="https://www.youtube.com/watch?v=2d8swyEGjMk"> Roman Empires</a>:</p>
-        <ul>
-            <li>  Happiness, satisfaction and ambition</li>
-            <li>  The business of consumer and media technology</li>
-            <li>  Gen Z and Gen Alpha lingo</li>
-            <li>  The politics of science and scientific progress</li>
-            <li>  Religion, morality and its interaction with society</li>
-            <li>  Nature and our relationship with the wild</li>
-            <li>  Contemporary art, especially from Indian artists</li>
-            <li>  How wealthy Indians live (<a href = "https://www.youtube.com/watch?v=gyl771NSojQ&t=1s">I'm serious</a>)</li>
-            
-        </ul>    
-    </section>    
-
-    <h2>Projects</h2>
-    <section class="content">
-        <p>I've started building software in my spare time as a new hobby. Some reflections on what I learned building these tools with LLMs <a href = "articles_3.html"> here</a>. A few recent projects (will host on Github soon):</p>
-        <ul>
-            <li>  Shorten podcast episodes by summarizing long-winded host questions and recreating it in a new voice while keeping the guest content unchanged (uses ChatGPT's Whisper, Eleven Labs and SpeechBrain)</li>
-            <li>  Generate ad creatives including the headline and image for different audiences with one click by scraping the company's website (uses ChatGPT 4o-mini, Stability AI)</li>
-            <li>  [In Progress] An app that lets children create their own bedtime stories in different styles e.g., tell me a story about a dog called Layla in the style of Beatrix Potter (uses ChatGPT, DALL-E)</li>
-            
-        </ul>    
-    </section>    
-
-
-    <h2>Contact</h2>
-
-    <section class="content">
-        <p>Email me at <a href="mailto:vinay.sridhar@gmail.com">vinay.sridhar@gmail.com</a> </p>
-    </section>
-
-    <section class="content">
-        <p>Last updated: Oct 2024</a> </p>
-    </section>
-
+        <div class="main-content" role="main">
+            <h1>Vinay Sridhar</h1>
+    
+            <h2 id="about-me">About Me</h2>
+    
+            <div class="section intro">
+                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I have worked in media, consulting and government. I studied engineering at IIT Madras and business at Harvard University. See my
+                <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my
+                professional life.</p>
+    
+                <p>In my free time, I consume all kinds of content, write book reviews,
+                take photographs, compete in trivia tournaments, collect art and cook
+                South Indian food. I also advise a non-profit called <a href="https://righttolive.org/">Right To
+                Live</a> in Bangalore, India.</p>
+            </div>
+    
+            <h2 id="thoughts">Thoughts</h2>
+    
+            <div class="section content">
+                <p>Go <a href="bookindex.html">here</a> to read my book reviews. Go
+                <a href="photography.html">here</a> for a collection of my photographs. I also codified the <a href="principles.html">principles</a> I try and live by.</p>
+    
+                <p>I try and write about ideas I've explored. A few have been published in
+                the Indian press (<a href="articles_1.html">on Indian politics</a>, <a href="articles_2.html">on Indian
+                business leaders</a>), but the majority are on my Notes
+                app. More on this coming.</p>
+            </div>
+    
+            <div class="section interests">
+                <h2 id="interests">Interests</h2>
+    
+                <div class="section content">
+                    <p>I tend to have brief obsessions about a range of things, and develop
+                    quick, sometimes incorrect, and loosely-held opinions. This is an
+                    incomplete list of my <a href="https://www.youtube.com/watch?v=2d8swyEGjMk">Roman
+                    Empires</a>:</p>
+    
+                    <ul>
+                        <li>Happiness, satisfaction and ambition</li>
+                        <li>The business of consumer and media technology</li>
+                        <li>Gen Z and Gen Alpha lingo</li>
+                        <li>The politics of science and scientific progress</li>
+                        <li>Religion, morality and its interaction with society</li>
+                        <li>Nature and our relationship with the wild</li>
+                        <li>Contemporary art, especially from Indian artists</li>
+                        <li>How wealthy Indians live (<a href="https://www.youtube.com/watch?v=gyl771NSojQ&t=1s">I'm serious</a>)</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="section projects">
+                <h2 id="projects">Projects</h2>
+    
+                <div class="section content">
+                    <p>I've started building software in my spare time as a new hobby. Some
+                    reflections on what I learned building these tools with LLMs
+                    <a href="articles_3.html">here</a>. A few recent projects (will host on Github
+                    soon):</p>
+    
+                    <ul>
+                        <li>Shorten podcast episodes by summarizing long-winded host questions
+                        and recreating it in a new voice while keeping the guest content
+                        unchanged (uses ChatGPT's Whisper, Eleven Labs and SpeechBrain)</li>
+                        <li>Generate ad creatives including the headline and image for different
+                        audiences with one click by scraping the company's website (uses
+                        ChatGPT 4o-mini, Stability AI)</li>
+                        <li>[In Progress] An app that lets children create their own bedtime
+                        stories in different styles e.g., tell me a story about a dog called
+                        Layla in the style of Beatrix Potter (uses ChatGPT, DALL-E)</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="section contact">
+                <h2>Contact</h2>
+    
+                <div class="section content">
+                    <p>Email me at <a href="mailto:vinay.sridhar@gmail.com">vinay.sridhar@gmail.com</a></p>
+                </div>
+            </div>
+    
+            <div class="section content">
+                <p>Last updated: Oct 2024</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

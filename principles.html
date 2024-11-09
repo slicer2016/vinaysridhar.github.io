@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principles</title>
+    <style>
+         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+            
+        }
+
+        h2 {
+            font-size: 1em;
+            margin-top: 2em;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 0;
+            margin-bottom: 2em;
+        }
+        li {
+            margin-bottom: 0.5em;
+            padding-left: 0.5em;
+            position: relative;
+        }
+
+/* Add bullet points with proper spacing */
+        li:before {
+            content: none;
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+   
+        a {
+            color: cornflowerblue;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: #666;
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 1em;
+            flex-shrink: 0;
+        }
+
+        .book-link {
+            color: rgb(85, 26, 139);
+            flex-grow: 1;
+            margin-right: 1em;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 40px;
+            padding: 0 20px;
+            align-items: flex-start; /* This ensures alignment at the top */
+        }
+
+        .left-rail {
+            width: 200px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            margin-top: 7.5em; /* This aligns with the main heading */
+        }
+
+        .left-rail ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .left-rail li {
+            margin-bottom: 8px;
+        }
+
+        .left-rail a {
+            font-size: 1em;
+            margin-top: 2em;
+            font-weight: 500;
+            color: #000;
+            transition: color 0.2s ease;
+        }
+
+        .left-rail a:hover {
+            color: #357abd;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        html {
+           scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .left-rail {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .left-rail ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .left-rail li {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+    <nav class="left-rail">
+        <ul>
+            <li><a href="#on-living">On Living</a></li>
+            <li><a href="#on-learning">On Learning</a></li>
+            <li><a href="#on-people">On People</a></li>
+            <li><a href="#on-working">On Working</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content" role="main">
+        <h1>Principles</h1>
+
+        <div class="section intro">
+            <p>These are the principles I aspire to live by. Most of these are not original (is anything?). I have linked to sources where I can remember them.</p>
+            
+            <p>I don't always live up to these ideals, but the ones marked ** are what I most need to get better at. I find that codifying and regularly looking at these principles helps me lead a more aligned life.</p>
+
+            <p>Last updated: Nov 2024</p>
+        </div>
+
+        <h2 id="on-living">On Living</h2>
+        <div class="section content">
+            <ol>
+                <li>Choose being kind over being right</li>
+                <li>Treat people the same regardless of their status relative to yours. Humans are social animals, people notice.</li>
+                <li>Never be mean, especially not to someone who can hurt you by doing nothing</li>
+                <li>Friendships are as important as family. Invest in your friends and prioritize making new ones. The larger the universe's friendship stock, the better off we will all be</li>
+                <li>You settle for the love you think you deserve. Value yourself more and you will be more thoughtful in whom you prioritize</li>
+                <li>Surround yourself with people whose eyes light up when they see you coming (<a href="https://www.youtube.com/watch?v=8NZq6TyGR80">Andre De Shields</a>)</li>
+                <li>Everything and everybody has a light, and it's your job to find it (<a href="https://www.haggadot.com/clip/story-birthday-world">Tikkun Olam</a>)</li>
+                <li>** Everyone has black holes in their lives; scarcely talked about events that shape the rest of their being. Remember that as you negatively judge someone (<a href="https://fs.blog/krista-tippett-listening-questions/">Krista Tippett</a>)</li>
+                <li>Treat animals the same way you treat humans. These distinctions are arbitrary and constructed (<a href="https://www.npr.org/2020/04/17/836139237/learning-lessons-from-inspiration-despite-complexity-in-why-fish-dont-exist">Lulu Miller</a>)</li>
+            </ol>
+        </div>
+
+        <h2 id="on-learning">On Learning</h2>
+        <div class="section content">
+            <ol>
+                <li>Be curious and expand your Umwelt. Truth finding is an energizing way to spend time. (Truth finding is a way to say "learning" but sound intellectual)</li>
+                <li>Epekho (via <a href="https://www.theguardian.com/commentisfree/belief/2010/may/24/montaigne-philosophy-scepticism">Montaigne</a>). Although I admittedly haven't fully figured out how this principle interacts with (1)</li>
+                <li>You can learn anything you set your mind to. The more you believe this, the more true it will be.</li>
+                <li>Regularly examine your worldview and look for <a href="https://www.readthesequences.com/Making-Beliefs-Pay-Rent-In-Anticipated-Experiences">floating beliefs</a>. Any belief that isn't connected to an anticipated experience is likely unhelpful</li>
+                <li>Your identity comes in the way of seeing clearly. Prune your "identity surface area". Avoid using labels to describe yourself, use verbs instead. Group identities are especially pernicious (<a href="https://www.redalyc.org/pdf/324/32433390008.pdf">George Kateb</a>)
+                    <ol>
+                        <li>If you are offended often, it likely means you have an identity surface area.</li>
+                    </ol>
+                </li>
+                <li>Never let your ego get too close to your position in a conversation</li>
+                <li>Look for "Edges", they are great places to learn.
+                    <ul>
+                        <li>"I have always felt that the action most worth watching is not at the center of things but where edges meet. I like shorelines, weather fronts, international borders. There are interesting frictions and incongruities in these places, and often, if you stand at the point of tangency, you can see both sides better than if you were in the middle of either one. This is especially true, I think, when the apposition is cultural" (<a href="https://www.goodreads.com/book/show/12609.The_Spirit_Catches_You_and_You_Fall_Down">The Spirit Catches You and You Fall Down</a>)</li>
+                    </ul>
+                </li>
+                <li>Improve your vocabulary and language. It will improve your thinking (<a href="https://asialenae.com/2019/04/13/proust-on-how-cliche-narrows-our-perceptions-the-obligation-of-the-artist-to-create-his-own-language/">Proust</a>, <a href="https://en.wikipedia.org/wiki/Linguistic_relativity">Sapir-Whorf hypothesis</a>)</li>
+                <li>** Reflect on your suffering, it will help you see more clearly. Most of this list was first written after a melancholic period (<a href="https://www.youtube.com/watch?v=bzfT16k6HEM">Jensen Huang</a>, <a href="https://www.theparisreview.org/blog/2019/05/28/proust-and-the-joy-of-suffering/">Proust</a>)</li>
+            </ol>
+        </div>
+
+        <h2 id="on-people">On People</h2>
+        <div class="section content">
+            <ol>
+                <li>Everyone — atheists included — has a God. For many people, it is money, fame and power. Know what yours is. (<a href="https://fs.blog/david-foster-wallace-this-is-water/">David Foster Wallace</a>)
+                    <ol>
+                        <li>By extension, find your temple. Going there will give you peace. Museums are one of my temples.</li>
+                    </ol>
+                </li>
+                <li>People who enjoy "exploring" ideas versus "defining" ideas make for more interesting conversation</li>
+                <li>The best kind of charisma is when you make the other person feel that you are seeing the best version of themselves. We sometimes call this flirting.</li>
+                <li>A majority of people's decisions are driven by signaling. This is not inherently bad. If you see the world this way, a lot more things start to make sense. (<a href="https://conversationswithtyler.com/episodes/robin-hanson/">Robin Hanson</a>)
+                    <ol>
+                        <li>I'm pretty sure my desire to post this list online (it's been on my Notes app for a while) is to signal that I'm a reflective person. Now that I have, I hope it's working.</li>
+                    </ol>
+                </li>
+                <li>Reading fiction will help you understand people better (<a href="http://www.geonius.com/eliot/#:~:text=%5BT%5Dhe%20only%20effect%20Ibeing%20struggling%20erring%20human%20creatures.">George Eliot</a>, among others)</li>
+            </ol>
+        </div>
+
+        <h2 id="on-working">On Working</h2>
+        <div class="section content">
+            <ol>
+                <li>** You are not your career.</li>
+                <li>You control whether you think your work has meaning. The meaning-making part has less to do with your work and more to do with your ability to convince yourself.</li>
+                <li>Luck is a massive factor in career outcomes. You can improve your luck but most of it is out of your control. (<a href="https://fs.blog/five-techniques-improve-luck/">Farnam Street</a>)</li>
+                <li>Your career will likely be 40+ years long. Remember that as you make decisions, you will likely have multiple careers</li>
+                <li>Great managers who believe in you are transformative. They will change the arc of your career and sense of self.</li>
+                <li>Every job has some bullshit. You can only decide what kind of bullshit you're willing to take</li>
+                <li>Think of work as a video game you're choosing to play. It makes the hard days easier.</li>
+                <li>There is 'alpha' in willing to roll up your sleeves and do the work nobody wants to do.</li>
+                <li>First principles thinking can get you surprisingly far. Expertise mainly helps in getting to the right answer faster.</li>
+                <li>Networking is a terrible idea. Instead, replace it with (4) from "On Living". (<a href="https://vinaysridhar.com/review.html?id=22">Joseph Kennedy</a>, among others)</li>
+            </ol>
+        </div>
+
+        <div class="section content">
+            <p>Last updated: Nov 2024</p>
+        </div>
+    </div>
+    </div>
