@@ -48,13 +48,16 @@
         }
    
         a {
-            color: cornflowerblue;
+            color: inherit;  /* This makes links same color as regular text */
             text-decoration: underline;
-            text-underline-offset: 3px;
+            text-decoration-color: cornflowerblue;  /* Light red underline */
+            text-underline-offset: 3px;  /* Keep your existing offset */
         }
 
         a:hover {
-            color: #666;
+            color: inherit;  /* Keep text color same on hover */
+            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+            font-weight: medium;
         }
 
         .date {
@@ -84,7 +87,7 @@
             flex-shrink: 0;
             position: sticky;
             top: 40px;
-            margin-top: 11em; /* This aligns with the main heading */
+            margin-top: 10em; /* This aligns with the main heading */
         }
 
         .left-rail ul {
@@ -155,7 +158,7 @@
     </nav>
 
     <div class="main-content" role="main">
-        <p><a href="index.html">Back to home</a></p>
+        <p><a href="index.html">Back to Home</a></p>
 
         <h1>Principles</h1>
 

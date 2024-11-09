@@ -48,13 +48,16 @@
         }
    
         a {
-            color: cornflowerblue;
+            color: inherit;  /* This makes links same color as regular text */
             text-decoration: underline;
-            text-underline-offset: 3px;
+            text-decoration-color: cornflowerblue;  /* Light red underline */
+            text-underline-offset: 3px;  /* Keep your existing offset */
         }
 
         a:hover {
-            color: #666;
+            color: inherit;  /* Keep text color same on hover */
+            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+            font-weight: medium;
         }
 
         .date {
@@ -76,7 +79,6 @@
             margin: 40px auto;
             gap: 40px;
             padding: 0 20px;
-            align-items: flex-start; /* This ensures alignment at the top */
         }
 
         .left-rail {
@@ -121,23 +123,32 @@
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
-                gap: 20px;
+                gap: 10px;
+                padding: 0 10px;
             }
 
             .left-rail {
                 width: 100%;
                 position: static;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
 
             .left-rail ul {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 16px;
+                gap: 8px;
+                justify-content: flex-start;
             }
 
             .left-rail li {
                 margin-bottom: 0;
+                flex: 0 1 auto;
+            }
+
+            .left-rail a {
+                font-size: 16px;  /* Slightly smaller font */
+                padding: 4px 8px;  /* Add some padding for touch targets */
+                white-space: nowrap;  /* Prevent text wrapping within links */
             }
         }
     </style>
@@ -177,10 +188,13 @@
                 <p>Go <a href="bookindex.html">here</a> to read my book reviews. Go
                 <a href="photography.html">here</a> for a collection of my photographs. I also codified the <a href="principles.html">principles</a> I try and live by.</p>
     
-                <p>I try and write about ideas I've explored. A few have been published in
-                the Indian press (<a href="articles_1.html">on Indian politics</a>, <a href="articles_2.html">on Indian
-                business leaders</a>), but the majority are on my Notes
-                app. More on this coming.</p>
+                <p>I try and write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers. Here are a few." </p>
+                <ul>
+                    <li><a href="articles_4.html">IVF and Technology Adoption Curves</a></li>
+                    <li><a href="articles_5.html">Family Conflict, Humanism and Formalism</a></li>
+                    <li><a href="articles_6.html">Competition and Validation</a></li>
+                    <li><a href="articles_1.html">On Indians who follow the US Elections</a> (published in the Indian Express)</li>
+                    <li><a href="articles_2.html">On Indian business leaders</a> (published in Business Standard)</li>
             </div>
     
             <div class="section interests">

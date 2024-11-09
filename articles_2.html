@@ -42,13 +42,16 @@
         }
 
         a {
-            color: cornflowerblue;
+            color: inherit;  /* This makes links same color as regular text */
             text-decoration: underline;
-            text-underline-offset: 3px;
+            text-decoration-color: cornflowerblue;  /* Light red underline */
+            text-underline-offset: 3px;  /* Keep your existing offset */
         }
 
         a:hover {
-            color: #666;
+            color: inherit;  /* Keep text color same on hover */
+            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+            font-weight: medium;
         }
 
         .date {
