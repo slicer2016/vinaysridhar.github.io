@@ -7,12 +7,13 @@
     <style>
          body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 900px;
+            margin: 30px auto;
             padding: 0 20px;
             line-height: 1.6;
             color: #333333;
         }
+
         h1 {
             font-size: 2em;
             margin-bottom: 1.5em;
@@ -23,6 +24,7 @@
         h2 {
             font-size: 1em;
             margin-top: 2em;
+            margin-bottom: 0.75em;
             font-weight: bold;
             color: #333333;
         }
@@ -33,8 +35,11 @@
             margin: 0;
             margin-bottom: 2em;
         }
+
         li {
             margin-bottom: 0.5em;
+            display: flex;
+            justify-content: space-between;
             padding-left: 0.5em;
             position: relative;
         }
@@ -116,6 +121,22 @@
             min-width: 0;
         }
 
+        .top-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem; /* Reduced vertical gap between items */
+            margin-bottom: 1rem; /* Reduced bottom margin */
+            padding: 0;
+        }
+
+        .top-nav a {
+            color: #000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-size: 0.9rem; /* Slightly smaller font on mobile */
+            line-height: 1.2; /* Tighter line height */
+        }
+
         html {
            scroll-behavior: smooth;
         }
@@ -150,6 +171,16 @@
                 padding: 4px 8px;  /* Add some padding for touch targets */
                 white-space: nowrap;  /* Prevent text wrapping within links */
             }
+
+            @media screen and (min-width: 768px) {
+                .top-nav {
+                    gap: 1rem 2rem; /* Larger gaps on desktop */
+                }
+                
+                .top-nav a {
+                    font-size: 1rem; /* Regular font size on desktop */
+                }
+            }
         }
     </style>
 </head>
@@ -172,14 +203,13 @@
             <h2 id="about-me">About Me</h2>
     
             <div class="section intro">
-                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I have worked in media, consulting and government. I studied engineering at IIT Madras and business at Harvard University. See my
+                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I have worked in Spotify's podcast business, management consulting and the Prime Minister's Office in India. I studied engineering at IIT Madras and business at Harvard University. See my
                 <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my
                 professional life.</p>
     
                 <p>In my free time, I consume all kinds of content, write book reviews,
                 take photographs, compete in trivia tournaments, collect art and cook
-                South Indian food. I also advise a non-profit called <a href="https://righttolive.org/">Right To
-                Live</a> in Bangalore, India.</p>
+                South Indian food. I also advise a non-profit called <a href="https://righttolive.org/">Right To Live</a> in Bangalore, India.</p>
             </div>
     
             <h2 id="thoughts">Thoughts</h2>
@@ -188,11 +218,12 @@
                 <p>Go <a href="bookindex.html">here</a> to read my book reviews. Go
                 <a href="photography.html">here</a> for a collection of my photographs. I also codified the <a href="principles.html">principles</a> I try and live by.</p>
     
-                <p>I try and write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. Here are a few." </p>
+                <p>I try and write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. </p>
                 <ul>
                     <li><a href="articles_4.html">IVF and Scientific Adoption Curves</a></li>
                     <li><a href="articles_5.html">Family Conflict, Humanism and Formalism</a></li>
                     <li><a href="articles_6.html">Holy Cows and Water Buffaloes</a></li>
+                    <li><a href="articles_7.html">Comparison and Validation</a></li>
                     <li><a href="articles_1.html">On Indians who follow the US Elections</a> (published in the Indian Express)</li>
                     <li><a href="articles_2.html">On Indian business leaders</a> (published in Business Standard)</li>
             </div>
@@ -202,9 +233,7 @@
     
                 <div class="section content">
                     <p>I tend to have brief obsessions about a range of things, and develop
-                    quick, sometimes incorrect, and loosely-held opinions. This is an
-                    incomplete list of my <a href="https://www.youtube.com/watch?v=2d8swyEGjMk">Roman
-                    Empires</a>:</p>
+                    quick and loosely-held opinions. This is an incomplete list of my <a href="https://www.youtube.com/watch?v=2d8swyEGjMk">Roman Empires</a>:</p>
     
                     <ul>
                         <li>Happiness, satisfaction and ambition</li>
