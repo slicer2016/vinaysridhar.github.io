@@ -83,10 +83,45 @@
             margin: 20px auto;
             gap: 20px;
             padding: 5px;
+            padding-top: 1rem;
         }
 
         .container ul li {
             margin-bottom: 0.05em;  /* Adjust this value for spacing */
+        }
+
+        .container > ul {
+            margin: 0;  /* Remove default margin */
+            padding: 0.5rem 0;  /* Add minimal padding */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;  /* Add small gaps between nav items */
+            font-size: 0.9rem;  /* Slightly smaller font size */
+        }
+
+        .container > ul > li {
+            margin: 0;  /* Remove default margin */
+            list-style: none;
+        }
+
+        .main-content .section.content ul {
+            list-style-type: disc !important;
+            padding-left: 2rem !important;
+            margin: 1rem 0 !important;
+        }
+
+        .main-content .section.content ul li {
+            display: list-item !important;
+            margin-bottom: 0.5rem;
+        }
+        .section.content ul {
+            list-style-type: circle;
+            padding-left: 1.5rem;
+        }
+
+
+        .section.content ul li {
+            margin-bottom: 0.5rem;
         }
 
         .left-rail {
@@ -147,6 +182,15 @@
             .container {
                 flex-direction: column;
                 gap: 6px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+                margin-top: 0.5rem;
+            }
+  
+            h2 {
+                font-size: 1.25rem;
             }
 
             .left-rail {
