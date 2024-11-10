@@ -169,11 +169,13 @@
         }
 
         .top-nav {
+            margin-top: 0;
+            padding-top: 0;
             top: 0;
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem; /* Reduced vertical gap between items */
-            margin-bottom: 1rem; /* Reduced bottom margin */
+            gap: 0.25rem; /* Reduced vertical gap between items */
+            margin-bottom: 0.25rem; /* Reduced bottom margin */
             padding: 0;
         }
 
@@ -191,12 +193,16 @@
 
         @media (max-width: 768px) {
             .container {
+                margin-top: 0;
+                padding-top: 0;
                 top: 0;
                 flex-direction: column;
                 gap: 1px;
             }
 
             h1 {
+                margin-top: 0;
+                padding-top: 0;
                 font-size: 1.75rem;
                 /* margin-top: 0.5rem; */
             }
