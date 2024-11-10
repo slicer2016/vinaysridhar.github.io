@@ -8,7 +8,7 @@
          body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             max-width: 900px;
-            margin: 30px auto;
+            margin: 20px auto;
             padding: 0 20px;
             line-height: 1.6;
             color: #333333;
@@ -16,21 +16,21 @@
 
         h1 {
             font-size: 2em;
-            margin-bottom: 1.5em;
+            margin-bottom: 1em;
             font-weight: bold;
             
         }
 
         h2 {
             font-size: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             margin-bottom: 0.75em;
             font-weight: bold;
             color: #333333;
         }
 
         ul {
-            list-style-type: disc;
+            list-style-type: circle;
             padding-left: 20px;
             margin: 0;
             margin-bottom: 2em;
@@ -39,12 +39,11 @@
         li {
             margin-bottom: 0.5em;
             display: flex;
-            justify-content: space-between;
             padding-left: 0.5em;
             position: relative;
+            color: #000;
         }
 
-/* Add bullet points with proper spacing */
         li:before {
             content: none;
             position: absolute;
@@ -81,32 +80,35 @@
         .container {
             display: flex;
             max-width: 1200px;
-            margin: 40px auto;
-            gap: 40px;
-            padding: 0 20px;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 5px;
+        }
+
+        .container ul li {
+            margin-bottom: 0.05em;  /* Adjust this value for spacing */
         }
 
         .left-rail {
             width: 200px;
             flex-shrink: 0;
             position: sticky;
-            top: 40px;
+            top: 30px;
             margin-top: 7.5em; /* This aligns with the main heading */
         }
 
         .left-rail ul {
-            list-style: none;
             padding: 0;
             margin: 0;
         }
 
         .left-rail li {
-            margin-bottom: 8px;
+            margin-bottom: 1px;
         }
 
         .left-rail a {
             font-size: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             font-weight: 500;
             color: #000;
             transition: color 0.2s ease;
@@ -124,7 +126,7 @@
         .top-nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem 1rem; /* Reduced vertical gap between items */
+            gap: 0.5rem 0.5rem; /* Reduced vertical gap between items */
             margin-bottom: 1rem; /* Reduced bottom margin */
             padding: 0;
         }
@@ -133,8 +135,8 @@
             color: #000;
             text-decoration: underline;
             text-underline-offset: 3px;
-            font-size: 0.9rem; /* Slightly smaller font on mobile */
-            line-height: 1.2; /* Tighter line height */
+            font-size: 0.6rem; /* Slightly smaller font on mobile */
+            line-height: 1; /* Tighter line height */
         }
 
         html {
@@ -145,7 +147,6 @@
             .container {
                 flex-direction: column;
                 gap: 6px;
-                padding: 0 10px;
             }
 
             .left-rail {
@@ -171,16 +172,6 @@
                 padding: 4px 8px;  /* Add some padding for touch targets */
                 white-space: nowrap;  /* Prevent text wrapping within links */
             }
-
-            @media screen and (min-width: 768px) {
-                .top-nav {
-                    gap: 1rem 2rem; /* Larger gaps on desktop */
-                }
-                
-                .top-nav a {
-                    font-size: 1rem; /* Regular font size on desktop */
-                }
-            }
         }
     </style>
 </head>
@@ -203,7 +194,7 @@
             <h2 id="about-me">About Me</h2>
     
             <div class="section intro">
-                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I have worked in Spotify's podcast business, management consulting and the Prime Minister's Office in India. I studied engineering at IIT Madras and business at Harvard University. See my
+                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I worked in media, consulting and in the Prime Minister's Office in India. I studied engineering at IIT Madras and business at Harvard University. See my
                 <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my
                 professional life.</p>
     
@@ -218,12 +209,11 @@
                 <p>Go <a href="bookindex.html">here</a> to read my book reviews. Go
                 <a href="photography.html">here</a> for a collection of my photographs. I also codified the <a href="principles.html">principles</a> I try and live by.</p>
     
-                <p>I try and write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. </p>
+                <p>I write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. </p>
                 <ul>
                     <li><a href="articles_4.html">IVF and Scientific Adoption Curves</a></li>
                     <li><a href="articles_5.html">Family Conflict, Humanism and Formalism</a></li>
                     <li><a href="articles_6.html">Holy Cows and Water Buffaloes</a></li>
-                    <li><a href="articles_7.html">Comparison and Validation</a></li>
                     <li><a href="articles_1.html">On Indians who follow the US Elections</a> (published in the Indian Express)</li>
                     <li><a href="articles_2.html">On Indian business leaders</a> (published in Business Standard)</li>
             </div>
