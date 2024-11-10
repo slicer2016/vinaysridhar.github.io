@@ -5,150 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Principles</title>
     <style>
-         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
-            line-height: 1.6;
-            color: #333333;
-        }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 1.5em;
-            font-weight: bold;
-            
-        }
+        body {
+           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+           max-width: 900px;
+           margin: 20px auto;
+           padding: 0 20px;
+           line-height: 1.6;
+           color: #333333;
+       }
 
-        h2 {
-            font-size: 1em;
-            margin-top: 2em;
-            font-weight: bold;
-            color: #333333;
-            max-width: 90%;
-        }
+       h1 {
+           font-size: 2em;
+           margin-bottom: 1em;
+           font-weight: bold;
+           
+       }
 
-        ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            margin: 0;
-            margin-bottom: 2em;
-        }
-        li {
-            margin-bottom: 0.5em;
-            padding-left: 0.5em;
-            position: relative;
-        }
+       h2 {
+           font-size: 1em;
+           margin-top: 1em;
+           margin-bottom: 0.75em;
+           font-weight: bold;
+           color: #333333;
+       }
 
-/* Add bullet points with proper spacing */
-        li:before {
-            content: none;
-            position: absolute;
-            left: 0;
-            color: #000;
-        }
-   
-        a {
-            color: inherit;  /* This makes links same color as regular text */
-            text-decoration: underline;
-            text-decoration-color: cornflowerblue;  /* Light red underline */
-            text-underline-offset: 3px;  /* Keep your existing offset */
-        }
+       ul {
+           list-style-type: circle;
+           padding-left: 20px;
+           margin: 0;
+           margin-bottom: 2em;
+       }
 
-        a:hover {
-            color: inherit;  /* Keep text color same on hover */
-            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
-            font-weight: medium;
-        }
+       li {
+           margin-bottom: 0.5em;
+           display: flex;
+           padding-left: 0.5em;
+           position: relative;
+           color: #000;
+       }
 
-        .date {
-            color: #666;
-            font-size: 0.9em;
-            margin-left: 1em;
-            flex-shrink: 0;
-        }
+       li:before {
+           content: none;
+           position: absolute;
+           left: 0;
+           color: #000;
+       }
+  
+       a {
+           color: inherit;  /* This makes links same color as regular text */
+           text-decoration: underline;
+           text-decoration-color: cornflowerblue;  /* Light red underline */
+           text-underline-offset: 3px;  /* Keep your existing offset */
+       }
 
-        .book-link {
-            color: rgb(85, 26, 139);
-            flex-grow: 1;
-            margin-right: 1em;
-        }
+       a:hover {
+           color: inherit;  /* Keep text color same on hover */
+           text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+           font-weight: medium;
+       }
 
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 20px auto;
-            gap: 20px;
-            padding: 5px;
-            align-items: flex-start; /* This ensures alignment at the top */
-        }
+       .date {
+           color: #666;
+           font-size: 0.9em;
+           margin-left: 1em;
+           flex-shrink: 0;
+       }
 
-        .left-rail {
-            width: 200px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 30px;
-            margin-top: 10em; /* This aligns with the main heading */
-        }
+       .book-link {
+           color: rgb(85, 26, 139);
+           flex-grow: 1;
+           margin-right: 1em;
+       }
 
-        .left-rail ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+       .container {
+           display: flex;
+           max-width: 1200px;
+           margin: 20px auto;
+           gap: 20px;
+           padding: 5px;
+           padding-top: 1rem;
+       }
 
-        .left-rail li {
-            margin-bottom: 2px;
-        }
+       .container ul li {
+           margin-bottom: 0.05em;  /* Adjust this value for spacing */
+       }
 
-        .left-rail a {
-            font-size: 1em;
-            margin-top: 1em;
-            font-weight: 500;
-            color: #000;
-            transition: color 0.2s ease;
-        }
+       .container > ul {
+           margin: 0;  /* Remove default margin */
+           padding: 0.5rem 0;  /* Add minimal padding */
+           display: flex;
+           flex-wrap: wrap;
+           gap: 0.5rem 1rem;  /* Add small gaps between nav items */
+           font-size: 0.9rem;  /* Slightly smaller font size */
+       }
 
-        .left-rail a:hover {
-            color: #357abd;
-        }
+       .container > ul > li {
+           margin: 0;  /* Remove default margin */
+           list-style: none;
+       }
 
-        .container ul li {
-            margin-bottom: 1em;  /* Adjust this value for spacing */
-        }
+       .main-content .section.content ul {
+           list-style-type: disc !important;
+           padding-left: 2rem !important;
+           margin: 1rem 0 !important;
+       }
 
-        .main-content {
-            flex: 1;
-            min-width: 0;
-        }
+       .main-content .section.content ul li {
+           display: list-item !important;
+           margin-bottom: 0.5rem;
+       }
+       .section.content ul {
+           list-style-type: circle;
+           padding-left: 1.5rem;
+       }
 
-        html {
-           scroll-behavior: smooth;
-        }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                gap: 6px;
-            }
+       .section.content ul li {
+           margin-bottom: 0.5rem;
+       }
 
-            .left-rail {
-                width: 100%;
-                position: static;
-                margin-bottom: 6px;
-            }
+       .left-rail {
+           width: 200px;
+           flex-shrink: 0;
+           position: sticky;
+           top: 30px;
+           margin-top: 7.5em; /* This aligns with the main heading */
+       }
 
-            .left-rail ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 16px;
-            }
+       .left-rail ul {
+           padding: 0;
+           margin: 0;
+       }
 
-            .left-rail li {
-                margin-bottom: 0;
-            }
-        }
-    </style>
+       .left-rail li {
+           margin-bottom: 1px;
+       }
+
+       .left-rail a {
+           font-size: 1em;
+           margin-top: 1em;
+           font-weight: 500;
+           color: #000;
+           transition: color 0.2s ease;
+       }
+
+       .left-rail a:hover {
+           color: #357abd;
+       }
+
+       .main-content {
+           flex: 1;
+           min-width: 0;
+       }
+
+       .top-nav {
+           display: flex;
+           flex-wrap: wrap;
+           gap: 0.5rem 0.5rem; /* Reduced vertical gap between items */
+           margin-bottom: 1rem; /* Reduced bottom margin */
+           padding: 0;
+       }
+
+       .top-nav a {
+           color: #000;
+           text-decoration: underline;
+           text-underline-offset: 3px;
+           font-size: 0.6rem; /* Slightly smaller font on mobile */
+           line-height: 1; /* Tighter line height */
+       }
+
+       html {
+          scroll-behavior: smooth;
+       }
+
+       @media (max-width: 768px) {
+           .container {
+               flex-direction: column;
+               gap: 6px;
+           }
+
+           h1 {
+               font-size: 1.75rem;
+               margin-top: 0.5rem;
+           }
+ 
+           h2 {
+               font-size: 1.25rem;
+           }
+
+           .left-rail {
+               width: 100%;
+               position: static;
+               margin-bottom: 6px;
+           }
+
+           .left-rail ul {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 8px;
+               justify-content: flex-start;
+           }
+
+           .left-rail li {
+               margin-bottom: 0;
+               flex: 0 1 auto;
+           }
+
+           .left-rail a {
+               font-size: 16px;  /* Slightly smaller font */
+               padding: 4px 8px;  /* Add some padding for touch targets */
+               white-space: nowrap;  /* Prevent text wrapping within links */
+           }
+       }
+   </style>
+
 </head>
 <body>
 
