@@ -113,6 +113,7 @@ html {
 
 @media (max-width: 768px) {
     .container {
+        padding-top: 0;
         flex-direction: column;
         gap: 20px;
     }
