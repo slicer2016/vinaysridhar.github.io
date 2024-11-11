@@ -145,6 +145,7 @@
         }
 
         .left-rail ul {
+            position: sticky;
             padding: 0;
             margin: 0;
         }
@@ -170,25 +171,6 @@
             min-width: 0;
         }
 
-        .top-nav {
-            margin-top: 0;
-            padding-top: 0;
-            top: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.1rem; /* Reduced vertical gap between items */
-            margin-bottom: 1rem; /* Reduced bottom margin */
-            padding: 0;
-        }
-
-        .top-nav a {
-            color: #000;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            font-size: 0.4rem; /* Slightly smaller font on mobile */
-            line-height: 0.5; /* Tighter line height */
-        }
-
         html {
            scroll-behavior: smooth;
         }
@@ -203,6 +185,25 @@
                 gap: 1px;
             }
 
+                .top-nav {
+                margin-top: 0;
+                padding-top: 0;
+                top: 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.1rem; /* Reduced vertical gap between items */
+                margin-bottom: 1rem; /* Reduced bottom margin */
+                padding: 0;
+            }
+
+            .top-nav a {
+                color: #000;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                font-size: 0.4rem; /* Slightly smaller font on mobile */
+                line-height: 0.5; /* Tighter line height */
+            }
+            
             h1 {
                 margin-top: 0;
                 padding-top: 0;
