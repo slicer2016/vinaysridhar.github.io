@@ -121,22 +121,6 @@
             min-width: 0;
         }
 
-        .top-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.2rem 0.4rem; /* Reduced vertical gap between items */
-            margin-bottom: 1rem; /* Reduced bottom margin */
-            padding: 0;
-        }
-
-        .top-nav a {
-            color: #000;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            font-size: 0.9rem; /* Slightly smaller font on mobile */
-            line-height: 1.2; /* Tighter line height */
-        }
-
         html {
            scroll-behavior: smooth;
         }
@@ -146,6 +130,22 @@
                 flex-direction: column;
                 gap: 6px;
                 padding: 0 10px;
+            }
+
+            .top-nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.2rem 0.2rem; /* Reduced vertical gap between items */
+                margin-bottom: 1rem; /* Reduced bottom margin */
+                padding: 0;
+            }
+
+            .top-nav a {
+                color: #000;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                font-size: 0.9rem; /* Slightly smaller font on mobile */
+                line-height: 1.2; /* Tighter line height */
             }
 
             .left-rail {
