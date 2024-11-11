@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vinay Sridhar</title>
     <style>
+        .clear { clear: both; }
+
          body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             max-width: 900px;
-            margin: 40px auto;
+            margin: 0;
             padding: 0 20px;
             line-height: 1.6;
             color: #333333;
@@ -16,35 +18,35 @@
 
         h1 {
             font-size: 2em;
-            margin-bottom: 1.5em;
+            margin-bottom: 1em;
             font-weight: bold;
             
         }
 
         h2 {
             font-size: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             margin-bottom: 0.75em;
             font-weight: bold;
             color: #333333;
         }
 
         ul {
-            list-style-type: disc;
+            list-style-type: circle;
             padding-left: 20px;
             margin: 0;
             margin-bottom: 2em;
+            color: #333333;
         }
 
         li {
             margin-bottom: 0.5em;
             display: flex;
-            justify-content: space-between;
             padding-left: 0.5em;
             position: relative;
+            color: #333333;
         }
 
-/* Add bullet points with proper spacing */
         li:before {
             content: none;
             position: absolute;
@@ -81,33 +83,77 @@
         .container {
             display: flex;
             max-width: 1200px;
-            margin: 40px auto;
-            gap: 40px;
-            padding: 0 20px;
-            padding-top: 0.25rem;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 5px;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .container ul li {
+            margin-top: 0;
+            padding-top: 0;
+            margin-bottom: 0.05em;  /* Adjust this value for spacing */
+        }
+
+        .container > ul {
+            margin-top: 0;
+            padding-top: 0;
+            margin: 0;  /* Remove default margin */
+            padding: 0.5rem 0;  /* Add minimal padding */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;  /* Add small gaps between nav items */
+            font-size: 0.9rem;  /* Slightly smaller font size */
+        }
+
+        .container > ul > li {
+            margin-top: 0;
+            padding-top: 0;
+            margin: 0;  /* Remove default margin */
+            list-style: none;
+        }
+
+        .main-content .section.content ul {
+            list-style-type: disc !important;
+            padding-left: 2rem !important;
+            margin: 1rem 0 !important;
+        }
+
+        .main-content .section.content ul li {
+            display: list-item !important;
+            margin-bottom: 0.5rem;
+        }
+        .section.content ul {
+            list-style-type: circle;
+            padding-left: 1.5rem;
+        }
+
+
+        .section.content ul li {
+            margin-bottom: 0.5rem;
         }
 
         .left-rail {
             width: 200px;
             flex-shrink: 0;
             position: sticky;
-            top: 40px;
+            top: 30px;
             margin-top: 7.5em; /* This aligns with the main heading */
         }
 
         .left-rail ul {
-            list-style: none;
             padding: 0;
             margin: 0;
         }
 
         .left-rail li {
-            margin-bottom: 8px;
+            margin-bottom: 1px;
         }
 
         .left-rail a {
             font-size: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             font-weight: 500;
             color: #000;
             transition: color 0.2s ease;
@@ -122,94 +168,71 @@
             min-width: 0;
         }
 
+        .top-nav {
+            margin-top: 0;
+            padding-top: 0;
+            top: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem; /* Reduced vertical gap between items */
+            margin-bottom: 0.25rem; /* Reduced bottom margin */
+            padding: 0;
+        }
+
+        .top-nav a {
+            color: #000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-size: 0.4rem; /* Slightly smaller font on mobile */
+            line-height: 0.5; /* Tighter line height */
+        }
+
         html {
            scroll-behavior: smooth;
         }
 
-        .container > ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.15rem 1rem;  /* Very small gaps */
-            margin: 0;            /* Remove default margins */
-            padding: 0.25rem 0;   /* Minimal padding */
-            list-style: none;     /* Remove bullets */
-            justify-content: flex-start;
-        }
-
         @media (max-width: 768px) {
-
-            body {
-                margin-top: 0;
-                padding-top: 0;
-            }
-
+            
             .container {
+                margin-top: -100px;
+                padding-top: -50px;
+                top: 0;
                 flex-direction: column;
-                gap: 6px;
-                padding: 0 10px;
-                padding-top: 0;
+                gap: 1px;
             }
 
-            .container > ul {
+            h1 {
                 margin-top: 0;
-                font-size: 0.7rem;
-                gap: 0.05rem 0.5rem;  /* Very small gaps */
-                margin: 0;            /* Remove default margins */
-                padding: 0.25rem 0;   /* Minimal padding */
-                list-style: none;     /* Remove bullets */
-                flex-direction: row;
-                width: 100%
+                padding-top: 0;
+                font-size: 1.75rem;
+                /* margin-top: 0.5rem; */
             }
-            .top-nav {
-                font-size: 0.8rem;
+  
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            .left-rail {
+                width: 100%;
+                position: static;
+                margin-bottom: 6px;
+            }
+
+            .left-rail ul {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.1rem 0.1rem; /* Reduced vertical gap between items */
-                margin-bottom: 1rem; /* Reduced bottom margin */
-                padding: 0.25rem 0;
-                margin:0;
-            }
-
-            .nav-list + h1 {  /* Target the h1 that follows nav */
-                margin-top: 0.5rem;  /* Reduce space between nav and heading */
-            }
-
-            .top-nav a {
-                color: #000;
-                text-decoration: underline;
-                text-underline-offset: 3px;
-                font-size: 0.9rem; /* Slightly smaller font on mobile */
-                line-height: 0.8; /* Tighter line height */
-            }
-
-            .container > ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.15rem 0.5rem;  /* Very small gaps */
-                margin: 0;            /* Remove default margins */
-                padding: 0.25rem 0;   /* Minimal padding */
-                list-style: none;     /* Remove bullets */
+                gap: 8px;
                 justify-content: flex-start;
             }
 
-            .container > ul > li {
-                margin: 0;
-                padding: 0;
+            .left-rail li {
+                margin-bottom: 0;
                 flex: 0 1 auto;
             }
 
-            .main-content {
-                margin-top: 0.5rem;
-            }
-
-            @media screen and (min-width: 768px) {
-                .top-nav {
-                    gap: 1rem 2rem; /* Larger gaps on desktop */
-                }
-                
-                .top-nav a {
-                    font-size: 1rem; /* Regular font size on desktop */
-                }
+            .left-rail a {
+                font-size: 16px;  /* Slightly smaller font */
+                white-space: nowrap;  /* Prevent text wrapping within links */
             }
         }
     </style>
@@ -233,7 +256,7 @@
             <h2 id="about-me">About Me</h2>
     
             <div class="section intro">
-                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I have worked in Spotify's podcast business, management consulting and the Prime Minister's Office in India. I studied engineering at IIT Madras and business at Harvard University. See my
+                <p>I grew up in Bangalore and now live in Brooklyn with my wife, dog and daughter. I  love culture-shaping consumer technology businesses and currently work in Product at Reddit. In the past, I worked in media, consulting and in the Prime Minister's Office in India. I studied engineering at IIT Madras and business at Harvard University. See my
                 <a href="https://www.linkedin.com/in/vinay-sridhar/">Linkedin</a> for more on my
                 professional life.</p>
     
@@ -248,12 +271,11 @@
                 <p>Go <a href="bookindex.html">here</a> to read my book reviews. Go
                 <a href="photography.html">here</a> for a collection of my photographs. I also codified the <a href="principles.html">principles</a> I try and live by.</p>
     
-                <p>I try and write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. </p>
+                <p>I write about ideas I've explored. These usually stem from an observation of something around me. My wife and cousin are usually my peer reviewers so if you disagree with something, please direct criticism at them. </p>
                 <ul>
                     <li><a href="articles_4.html">IVF and Scientific Adoption Curves</a></li>
                     <li><a href="articles_5.html">Family Conflict, Humanism and Formalism</a></li>
                     <li><a href="articles_6.html">Holy Cows and Water Buffaloes</a></li>
-                    <li><a href="articles_7.html">Comparison and Validation</a></li>
                     <li><a href="articles_1.html">On Indians who follow the US Elections</a> (published in the Indian Express)</li>
                     <li><a href="articles_2.html">On Indian business leaders</a> (published in Business Standard)</li>
             </div>
@@ -294,7 +316,8 @@
                         <li>Generate ad creatives including the headline and image for different
                         audiences with one click by scraping the company's website (uses
                         ChatGPT 4o-mini, Stability AI)</li>
-                        <li>[In Progress] An app that lets children create their own bedtime
+                        <li><i>[In Progress]</i> An app for doctors in India to help illiterate Hindi-speaking patients. It converts an English medical prescription into an audio file in Hindi that describes each medicine and dosage instructions</li>    
+                        <li><i>[In Progress]</i> An app that lets children create their own bedtime
                         stories in different styles e.g., tell me a story about a dog called
                         Layla in the style of Beatrix Potter (uses ChatGPT, DALL-E)</li>
                     </ul>
