@@ -139,13 +139,13 @@
         .left-rail {
             width: 200px;
             flex-shrink: 0;
-            position: fixed;
+            position: sticky;
             top: 30px;
             margin-top: 7.5em; /* This aligns with the main heading */
         }
 
         .left-rail ul {
-            position: fixed;
+            position: sticky;
             padding: 0;
             margin: 0;
         }
@@ -198,10 +198,11 @@
                 padding: 0.5rem 0;  /* Add minimal padding */
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.1rem 0.1rem;  /* Add small gaps between nav items */
+                gap: 0.25rem 0.25rem;  /* Add small gaps between nav items */
                 font-size: 0.6rem;  /* Slightly smaller font size */
                 margin-bottom: 1rem;
             }
+
             .top-nav {
                 margin-top: 1rem;
                 padding-top: 0;
