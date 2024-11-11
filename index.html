@@ -84,6 +84,7 @@
             margin: 40px auto;
             gap: 40px;
             padding: 0 20px;
+            padding-top: 0.25rem;
         }
 
         .left-rail {
@@ -126,6 +127,11 @@
         }
 
         @media (max-width: 768px) {
+            
+            body {
+                padding-top: 0.25rem;
+            }
+
             .container {
                 flex-direction: column;
                 gap: 6px;
@@ -133,11 +139,17 @@
             }
 
             .top-nav {
+                font-size: 0.8rem;
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.2rem 0.2rem; /* Reduced vertical gap between items */
+                gap: 0.1rem 0.1rem; /* Reduced vertical gap between items */
                 margin-bottom: 1rem; /* Reduced bottom margin */
-                padding: 0;
+                padding: 0.25rem 0;
+                margin:0;
+            }
+
+            .nav-list + h1 {  /* Target the h1 that follows nav */
+                margin-top: 0.5rem;  /* Reduce space between nav and heading */
             }
 
             .top-nav a {
@@ -145,7 +157,7 @@
                 text-decoration: underline;
                 text-underline-offset: 3px;
                 font-size: 0.9rem; /* Slightly smaller font on mobile */
-                line-height: 1.2; /* Tighter line height */
+                line-height: 0.8; /* Tighter line height */
             }
 
             .left-rail {
