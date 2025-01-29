@@ -39,7 +39,6 @@
             position: relative;
         }
 
-/* Add bullet points with proper spacing */
         li:before {
             content: none;
             position: absolute;
@@ -48,15 +47,15 @@
         }
    
         a {
-            color: inherit;  /* This makes links same color as regular text */
+            color: inherit;  
             text-decoration: underline;
-            text-decoration-color: cornflowerblue;  /* Light red underline */
-            text-underline-offset: 3px;  /* Keep your existing offset */
+            text-decoration-color: cornflowerblue;  
+            text-underline-offset: 3px;  
         }
 
         a:hover {
-            color: inherit;  /* Keep text color same on hover */
-            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+            color: inherit;  
+            text-decoration-color: cornflowerblue; 
             font-weight: medium;
         }
 
@@ -99,7 +98,7 @@
         .index {
             font-size: 0.8em;
             line-height: 1.4;
-            margin: 2em 0;
+            margin: 1em 0;
             color: #555;
             position: sticky;
             top: 0;
@@ -107,6 +106,7 @@
             padding: 1em 0;
             z-index: 100;
             border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
         }
 
         .index a {
@@ -120,6 +120,11 @@
             text-decoration-color: cornflowerblue;
             font-weight: medium;
         }
+
+        [id] {
+        scroll-margin-top: 150px; /* Adjust this value based on your sticky header height */
+        }
+
     </style>
 </head>
 <body>
@@ -135,8 +140,6 @@
     <p>They say you need distance to gain perspective. Returning to Bangalore was like revisiting my childhood home – the bones are the same, but the garments have evolved. This is a collection of my observations about urban India today, drawn primarily from conversations and personal experience, supplemented with data where available. These observations are largely around technology, business and affluent urban life – and include a few banal takes. This is a living document; I will update it as my understanding evolves.</p>
 
     <p>Note: Many stats here reference the excellent <a href="https://blume.vc/reports/indus-valley-annual-report-2024">Indus Valley Report (2024)</a>, and some are from conversations with people working in these areas. Errors are mine.</p>
-
-    <h2>Sections</h2>
 
     <div class="index">
         <p><strong>On Public Infrastructure and the Economy:</strong> <a href="#infrastructure-gap">Physical Infrastructure Gap</a>; <a href="#digital-infra">Digital Infrastructure Leap</a>; <a href="#consumption">Consumption Growth Patterns</a>; <a href="#ev">Electric Mobility Shift</a>; <a href="#dissonance">Dissonance among urban Indian consumers</a>; <a href="#gilded-age">Private Institutions and India's Gilded Age</a>; <a href="#loans">Private Consumer Loans and Credit</a></p>
