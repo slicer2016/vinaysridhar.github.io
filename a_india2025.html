@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflections on Urban India</title>
+    <style>
+         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+            
+        }
+
+        h2 {
+            font-size: 1em;
+            margin-top: 2em;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 0;
+            margin-bottom: 2em;
+        }
+        li {
+            margin-bottom: 0.5em;
+            padding-left: 0.5em;
+            position: relative;
+        }
+
+/* Add bullet points with proper spacing */
+        li:before {
+            content: none;
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+   
+        a {
+            color: inherit;  /* This makes links same color as regular text */
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;  /* Light red underline */
+            text-underline-offset: 3px;  /* Keep your existing offset */
+        }
+
+        a:hover {
+            color: inherit;  /* Keep text color same on hover */
+            text-decoration-color: cornflowerblue;  /* Slightly darker red on hover */
+            font-weight: medium;
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 1em;
+            flex-shrink: 0;
+        }
+
+        .book-link {
+            color: rgb(85, 26, 139);
+            flex-grow: 1;
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">Back to Home</a></p>
+
+    <h1>Reflections on Urban India</h1>
+
+    <p class="quote">"To know a city, you must leave it, and then return as a stranger to discover what you took for granted when it was home"</p>
+    <p class="attribution">– Relevant quote that Claude misattributed to Salman Rushdie</p>
+
+    <p>I grew up in Bangalore through the 1990s and 2000s. I then left for the United States eight years ago, and have since returned only for brief visits. Recently, I spent two months in India during paternity leave. I was primarily based in Bangalore with shorter trips to Chennai, Mumbai, and Delhi. This extended stay — in between periods of childcare — allowed me to reconnect with people across various industries, professions, and walks of life.</p>
+
+    <p>They say you need distance to gain perspective. Returning to Bangalore was like revisiting my childhood home – the bones are the same, but the garments have evolved. This is a collection of my observations about urban India today, drawn primarily from conversations and personal experience, supplemented with data where available. These observations are largely around technology, business and affluent urban life – areas where my interests and background have drawn my attention. This is a living document; I will update it as my understanding evolves.</p>
+
+    <p>Note: Many stats here reference the excellent <a href="https://blume.vc/reports/indus-valley-annual-report-2024">Indus Valley Report (2024)</a>, and some are from conversations with people working in these areas. Errors are mine.</p>
+
+    <h2>On Public Infrastructure and the Economy</h2>
+
+    <ul>
+        <li><strong>Physical Public Infrastructure Gap:</strong> Public infrastructure feels significantly worse than 8 years ago. An illustrative example – it took me ~2 hours to go from Sion to Andheri in Mumbai that used to take me ~40 mins in 2014. Everyone I met accounts for this in everything from social calendars to decisions on where to live.
+            <ul>
+                <li>Hatchbacks seem to have been entirely replaced by SUVs, larger cars that additionally clog roads (SUVs now account for 60% of sales growing at 21% YoY <a href="https://www.google.com/url?q=https://www.autocarpro.in/analysis-sales/suvs-capture-57-of-indias-pv-market-maruti-leads-with-26-market-share-mm-at-18-in-h1-fy2024-117350&sa=D&source=docs&ust=1738177561191545&usg=AOvVaw0LwOge8BUOZxr9v-IEP4mh">link</a>)</li>
+                <li>There don't seem to be more public spaces, and even the ones I grew up with are being "developed" in all the wrong ways - far more restrictions and less convenient (Krishna Rao Park in Bangalore is a pale imitation of what it used to be). I understand the rationale, but it seems to miss the thesis of public spaces - what Jane Jacobs called 'the ballet of the sidewalk,' where cities come alive through casual social interactions.</li>
+                <li>Given the scale of population growth in urban environments, I worry we may not be investing in proportion. India's Gross Fixed Capital Formation lags China at ~28% of GDP vs China's 40%+ (<a href="https://www.oxfordeconomics.com/resource/asia-pacific-china-india-are-all-growth-stories-built-on-infrastructure/">Oxford Economics on China-India</a>)</li>
+                <li>On public transport, metros are not the solution - last-mile connectivity drives so much of decisioning - buses are critical, and do not get the same level of investment as metros. Even in London, 55% of all journeys were on buses (<a href="https://www.statista.com/topics/5199/public-transport-in-the-united-kingdom/#topicOverview">link</a>). Shashi Verma’s episode on The Seen and The Unseen was remarkably good on this topic - recommend listening to 4:00:00 onwards (<a href="https://seenunseen.in/episodes/2024/6/17/episode-386-shashi-verma-made-london-move/">link</a>)</li>
+            </ul>
+        </li>
+
+        <li><strong>Digital Public Infrastructure Leap:</strong> In contrast, (no surprises) digital infrastructure is fantastic. Using UPI is remarkably easy, and I haven't touched cash since I got here. There was admittedly painful initial setup costs for me, but that shouldn't matter for long-time residents. It is remarkable the number of massive tech businesses that seem to be built on top of DPI as Blume VC notes - UPI (Phone Pe, Paytm et al), DigiLocker (CRED, Zerodha), ONDC (Namma Yatri)
+            <ul>
+                <li>One that I am particularly excited by is ONDC - it seems to be just getting started. In contrast to the US, with everyone building their own walled garden marketplaces, I wonder if this will allow a host of niche consumer marketplace businesses that may not have been viable in the US</li>
+            </ul>
+        </li>
+
+        <li><strong>Consumption Growth Patterns:</strong> Affluent urban India definitely feels larger and richer, with more consumption, and more luxury consumption
+            <ul>
+                <li>Per the Indus Valley report, premium brands are outperforming the mass market in growth terms. Dozens more stores in urban areas compared to 8 years ago</li>
+                <li>Range of premium indie brands that make high-quality goods that are comparable in cost to global equivalents - Nappa Dori, The Whole Truth (even better than what I buy in the US). Can imagine they will rapidly expand beyond India once they penetrate into the 6M affluent India TAM.</li>
+                <li>At the same time, it is noteworthy to see the brand power incumbent business houses have. At a recent visit to Tanishq, every fifth word in a sales pitch was "you are at the House of Tata, trust us". Similarly, for e-vehicles, auto owners prefer to stick with decades-old incumbents like Bajaj or Mahindra.</li>
+            </ul>
+        </li>
+
+        <li><strong>Electric Mobility Shift:</strong> Clear signs of EV revolution in urban areas, much more than what I see on US roads. Wonderful to see the number of electric scooters and electric autos around the city. The argument is nearly entirely cost-focused (Total Cost of Ownership or TCO of an e-vehicle is lower), with the psychological benefit of choosing an environmentally friendly alternative. For autos specifically –
+            <ul>
+                <li>Electric autos are priced at ~₹3.6L versus ~₹2.8L for an LPG auto with around ₹5K relative savings per month. Drivers make their incremental cost back in 1 year, with all future savings becoming profit</li>
+                <li>Despite the lower TCO, mileage seems to still be a concern to shift primary modes of transportation (2 auto drivers I spoke to required an afternoon trip to a charging station, affecting their workday). It seems like this will quickly evolve as battery technology improves</li>
+                <li>In contrast, instant delivery (Instamart, Zepto, Blinkit etc.) all prefer EVs, with more than 75% adoption in these companies given the hub-spoke model of delivery of less than a 3KM ride from warehouses</li>
+                <li>Incumbents are helping establish the ecosystem with original LPG manufacturers driving majority of electric auto sales volume - Bajaj sold ~35% of e-autos in 2024, with the top 3 (+ Piaggio, Mahindra) selling 50% (<a href="https://vahan.parivahan.gov.in/vahan4dashboard/vahan/dashboardview.xhtml;jsessionid=29B51A1D5AA5A669E5CAB980F6B535D4">VAHAN sales dashboard</a>)</li>
+            </ul>
+        </li>
+
+        <li><strong>Dissonance in the urban Indian consumer:</strong> I find this contrast fascinating and poetic - affluent India 1 buyers are moving to SUVs from sedans and hatchbacks, trading cost and mileage for comfort and size. Price conscious India 2 buyers are moving to electric vehicles. This transition is happening at once, on the same roads.</li>
+
+        <li><strong>Private Institutions and India's Gilded Age:</strong> India is in the early days of a Gilded Age with private money building a range of institutions. I recently visited the Museum of Art and Photography in Bangalore - it was notably reminiscent of premier museums abroad. It was conceived by Abhishek Poddar but has contributions from other collectors. This is just one of many examples across spaces – Art (NMACC in Mumbai from the Ambanis, Nadar Museum of Art), Universities (Ashoka University, Premji University, Plaksha, KREA et al), and Nonprofits (too many to name)
+            <ul>
+                <li>I'd imagine this will continue to expand as India 1 gets richer and the Tech ecosystem gets liquidity - creating a new crop of wealthy benefactors</li>
+            </ul>
+        </li>
+
+        <li><strong>Private Consumer Loans and Credit:</strong> It is astounding how prominently startups are pushing unsecured loans - even Ola (originally a ride-hailing app) now prompts me to avail a 11% APR loan of up to ₹10L. Anecdotally, I've heard multiple employers describe the extent to which colleagues in their 20s are taking out loans for operating expenses.
+            <ul>
+                <li>This definitely feels fueled by Tech's hunt for returns given payments is not a major margin driver</li>
+                <li>Per the Indus Valley report, personal loans have grown 12X in volume since FY18, with only 3.5X in value. 40% of personal loans are to borrowers with 5+ loans. The volume does not yet seem large enough for institutional risk, but we've seen this story play out before ;) Good to see <a href="https://www.fibe.in/blogs/personal-loan-guidelines-by-rbi/">RBI responding</a> to this risk.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>On Technology and Business</h2>
+
+    <ul>
+        <li><strong>Local Innovation Winning:</strong> For the first time, I have switched entirely from Uber to Rapido - which has a range of innovations that mimic traditional Indian behavior e.g., adjustable prices ala haggling. In 2014, most startups seemed to be a version of a US business designed for India - this has evolved e.g., FRND (solving urban loneliness, $30M ARR), eMandir (building tech-enabled religious solutions), PocketFM (somehow managing to build a viable business on original audio content - which even Spotify could not figure out) etc.
+            <ul>
+                <li>India's GDP per capita is still ~1/40th of the US with the wealthiest 6M Indians having comparable purchasing power. Thus, to truly "crack" the massive price-sensitive Indian consumer market, I expect a very different monetization engine than the US. I wonder how Digital Ads will grow in India - the traditional monetization of the consumer internet, especially when ARPUs are likely at a similar ~1/40 ratio.</li>
+                <li>Even Tech businesses that are serving the upper echelons of India1 are uniquely Indian. At ₹25K a year ($300), <a href="https://www.storyboard18.com/brand-marketing/swiggy-eyes-elite-customers-with-exclusive-rare-club-concierge-service-44045.htm">Rare by Swiggy</a> gives you a private concierge service - I used it in February and was impressed by the quality of service</li>
+            </ul>
+        </li>
+
+        <li><strong>Tech Ecosystem Still Maturing:</strong> There seem to be very few liquidity events relative to the US. Venture funding dropped by over 60% in both deal value and volume compared to peak. Early and late-stage funding dropped by two-thirds, more severely than seed stage.
+            <ul>
+                <li>Anecdotally, ESOPs size and scale also seem smaller compared to the US market. Per Indus Valley reports, ESOP buybacks at $812M in 2023 (up 4x YoY) but 90% are from a single Flipkart event. This is dramatically different from Bangalore's earlier Tech Boom from IT Services that created thousands of dollar millionaires.</li>
+            </ul>
+        </li>
+
+        <li><strong>Conglomerates entering the game:</strong> Distribution is king. While India's traditional business houses were late movers, many incumbents now seem to have "tech-ed up" and are scaling fast. And when they do, they seem to win.
+            <ul>
+                <li>Digital Native Brands attracting strategic investments from Tata, Reliance et al.</li>
+                <li>Major acquisitions by incumbents: Reliance Retail (Dunzo), HUL (Oziva, Wellbeing Nutrition), ITC (Mother Sparsh, Mylo, Yogabar) etc.</li>
+                <li>Transition from digital-only to omnichannel evident in incumbent strategy</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>On Living</h2>
+
+    <ul>
+        <li><strong>India is cheaper than the US, but this is untrue in premium niches:</strong> Life in India is definitely relatively inexpensive (1 Crore INR has the same purchasing power as ~$400K in the US), especially in any aspect of life where labor is involved. That said, I was amazed at how comparably expensive luxury experiences are relative to the US. A cocktail at Bastian in Mumbai cost $20, expensive even by NYC standards. Premium 3BR houses in Mahalaxmi in Mumbai cost $2M+, roughly what they would cost in Manhattan.
+            <ul>
+                <li>As an old friend used to say, there's a global elite class that live similar lives across time zones. I used to laugh at this when I was younger, but this feels very true. And this global elite class is getting larger, fast - rough math, seems to be growing at 10-15% in volume</li>
+            </ul>
+        </li>
+
+        <li><strong>Healthcare Quality and Access:</strong> I had a fantastic experience with Bangalore's healthcare system. My mother needed urgent care, we received comprehensive treatment at a neighborhood hospital - including an ECG, multiple blood tests, and prescribed medications - all for approximately ₹1000 ($15). Similarly, I got a CT Coronary Angio for $100. I had forgotten how remarkably good and inexpensive Indian healthcare is.
+            <ul>
+                <li>This stands in stark contrast to the NHS in the UK, where wait times stretch for months, and the US system where even routine procedures with insurance can lead to significant out-of-pocket expenses (I paid $2000 out-of-pocket for an ER visit despite having private insurance)</li>
+            </ul>
+        </li>
+
+        <li><strong>Labor Dynamics and Civic Sense:</strong> I've always flippantly said that India's an amazing place to live because labor is cheap. This time, I saw it differently. Perhaps because I have gotten used to a life with expensive blue collar labor, I've found some aspects of this relationship distasteful. The statement still remains true, but I'm less comfortable referencing it casually.
+            <ul>
+                <li>Domestic help (maids, drivers etc) have no labor protection, get paid abysmally little ($50-100 per month), have no conceptions of PTO and usually work round the clock</li>
+                <li>Additionally, sharing intimate spaces with someone who has a fraction of what you have makes me more conscious of my privilege in a way it did not before. In contrast, I often trade book recommendations with my doorman in Brooklyn - the inequality feels less stark.</li>
+                <li>There is still hierarchy in types of labor - a household maid will not usually wash your toilet, a flower supplier for an event will not clean up ("not my job"). I wonder if this is a modern vestige of caste systems.</li>
+                <li>In parallel, civic sense has not improved. I wonder if this also links to notions of labor hierarchy. I have always been a believer in the symbolic significance of the Swachh Bharat Abhiyan - seeing the Prime Minister pick up a broom or wash the feet of a manual scavenger is a powerful visual. It will likely take a generation for marked change, in addition to potentially unpopular policy changes.</li>
+            </ul>
+        </li>
+
+        <li><strong>Urban Environments:</strong> Public infrastructure gaps (see below) mean cities operate like collections of suburbs. Gated communities become self-contained ecosystems - stunning no doubt, but it does not operate like a city. As <a href="https://www.livemint.com/opinion/columns/manu-joseph-escaping-india-within-india-is-an-exorbitant-exercise-super-rich-gurgaon-apartment-price-urban-infra-11734593396658.html#:~:text=The%20wealthy%20in%20Gurgaon%20pay,%2C%20it%20doesn%27t%20happen.">Manu Joseph</a> vividly puts it, <em>"In the best areas of London or New York, you pay a premium for what the city offers, and what the city offers is available to everyone. In India, it is the opposite. The city is the problem, and you pay to shut it out, along with most Indians."</em>
+            <ul>
+                <li>If Jane Jacobs walked around modern Bengaluru, I wonder if she would call it a true city</li>
+                <li>Where do we go from here? I subscribe to Alain Bertaud's Order Without Design idea, but changing this mould will take a special kind of urban planning, and people smarter than me are thinking about this</li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+</html>
