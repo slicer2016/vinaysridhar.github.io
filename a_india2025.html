@@ -100,13 +100,28 @@
             line-height: 1.4;
             margin: 1em 0;
             color: #555;
-            position: sticky;
-            top: 0;
-            background-color: white;
             padding: 1em 0;
-            z-index: 100;
             border-bottom: 1px solid #eee;
             border-top: 1px solid #eee;
+        }
+
+        /* Desktop styles */
+        @media screen and (min-width: 769px) {
+            .index {
+                position: sticky;
+                top: 0;
+                background-color: white;
+                z-index: 100;
+            }
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 768px) {
+            .index {
+                position: static;  /* Removes sticky positioning */
+                background-color: transparent;
+                z-index: auto;
+            }
         }
 
         .index a {
@@ -135,9 +150,10 @@
         .quote-container {
             background-color: #f5f5f5;  /* Light grey background */
             padding: 2em;
-            margin: 2em 0;
+            margin: 1em 0;
             text-align: center;
             border-radius: 4px;
+            font-size: 0.9em;
         }
 
         .quote {
@@ -174,7 +190,7 @@
         
         <p><strong>2. On Public Infrastructure and the Economy:</strong> <a href="#infrastructure-gap">Physical Infrastructure Gap</a>; <a href="#digital-infra">Digital Infrastructure Leap</a>; <a href="#consumption">Consumption Growth Patterns</a>; <a href="#gilded-age">Private Institutions and India's Gilded Age</a>; <a href="#loans">Private Consumer Loans and Credit</a></p>
     
-        <p><strong>3. On Technology and Business:</strong> <a href="#local-innovation">Local Innovation Winning</a>; <a href="#tech-ecosystem">Tech Ecosystem Still Maturing; <a href="#ivf">IVF and Fertility</a>; <a href="#ev">Electric Mobility Shift</a></p>
+        <p><strong>3. On Technology and Business:</strong> <a href="#local-innovation">Local Innovation Winning</a>; <a href="#tech-ecosystem">Tech Ecosystem Still Maturing</a>; <a href="#ivf">IVF and Fertility</a>; <a href="#ev">Electric Mobility Shift</a></p>
     
     </div>
 
