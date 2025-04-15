@@ -164,7 +164,7 @@
         
         try {
           // Fetch answer from API
-          const response = await fetch('https://vinaysridhar.com/api/rag', {
+          const response = await fetch('https://vinaysridhar-github-80g66t5sn-vinay-sridhars-projects.vercel.app/api/rag', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query })
@@ -175,8 +175,8 @@
           const data = await response.json();
           
           // Parse citations from answer
-          const answer = data.answer;
-          const sources = data.sources || [];
+          const answer = data.response;
+          const sources = data.citations || [];
           
           // Display answer with clickable citations
           let formattedAnswer = answer;
