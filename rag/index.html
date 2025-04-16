@@ -80,6 +80,25 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    
+    /* Styles for response mode buttons */
+    #response-mode-container {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      margin-top: 1rem;
+    }
+    
+    #answer-container:hover #response-mode-container {
+      opacity: 1;
+    }
+    
+    #roast-button, #toast-button {
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    #roast-button:hover, #toast-button:hover {
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -100,6 +119,15 @@
         <h3 class="text-lg font-medium mb-2">Answer:</h3>
         <div id="answer-box" class="answer-box">
           <p id="answer-text"></p>
+        </div>
+        
+        <div id="response-mode-container" class="mt-4 flex space-x-2">
+          <button id="roast-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+            🔥 Roast Vinay
+          </button>
+          <button id="toast-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+            🙌 Toast Vinay
+          </button>
         </div>
         
         <div id="sources-container" class="mt-4" style="display: none;">
@@ -125,9 +153,16 @@
         This is a Retrieval-Augmented Generation (RAG) system built for vinaysridhar.com. It uses LangChain, OpenAI embeddings,
         and a custom retrieval pipeline to provide accurate answers about content from the website.
       </p>
-      <p>
+      <p class="mb-4">
         The system includes optimized chunking, precomputed embeddings, anti-hallucination techniques, and citation support
         to ensure high-quality, factual responses.
+      </p>
+      <p class="mb-4 font-semibold">
+        NEW! After getting an answer, hover over it to reveal the "Roast" and "Toast" buttons for some fun variations:
+      </p>
+      <p class="flex space-x-4 mb-4">
+        <span class="bg-red-100 p-2 rounded"><strong>🔥 Roast:</strong> Get a sarcastic, condescending perspective</span>
+        <span class="bg-yellow-100 p-2 rounded"><strong>🙌 Toast:</strong> Get an overly flattering, obsequious response</span>
       </p>
     </div>
     
@@ -145,6 +180,11 @@
       const sourcesContainer = document.getElementById('sources-container');
       const sourcesList = document.getElementById('sources-list');
       const loadingSpinner = document.getElementById('loading-spinner');
+      const roastButton = document.getElementById('roast-button');
+      const toastButton = document.getElementById('toast-button');
+      
+      // Store the last query for reuse with roast/toast buttons
+      let lastQuery = '';
       
       // Example query links
       document.querySelectorAll('.example-query').forEach(link => {
@@ -155,11 +195,8 @@
         });
       });
       
-      // Handle query submission
-      queryButton.addEventListener('click', async function() {
-        const query = queryInput.value.trim();
-        if (!query) return;
-        
+      // Function to fetch answer with optional mode parameter
+      async function fetchAnswer(query, mode = 'normal') {
         // Show loading state
         loadingSpinner.style.display = 'block';
         answerContainer.style.display = 'none';
@@ -171,7 +208,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             // No credentials for simpler CORS
-            body: JSON.stringify({ query })
+            body: JSON.stringify({ query, mode })
           });
           
           if (!response.ok) throw new Error('Failed to get response');
@@ -228,6 +265,9 @@
           // Show answer
           answerContainer.style.display = 'block';
           
+          // Store the query for reuse
+          lastQuery = query;
+          
         } catch (error) {
           console.error('Error:', error);
           answerText.textContent = 'Sorry, I encountered an error while processing your question. Please try again.';
@@ -235,6 +275,27 @@
         } finally {
           loadingSpinner.style.display = 'none';
         }
+      }
+      
+      // Handle query submission
+      queryButton.addEventListener('click', async function() {
+        const query = queryInput.value.trim();
+        if (!query) return;
+        
+        // Use default 'normal' mode
+        await fetchAnswer(query, 'normal');
+      });
+      
+      // Handle roast button
+      roastButton.addEventListener('click', async function() {
+        if (!lastQuery) return;
+        await fetchAnswer(lastQuery, 'roast');
+      });
+      
+      // Handle toast button
+      toastButton.addEventListener('click', async function() {
+        if (!lastQuery) return;
+        await fetchAnswer(lastQuery, 'toast');
       });
       
       // Handle Enter key in input
