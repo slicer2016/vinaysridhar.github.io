@@ -183,6 +183,20 @@
       background-color: #e5e7eb;
       transform: translateY(-2px);
     }
+    .example-query.selected {
+      background-color: #d1d5db;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
     .about-container {
       background-color: white;
       border-radius: 16px;
@@ -280,11 +294,26 @@
       document.querySelectorAll('.example-query').forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
+          // Clear any previous selections
+          document.querySelectorAll('.example-query').forEach(l => l.classList.remove('selected'));
+          // Mark this link as selected
+          this.classList.add('selected');
+          
           queryInput.value = this.textContent;
           // Show prompt to choose between roast and toast
           answerText.innerHTML = "You have to choose - Roast or Toast!";
           answerContainer.style.display = 'block';
           sourcesContainer.style.display = 'none';
+          
+          // Make the buttons shake to indicate they need to be clicked
+          roastButton.classList.add('shake');
+          toastButton.classList.add('shake');
+          
+          // Remove the shake class after animation completes
+          setTimeout(() => {
+            roastButton.classList.remove('shake');
+            toastButton.classList.remove('shake');
+          }, 500);
         });
       });
       
@@ -380,6 +409,14 @@
       roastButton.addEventListener('click', async function() {
         const query = queryInput.value.trim();
         if (!query) return;
+        // Clear selection styling when answer is fetched
+        document.querySelectorAll('.example-query').forEach(l => {
+          if (l.textContent === query) {
+            l.classList.add('selected');
+          } else {
+            l.classList.remove('selected');
+          }
+        });
         await fetchAnswer(query, 'roast');
       });
       
@@ -387,6 +424,14 @@
       toastButton.addEventListener('click', async function() {
         const query = queryInput.value.trim();
         if (!query) return;
+        // Clear selection styling when answer is fetched
+        document.querySelectorAll('.example-query').forEach(l => {
+          if (l.textContent === query) {
+            l.classList.add('selected');
+          } else {
+            l.classList.remove('selected');
+          }
+        });
         await fetchAnswer(query, 'toast');
       });
       
