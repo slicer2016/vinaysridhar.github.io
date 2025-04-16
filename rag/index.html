@@ -22,15 +22,12 @@
     .logo-container {
       display: flex;
       align-items: center;
-      justify-content: center;
       margin-bottom: 2rem;
     }
     .logo {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      margin-right: 0.75rem;
-      object-fit: contain;
+      width: 180px;
+      height: auto;
+      margin-right: 1rem;
     }
     .search-container {
       position: relative;
@@ -54,32 +51,43 @@
     .mode-buttons {
       display: flex;
       justify-content: center;
-      gap: 0.75rem;
-      margin-top: 0.75rem;
+      gap: 1rem;
+      margin-top: 1rem;
     }
     .mode-button {
-      padding: 0.5rem 1.25rem;
+      padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 16px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-button:focus {
+      outline: none;
     }
     .roast-button {
       background-color: #ef4444;
       color: white;
+      border: 1px solid #dc2626;
     }
     .roast-button:hover {
       background-color: #dc2626;
       transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(220, 38, 38, 0.25);
     }
     .toast-button {
       background-color: #f59e0b;
       color: white;
+      border: 1px solid #d97706;
     }
     .toast-button:hover {
       background-color: #d97706;
       transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(217, 119, 6, 0.25);
     }
     .loading-spinner {
       display: none;
@@ -125,6 +133,16 @@
       border-radius: 8px;
       font-size: 0.9rem;
     }
+    .source-link {
+      color: #6366f1;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+    .source-link:hover {
+      text-decoration: underline;
+    }
     .examples-container {
       background-color: white;
       border-radius: 16px;
@@ -159,21 +177,28 @@
       color: #6b7280;
       font-size: 0.875rem;
     }
+    .button-icon {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="logo-container">
       <img src="https://i.ibb.co/0yvN9h9c/Chat-GPT-Image-Apr-16-2025-11-17-16-AM.png" alt="Perspicacity AI Logo" class="logo" id="logo">
-      <h1 class="text-2xl font-bold">Perspicacity AI</h1>
     </div>
     
     <div class="search-container">
       <input type="text" id="query-input" class="search-input" placeholder="Ask a question about Vinay..." />
       <div id="loading-spinner" class="loading-spinner"></div>
       <div class="mode-buttons">
-        <button id="roast-button" class="mode-button roast-button">Roast</button>
-        <button id="toast-button" class="mode-button toast-button">Toast</button>
+        <button id="roast-button" class="mode-button roast-button">
+          <span class="button-icon">🔥</span>Roast
+        </button>
+        <button id="toast-button" class="mode-button toast-button">
+          <span class="button-icon">✨</span>Toast
+        </button>
       </div>
     </div>
     
@@ -278,15 +303,21 @@
           
           answerText.innerHTML = formattedAnswer;
           
-          // Display sources
+          // Display sources with hyperlinks
           if (sources.length > 0) {
             sourcesList.innerHTML = '';
             sources.forEach((source, i) => {
               const sourceEl = document.createElement('div');
               sourceEl.className = 'source-box';
+              
+              // Create link if source URL exists
+              const sourceUrl = source.source || '';
+              const sourceLink = sourceUrl.startsWith('http') ? 
+                `<a href="${sourceUrl}" target="_blank" class="source-link">View source</a>` : '';
+              
               sourceEl.innerHTML = `
                 <p><strong>[${i+1}]</strong> ${source.title || 'Untitled'}</p>
-                <p><em>${source.source || ''}</em></p>
+                <p><em>${sourceUrl}</em> ${sourceLink}</p>
                 <p>${source.text || ''}</p>
               `;
               sourcesList.appendChild(sourceEl);
