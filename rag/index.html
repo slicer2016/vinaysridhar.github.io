@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAG System | Vinay Sridhar</title>
   <link rel="shortcut icon" href="https://vinaysridhar.com/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://vinaysridhar.com/favicon.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
@@ -83,7 +84,7 @@
 <body>
   <div class="container">
     <h1 class="text-3xl font-bold mb-6">Website RAG System</h1>
-
+    
     <div class="rag-card">
       <h2 class="text-xl font-semibold mb-4">Ask a question about Vinay</h2>
       <div class="flex flex-col">
@@ -93,20 +94,20 @@
           <div id="loading-spinner" class="loading-spinner"></div>
         </div>
       </div>
-
+      
       <div id="answer-container" class="mt-6" style="display: none;">
         <h3 class="text-lg font-medium mb-2">Answer:</h3>
         <div id="answer-box" class="answer-box">
           <p id="answer-text"></p>
         </div>
-
+        
         <div id="sources-container" class="mt-4" style="display: none;">
           <h3 class="text-lg font-medium mb-2">Sources:</h3>
           <div id="sources-list"></div>
         </div>
       </div>
     </div>
-
+    
     <div class="rag-card">
       <h2 class="text-xl font-semibold mb-4">Example Questions</h2>
       <ul class="list-disc pl-5 space-y-2">
@@ -116,7 +117,7 @@
         <li><a href="#" class="text-blue-600 hover:underline example-query">What technologies does Vinay work with?</a></li>
       </ul>
     </div>
-
+    
     <div class="rag-card">
       <h2 class="text-xl font-semibold mb-4">About This RAG System</h2>
       <p class="mb-4">
@@ -128,7 +129,7 @@
         to ensure high-quality, factual responses.
       </p>
     </div>
-
+    
     <p class="text-sm text-gray-600 mt-8 text-center">
       Built with Next.js, LangChain, and OpenAI. View the <a href="https://github.com/slicer2016/website-rag" class="text-blue-600 hover:underline">source code</a>.
     </p>
@@ -143,7 +144,7 @@
       const sourcesContainer = document.getElementById('sources-container');
       const sourcesList = document.getElementById('sources-list');
       const loadingSpinner = document.getElementById('loading-spinner');
-
+      
       // Example query links
       document.querySelectorAll('.example-query').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -152,34 +153,37 @@
           queryButton.click();
         });
       });
-
+      
       // Handle query submission
       queryButton.addEventListener('click', async function() {
         const query = queryInput.value.trim();
         if (!query) return;
-
+        
         // Show loading state
         loadingSpinner.style.display = 'block';
         answerContainer.style.display = 'none';
         sourcesContainer.style.display = 'none';
-
+        
         try {
           // Fetch answer from API - without credentials to simplify CORS
           const response = await fetch('http://184.72.215.140/rag', {
+          // Fetch answer from API - without credentials to simplify CORS
+          const response = await fetch('https://rag.vinaysridhar.com/api/rag', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             // No credentials for simpler CORS
+            // No credentials for simpler CORS
             body: JSON.stringify({ query })
           });
-
+          
           if (!response.ok) throw new Error('Failed to get response');
-
+          
           const data = await response.json();
-
+          
           // Parse citations from answer
           const answer = data.response;
           const sources = data.citations || [];
-
+          
           // Display answer with clickable citations
           let formattedAnswer = answer;
           if (sources.length > 0) {
@@ -191,9 +195,9 @@
               );
             });
           }
-
+          
           answerText.innerHTML = formattedAnswer;
-
+          
           // Display sources
           if (sources.length > 0) {
             sourcesList.innerHTML = '';
@@ -209,7 +213,7 @@
             });
             sourcesContainer.style.display = 'block';
           }
-
+          
           // Add click handlers for citations
           document.querySelectorAll('.citation').forEach(citation => {
             citation.addEventListener('click', function() {
@@ -222,10 +226,10 @@
               }, 2000);
             });
           });
-
+          
           // Show answer
           answerContainer.style.display = 'block';
-
+          
         } catch (error) {
           console.error('Error:', error);
           answerText.textContent = 'Sorry, I encountered an error while processing your question. Please try again.';
@@ -234,7 +238,7 @@
           loadingSpinner.style.display = 'none';
         }
       });
-
+      
       // Handle Enter key in input
       queryInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
