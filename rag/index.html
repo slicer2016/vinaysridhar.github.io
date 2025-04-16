@@ -5,163 +5,217 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
-  <title> Perspicacity AI: A Vinay Sridhar RAG</title>
+  <title>Perspicacity AI: A Vinay Sridhar RAG</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f9fafb;
+      color: #374151;
     }
     .container {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1rem;
     }
-    .rag-card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 2rem;
     }
-    .query-input {
+    .logo {
+      width: 50px;
+      height: 50px;
+      background-color: #e5e7eb; /* Placeholder color */
+      border-radius: 10px;
+      margin-right: 0.75rem;
+    }
+    .search-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .search-input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
       font-size: 1rem;
-      margin-bottom: 1rem;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
     }
-    .query-button {
-      background-color: #0070f3;
-      color: white;
-      font-weight: bold;
-      padding: 0.75rem 1.5rem;
+    .search-input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 4px 8px rgba(99, 102, 241, 0.15);
+    }
+    .mode-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .mode-button {
+      padding: 0.5rem 1.25rem;
       border: none;
-      border-radius: 4px;
+      border-radius: 16px;
+      font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.2s;
     }
-    .query-button:hover {
-      background-color: #0051b3;
+    .roast-button {
+      background-color: #ef4444;
+      color: white;
     }
-    .citation {
-      font-size: 0.7rem;
-      vertical-align: super;
-      color: #0070f3;
-      cursor: pointer;
+    .roast-button:hover {
+      background-color: #dc2626;
+      transform: translateY(-2px);
     }
-    .answer-box {
-      background-color: #f7f9fc;
-      border-left: 4px solid #0070f3;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-radius: 0 4px 4px 0;
-      white-space: pre-wrap;
-      line-height: 1.5;
+    .toast-button {
+      background-color: #f59e0b;
+      color: white;
     }
-    
-    /* Style for better paragraph spacing */
-    .answer-box p {
-      margin-bottom: 1rem;
-    }
-    .source-box {
-      background-color: #f5f5f5;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
+    .toast-button:hover {
+      background-color: #d97706;
+      transform: translateY(-2px);
     }
     .loading-spinner {
       display: none;
-      margin-left: 1rem;
       width: 1.5rem;
       height: 1.5rem;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #0070f3;
+      border: 3px solid rgba(99, 102, 241, 0.2);
+      border-top: 3px solid #6366f1;
       border-radius: 50%;
       animation: spin 1s linear infinite;
+      position: absolute;
+      right: 1.25rem;
+      top: 1rem;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    
-    /* Styles for response mode buttons */
-    #response-mode-container {
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      margin-top: 1rem;
+    .answer-container {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-    
-    #answer-container:hover #response-mode-container {
-      opacity: 1;
+    .answer-box {
+      line-height: 1.7;
+      white-space: pre-wrap;
     }
-    
-    #roast-button, #toast-button {
-      transition: transform 0.2s ease-in-out;
+    .answer-box p {
+      margin-bottom: 1rem;
     }
-    
-    #roast-button:hover, #toast-button:hover {
+    .citation {
+      font-size: 0.65rem;
+      vertical-align: super;
+      color: #6366f1;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .source-box {
+      background-color: #f3f4f6;
+      padding: 1rem;
+      margin-top: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    .examples-container {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .example-query {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem;
+      background-color: #f3f4f6;
+      border-radius: 16px;
+      color: #4b5563;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .example-query:hover {
+      background-color: #e5e7eb;
       transform: translateY(-2px);
+    }
+    .about-container {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      color: #6b7280;
+      font-size: 0.875rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 class="text-3xl font-bold mb-6">Perspicacity AI: A Vinay Sridhar RAG</h1>
+    <div class="logo-container">
+      <div class="logo" id="logo">
+        <!-- Logo placeholder - you can add an image here -->
+      </div>
+      <h1 class="text-2xl font-bold">Perspicacity AI</h1>
+    </div>
     
-    <div class="rag-card">
-      <h2 class="text-xl font-semibold mb-4">Ask a question about Vinay</h2>
-      <div class="flex flex-col">
-        <input type="text" id="query-input" class="query-input" placeholder="e.g., What does Vinay like about living in India versus the US?" />
-        <div class="flex items-center space-x-2">
-          <button id="roast-button" class="query-button bg-red-600">Roast</button>
-          <button id="toast-button" class="query-button bg-yellow-600">Toast</button>
-          <div id="loading-spinner" class="loading-spinner"></div>
-        </div>
+    <div class="search-container">
+      <input type="text" id="query-input" class="search-input" placeholder="Ask a question about Vinay..." />
+      <div id="loading-spinner" class="loading-spinner"></div>
+      <div class="mode-buttons">
+        <button id="roast-button" class="mode-button roast-button">Roast</button>
+        <button id="toast-button" class="mode-button toast-button">Toast</button>
+      </div>
+    </div>
+    
+    <div id="answer-container" class="answer-container" style="display: none;">
+      <div id="answer-box" class="answer-box">
+        <p id="answer-text"></p>
       </div>
       
-      <div id="answer-container" class="mt-6" style="display: none;">
-        <h3 class="text-lg font-medium mb-2">Answer:</h3>
-        <div id="answer-box" class="answer-box">
-          <p id="answer-text"></p>
-        </div>
-        
-        
-        <div id="sources-container" class="mt-4" style="display: none;">
-          <h3 class="text-lg font-medium mb-2">Sources:</h3>
-          <div id="sources-list"></div>
-        </div>
+      <div id="sources-container" class="mt-4" style="display: none;">
+        <h3 class="text-lg font-medium mb-2 mt-4">Sources:</h3>
+        <div id="sources-list"></div>
       </div>
     </div>
     
-    <div class="rag-card">
-      <h2 class="text-xl font-semibold mb-4">Example Questions</h2>
-      <ul class="list-disc pl-5 space-y-2">
-        <li><a href="#" class="text-blue-600 hover:underline example-query">What kind of books does Vinay read?</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline example-query">What are Vinay's principles?</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline example-query">What are recent projects Vinay has worked on?</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline example-query">What technologies does Vinay work with?</a></li>
-      </ul>
+    <div class="examples-container">
+      <h2 class="text-lg font-semibold mb-3">Try asking about:</h2>
+      <div class="flex flex-wrap">
+        <a href="#" class="example-query">What kind of books does Vinay read?</a>
+        <a href="#" class="example-query">What are Vinay's principles?</a>
+        <a href="#" class="example-query">What are recent projects Vinay worked on?</a>
+        <a href="#" class="example-query">What technologies does Vinay work with?</a>
+      </div>
     </div>
     
-    <div class="rag-card">
-      <h2 class="text-xl font-semibold mb-4">About This RAG System</h2>
-      <p class="mb-4">
+    <div class="about-container">
+      <h2 class="text-lg font-semibold mb-3">About This RAG System</h2>
+      <p class="mb-3 text-sm">
         This is a Retrieval-Augmented Generation (RAG) system built for vinaysridhar.com. It uses LangChain, OpenAI embeddings,
         and a custom retrieval pipeline to provide accurate answers about content from the website.
       </p>
-      <p class="mb-4">
+      <p class="text-sm">
         The system includes optimized chunking, precomputed embeddings, anti-hallucination techniques, and citation support
         to ensure high-quality, factual responses.
       </p>
     </div>
     
-    <p class="text-sm text-gray-600 mt-8 text-center">
-      Built with Next.js, LangChain, and OpenAI. View the <a href="https://github.com/slicer2016/website-rag" class="text-blue-600 hover:underline">source code</a>.
-    </p>
+    <footer>
+      Built with Next.js, LangChain, and OpenAI. 
+      <a href="https://github.com/slicer2016/website-rag" class="text-indigo-600 hover:underline">View source code</a>.
+    </footer>
   </div>
 
   <script>
@@ -248,9 +302,9 @@
               const index = this.dataset.index;
               const sourceEl = sourcesList.children[index];
               sourceEl.scrollIntoView({ behavior: 'smooth' });
-              sourceEl.style.backgroundColor = '#ffffcc';
+              sourceEl.style.backgroundColor = '#f0f7ff';
               setTimeout(() => {
-                sourceEl.style.backgroundColor = '#f5f5f5';
+                sourceEl.style.backgroundColor = '#f3f4f6';
               }, 2000);
             });
           });
@@ -269,9 +323,6 @@
           loadingSpinner.style.display = 'none';
         }
       }
-      
-      // We now have Roast and Toast buttons instead of a query button
-      // Let's remove references to the old queryButton
       
       // Handle roast button
       roastButton.addEventListener('click', async function() {
@@ -294,6 +345,9 @@
           toastButton.click();
         }
       });
+
+      // Focus the input field on page load
+      queryInput.focus();
     });
   </script>
 </body>
