@@ -12,7 +12,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #e9e7e0;
+      background-color: #eeebdd;
       color: #1a2a2f;
     }
     .container {
@@ -323,23 +323,23 @@
           
           answerText.innerHTML = formattedAnswer;
           
-          // Display sources with hyperlinks
+          // Display condensed sources with hyperlinks
           if (sources.length > 0) {
             sourcesList.innerHTML = '';
             sources.forEach((source, i) => {
               const sourceEl = document.createElement('div');
               sourceEl.className = 'source-box';
               
-              // Create link if source URL exists
+              // Get source URL and title
               const sourceUrl = source.source || '';
-              const sourceLink = sourceUrl.startsWith('http') ? 
-                `<a href="${sourceUrl}" target="_blank" class="source-link">View source</a>` : '';
+              const sourceTitle = source.title || 'Untitled';
               
-              sourceEl.innerHTML = `
-                <p><strong>[${i+1}]</strong> ${source.title || 'Untitled'}</p>
-                <p><em>${sourceUrl}</em> ${sourceLink}</p>
-                <p>${source.text || ''}</p>
-              `;
+              // Create a linked title if URL exists, otherwise just the title
+              const linkedTitle = sourceUrl.startsWith('http') ? 
+                `<a href="${sourceUrl}" target="_blank" class="source-link">${sourceTitle}</a>` : 
+                sourceTitle;
+              
+              sourceEl.innerHTML = `<p><strong>[${i+1}]</strong> ${linkedTitle}</p>`;
               sourcesList.appendChild(sourceEl);
             });
             sourcesContainer.style.display = 'block';
