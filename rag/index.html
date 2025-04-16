@@ -58,6 +58,13 @@
       padding: 1rem;
       margin-top: 1rem;
       border-radius: 0 4px 4px 0;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    
+    /* Style for better paragraph spacing */
+    .answer-box p {
+      margin-bottom: 1rem;
     }
     .source-box {
       background-color: #f5f5f5;
@@ -109,8 +116,9 @@
       <h2 class="text-xl font-semibold mb-4">Ask a question about Vinay</h2>
       <div class="flex flex-col">
         <input type="text" id="query-input" class="query-input" placeholder="e.g., What does Vinay like about living in India versus the US?" />
-        <div class="flex items-center">
-          <button id="query-button" class="query-button">Ask</button>
+        <div class="flex items-center space-x-2">
+          <button id="roast-button" class="query-button bg-red-600">Roast</button>
+          <button id="toast-button" class="query-button bg-yellow-600">Toast</button>
           <div id="loading-spinner" class="loading-spinner"></div>
         </div>
       </div>
@@ -121,14 +129,6 @@
           <p id="answer-text"></p>
         </div>
         
-        <div id="response-mode-container" class="mt-4 flex space-x-2">
-          <button id="roast-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-            🔥 Roast Vinay
-          </button>
-          <button id="toast-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
-            🙌 Toast Vinay
-          </button>
-        </div>
         
         <div id="sources-container" class="mt-4" style="display: none;">
           <h3 class="text-lg font-medium mb-2">Sources:</h3>
@@ -157,13 +157,6 @@
         The system includes optimized chunking, precomputed embeddings, anti-hallucination techniques, and citation support
         to ensure high-quality, factual responses.
       </p>
-      <p class="mb-4 font-semibold">
-        NEW! After getting an answer, hover over it to reveal the "Roast" and "Toast" buttons for some fun variations:
-      </p>
-      <p class="flex space-x-4 mb-4">
-        <span class="bg-red-100 p-2 rounded"><strong>🔥 Roast:</strong> Get a sarcastic, condescending perspective</span>
-        <span class="bg-yellow-100 p-2 rounded"><strong>🙌 Toast:</strong> Get an overly flattering, obsequious response</span>
-      </p>
     </div>
     
     <p class="text-sm text-gray-600 mt-8 text-center">
@@ -174,7 +167,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const queryInput = document.getElementById('query-input');
-      const queryButton = document.getElementById('query-button');
       const answerContainer = document.getElementById('answer-container');
       const answerText = document.getElementById('answer-text');
       const sourcesContainer = document.getElementById('sources-container');
@@ -191,7 +183,8 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
           queryInput.value = this.textContent;
-          queryButton.click();
+          // Default to toast mode for examples
+          toastButton.click();
         });
       });
       
@@ -277,31 +270,28 @@
         }
       }
       
-      // Handle query submission
-      queryButton.addEventListener('click', async function() {
-        const query = queryInput.value.trim();
-        if (!query) return;
-        
-        // Use default 'normal' mode
-        await fetchAnswer(query, 'normal');
-      });
+      // We now have Roast and Toast buttons instead of a query button
+      // Let's remove references to the old queryButton
       
       // Handle roast button
       roastButton.addEventListener('click', async function() {
-        if (!lastQuery) return;
-        await fetchAnswer(lastQuery, 'roast');
+        const query = queryInput.value.trim();
+        if (!query) return;
+        await fetchAnswer(query, 'roast');
       });
       
       // Handle toast button
       toastButton.addEventListener('click', async function() {
-        if (!lastQuery) return;
-        await fetchAnswer(lastQuery, 'toast');
+        const query = queryInput.value.trim();
+        if (!query) return;
+        await fetchAnswer(query, 'toast');
       });
       
       // Handle Enter key in input
       queryInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
-          queryButton.click();
+          // Default to toast mode on Enter
+          toastButton.click();
         }
       });
     });
