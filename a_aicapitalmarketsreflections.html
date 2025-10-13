@@ -20,8 +20,18 @@
         }
 
         h2 {
+            font-size: 1.3em;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            padding-bottom: 0.5em;
+            font-weight: bold;
+            color: #000;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h3 {
             font-size: 1em;
-            margin-top: 2em;
+            margin-top: 1.5em;
             margin-bottom: 0.75em;
             font-weight: bold;
             color: #000;
@@ -57,6 +67,22 @@
         strong {
             font-weight: bold;
         }
+
+        .explorer {
+            margin: 2em 0;
+            padding: 1em;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+
+        .explorer h3 {
+            margin-top: 0;
+            font-size: 1em;
+        }
+
+        .explorer ul {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -77,15 +103,38 @@
 
     <p>So I decided to spend some time collecting more facts and forming a POV. I plan to share the facts as I see them today (11 October 2025) and what I think could happen.</p>
 
+    <div class="explorer">
+        <h3>1. What I am seeing:</h3>
+        <ul>
+            <li><a href="#seeing1">CapEx Ratios are Highly Inflated</a></li>
+            <li><a href="#seeing2">AI's P&L Impact Takes Time to Materialize</a></li>
+            <li><a href="#seeing3">Valuations Haven't Reached Previous Peak Levels</a></li>
+            <li><a href="#seeing4">IPO Activity Remains Subdued</a></li>
+            <li><a href="#seeing5">Interest Rates Are Structurally Higher</a></li>
+            <li><a href="#seeing6">Private Credit Boom Is Fueling Infrastructure Spend</a></li>
+            <li><a href="#seeing7">GPU Depreciation Schedules Don't Match Reality</a></li>
+        </ul>
+        
+        <h3>2. What I think might happen:</h3>
+        <ul>
+            <li><a href="#thinking1">P&L Impact is First Seen in Marketing Expenses and Engineering Opex</a></li>
+            <li><a href="#thinking2">A Soft Landing with Longer Timelines</a></li>
+            <li><a href="#thinking3">Spend Reallocations towards MAG7 and maybe OpenAI-Anthropic</a></li>
+            <li><a href="#thinking4">The Big Unknown: New Categories We Can't See</a></li>
+        </ul>
+    </div>
+
     <h2>What I am seeing</h2>
 
-    <p><strong>1. CapEx Ratios are Highly Inflated.</strong> Hyperscalers historically ran capex at 11-16% of revenue. Today they're at 22%. Microsoft hit 29% in 2024. The four major hyperscalers—Microsoft, Amazon, Alphabet, and Meta—are spending approximately $320 billion combined on AI infrastructure in 2025.</p>
+    <h3 id="seeing1">1. CapEx Ratios are Highly Inflated</h3>
+    
+    <p>Hyperscalers historically ran capex at 11-16% of revenue. Today they're at 22%. Microsoft hit 29% in 2024. The four major hyperscalers—Microsoft, Amazon, Alphabet, and Meta—are spending approximately $320 billion combined on AI infrastructure in 2025.</p>
 
     <p>Using the current 22% capex-to-revenue ratio, every dollar of investment should generate roughly $4.50 in annual revenue to maintain historical return profiles. At the pre-AI norm of 15% capex-to-revenue, it's closer to $6.50. This means the market expects these investments to generate <strong>$1.4-2.1 trillion</strong> in incremental annual revenue — and we expect them to continue to invest in improved GPUs and AI infrastructure. For context: During the telecom boom of the late 1990s, the top carriers increased capex from 15-18% of revenue to 25-30%.</p>
 
     <p>This is even showing up in broader US GDP numbers! ~40% of the US real GDP growth last quarter was driven by tech capex.</p>
 
-    <p><strong>2. AI's P&L Impact Takes Time to Materialize</strong></p>
+    <h3 id="seeing2">2. AI's P&L Impact Takes Time to Materialize</h3>
 
     <p><a href="https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/" target="_blank">MIT's NANDA initiative</a> found that about 5% of AI pilot programs work — and this report invaded our Linkedin Feeds for a few weeks. The core issue isn't model quality but the "learning gap" for tools and organizations. Separately, a friend who runs an SMB roll-up and is investing in AI-led operational improvements concurs - it isn't showing up in P&Ls yet.</p>
 
@@ -93,19 +142,19 @@
 
     <p>I am paying more attention to enterprise because I don't think AI will launch net-new consumer platforms (beyond ChatGPT, of course). I expect most AI-driven revenue to come from existing line items in enterprise P&Ls.</p>
 
-    <p><strong>3. Valuations Haven't Reached Previous Peak Levels</strong></p>
+    <h3 id="seeing3">3. Valuations Haven't Reached Previous Peak Levels</h3>
 
     <p>Current valuations, while elevated, remain "much lower" than prior tech bubbles. The Nasdaq's forward P/E ratio is ~28X today. At the 2000 peak, it exceeded 70X. Even in 2007 before the financial crisis, tech valuations were higher relative to earnings than they are now.</p>
 
     <p>Looking more closely, the MAG7 — who are spending the majority of this capex — has a blended P/E of ~32X — expensive, as Coatue's Laffont brothers <a href="https://open.spotify.com/episode/7h8ctH9qH746Dj20h0QDIx?si=93ac6695e4f84c46" target="_blank">said last week</a>, but not extreme relative to past tech bubbles.</p>
 
-    <p><strong>4. IPO Activity Remains Subdued</strong></p>
+    <h3 id="seeing4">4. IPO Activity Remains Subdued</h3>
 
     <p>Tech IPO volume hasn't approached previous boom levels. In 1999, there were 486 IPOs in the US. In 2021 — the peak of the recent SPAC/IPO boom — there were 397. In 2023, just 108. Additionally, the class of 2021 bubbles are trading 50% below their listing price (from Coatue).</p>
 
     <p>That said, IPOs are not a great indicator in 2025 as private markets get larger. Stripe is 14 years old, valued at $70 billion, still private. OpenAI is 9 years old and valued at $500 billion, with no public IPO timeline. Anthropic, founded in 2021, valued at $60 billion, private. Companies don't need public markets to raise significant capital — so the lack of IPOs is likely not a good indicator that markets are not frothy.</p>
 
-    <p><strong>5. Interest Rates Are Structurally Higher</strong></p>
+    <h3 id="seeing5">5. Interest Rates Are Structurally Higher</h3>
 
     <p>The federal funds rate is 4.75-5.00% versus near zero for most of the 2010s. During the late 1990s, rates averaged 5-6%, but has begun declining into the 2000 crash.</p>
 
@@ -113,7 +162,7 @@
 
     <p>Of note: points (3), (4) and (5) are what Goldman's Americas Technology equity research is forming their view that we are not in a bubble in the next 6-12 months.</p>
 
-    <p><strong>6. Private Credit Boom Is Fueling Infrastructure Spend</strong></p>
+    <h3 id="seeing6">6. Private Credit Boom Is Fueling Infrastructure Spend</h3>
 
     <p>A lot of Matt Levine's recent posts involve Private Credit — which has been a fascinating trend to me. While on-net this is safer for the ecosystem (versus the traditional bank lending with short-term liabilities to fund long-term assets). <a href="https://www.bny.com/corporate/global/en/insights/rise-of-private-credit.html" target="_blank">Private credit AUM has grown 10X</a> to $1.7 trillion in 2025 since the financial crisis.</p>
 
@@ -121,7 +170,7 @@
 
     <p>I find this notable given that the MAG7 combined had $324 billion in free cash flow in 2024. They <em>can</em> afford to fund AI capex without leverage. This matters because off-balance-sheet investment creates opacity. When it's in SPVs or structured as customer financing deals, the accountability is murkier. The accounting tricks depress reported infrastructure spending, inflating profits.</p>
 
-    <p><strong>7. GPU Depreciation Schedules Don't Match Reality</strong></p>
+    <h3 id="seeing7">7. GPU Depreciation Schedules Don't Match Reality</h3>
 
     <p>Nvidia now unveils a new AI chip every year instead of every two years. Jensen Huang said in March that "when Blackwell starts shipping in volume you couldn't give Hoppers away".</p>
 
@@ -133,13 +182,13 @@
 
     <h2>What I think might happen</h2>
 
-    <p><strong>1. P&L Impact is First Seen in Marketing Expenses and Engineering Opex</strong></p>
+    <h3 id="thinking1">1. P&L Impact is First Seen in Marketing Expenses and Engineering Opex</h3>
 
     <p><em>On digital ads</em>: The MAG7 that are heavy on advertising (Meta, Google, Amazon) will see benefits first. My bet is that digital ads will be the first big winner in terms of enterprise impact from AI investments - with higher ROAS from better ad targeting models. Largely because these improvements will require little-to-no change for customers - benefits will be accrue to the broader economy faster.</p>
 
     <p><em>On headcount</em>: We're already seeing software engineering hiring slow - companies will accomplish more, faster with fewer FTEs. This also means that MAG7 and the broader Tech sector will benefit dramatically.</p>
 
-    <p><strong>2. A Soft Landing with Longer Timelines</strong></p>
+    <h3 id="thinking2">2. A Soft Landing with Longer Timelines</h3>
 
     <p>The $1.4-2.1T in incremental revenue materializes, just not in 3-5 years. Which means we will likely see a period of flat-to-modest growth while applications catch up to infrastructure capacity. Stock multiples compress but don't crash. Some capex gets cut in 2026-2027, then resumes when we start seeing traction.</p>
 
@@ -147,7 +196,7 @@
 
     <p>My sense is that the correction will start with reports of MAG7 not seeing incremental revenue in cloud revenue from AI investments in the near-term. I would heavily discount data points in earnings statements of stats from AI launches - the key requirement is incremental revenue, which will take longer than a publicly shareable stat.</p>
 
-    <p><strong>3. Spend Reallocations towards MAG7 and maybe OpenAI-Anthropic</strong></p>
+    <h3 id="thinking3">3. Spend Reallocations towards MAG7 and maybe OpenAI-Anthropic</h3>
 
     <p>For example, say an SMB spends $10M on Salesforce + data analysts + customer service reps. They shift to spending $10M on AI agents + infrastructure instead — with the hyperscalers booking revenue growth. GDP sees limited incremental growth, but employment drops in affected sectors.</p>
 
@@ -157,7 +206,7 @@
 
     <p>This has happened in every tech cycle. The infrastructure phase looks like everyone wins. The application phase reveals who actually has sustainable advantages.</p>
 
-    <p><strong>4. The Big Unknown: New Categories We Can't See</strong></p>
+    <h3 id="thinking4">4. The Big Unknown: New Categories We Can't See</h3>
 
     <p>In 2007, no one predicted the App Store would create a $200B+ economy. It's almost certain that AI will enable entirely new categories of value creation we can't predict.</p>
 
