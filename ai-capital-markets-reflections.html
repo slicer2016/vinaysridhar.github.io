@@ -69,10 +69,22 @@
         }
 
         .explorer {
-            margin: 2em 0;
-            padding: 1em;
-            background-color: #f8f8f8;
-            border-radius: 5px;
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin: 1em 0;
+            color: #555;
+            padding: 1em 0;
+            border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
+        }
+
+        @media screen and (min-width: 769px) {
+            .explorer {
+                position: sticky;
+                top: 0;
+                background-color: white;
+                z-index: 100;
+            }
         }
 
         .explorer h3 {
@@ -95,6 +107,41 @@
         .explorer a:hover {
             text-decoration: underline;
             text-decoration-color: cornflowerblue;
+        }
+
+        @media screen and (max-width: 768px) {
+            .explorer {
+                position: static;
+                background-color: transparent;
+                z-index: auto;
+            }
+        }
+
+        .explorer a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;
+            text-underline-offset: 3px;
+        }
+
+        .explorer a:hover {
+            text-decoration-color: cornflowerblue;
+            font-weight: medium;
+        }
+
+        .explorer p {
+            margin: 0.5em 0;
+        }
+
+        [id] {
+            scroll-margin-top: 200px;
+        }
+        
+        /* Reduce scroll margin for mobile devices */
+        @media screen and (max-width: 768px) {
+            [id] {
+                scroll-margin-top: 250px;
+            }
         }
 
         .image-container {
@@ -126,7 +173,7 @@
     <p><a href="index.html">Back to Home</a></p>
     <h1>Observations on AI and the Capital Markets in 2025</h1>
  
-    <p>I work in Product at Reddit, where LLMs are at the heart of nearly all our work. Like everyone with a mobile phone, I use AI tools every day and remain excited about its potential.</p>
+    <p>I lead a Product team at Reddit, where LLMs are at the heart of nearly all our work. Like everyone with a mobile phone today, I use AI tools daily and remain excited about its potential.</p>
 
     <p>But I also follow the financial markets - where there's increasing chatter about a poetntial AI bubble. Some recent examples:</p>
 
@@ -141,38 +188,23 @@
     <p>So I decided to form my own POV. I plan to share the facts as I see them and what I think will likely happen - as of early Oct 2025.</p>
 
     <div class="explorer">
-        <h3>1. What I am seeing:</h3>
-        <ul>
-            <li><a href="#seeing1">CapEx Ratios are Highly Inflated</a></li>
-            <li><a href="#seeing2">AI's P&L Impact Takes Time to Materialize</a></li>
-            <li><a href="#seeing3">Valuations Haven't Reached Previous Peak Levels</a></li>
-            <li><a href="#seeing4">IPO Activity Remains Subdued</a></li>
-            <li><a href="#seeing5">Interest Rates Are Structurally Higher</a></li>
-            <li><a href="#seeing6">Private Credit Boom Is Fueling Infrastructure Spend</a></li>
-            <li><a href="#seeing7">GPU Depreciation Schedules Don't Match Reality</a></li>
-        </ul>
+        <p><strong>Stylized Facts on AI today:</strong> <a href="#seeing1">1. CapEx Ratios are Highly Inflated</a>; <a href="#seeing2">2. AI's P&L Impact Takes Time to Materialize</a>; <a href="#seeing3">3. Valuations Haven't Reached Previous Peak Levels</a>; <a href="#seeing4">4. IPO Activity Remains Subdued</a>; <a href="#seeing5">5. Interest Rates Are Structurally Higher</a>; <a href="#seeing6">6. Private Credit Boom Is Fueling Infrastructure Spend</a>; <a href="#seeing7">7. GPU Depreciation Schedules Don't Match Reality</a></p>
         
-        <h3>2. What I think might happen:</h3>
-        <ul>
-            <li><a href="#thinking1">P&L Impact is First Seen in Marketing Expenses and Engineering Opex</a></li>
-            <li><a href="#thinking2">A Soft Landing with Longer Timelines</a></li>
-            <li><a href="#thinking3">Spend Reallocations towards MAG7 and maybe OpenAI-Anthropic</a></li>
-            <li><a href="#thinking4">The Big Unknown: New Categories We Can't See</a></li>
-        </ul>
+        <p><strong>Potential Paths Forward:</strong> <a href="#thinking1">1. P&L Impact is First Seen in Marketing Expenses and Engineering Opex</a>; <a href="#thinking2">2. A Soft Landing with Longer Timelines</a>; <a href="#thinking3">3. Spend Reallocations are Not Incremental</a>; <a href="#thinking4">4. The Big Unknown: New Categories We Can't See</a></p>
     </div>
 
-    <h2>Stylized Facts I'm seeing</h2>
+    <h2>Stylized Facts on AI Today</h2>
 
     <h3 id="seeing1">1. CapEx Ratios are Highly Inflated</h3>
     
-    <p>Hyperscalers (Microsoft, Amazon, Alphabet and Meta) historically ran capex at 11-16% of revenue. Today they're at 22%. Microsoft hit 29% in 2024. The four major hyperscalers are spending approximately $320 billion combined on AI infrastructure in 2025 - with public statements on how <a href="https://www.reuters.com/business/zuckerberg-says-meta-will-invest-hundreds-billions-superintelligence-2025-07-14/">this will likely continue</a>.</p>
+    <p>Hyperscalers (Microsoft, Amazon, Alphabet and Meta) historically ran capex at 11-16% of revenue. Today they're at 22%, with revenue growth in the 15-25% (ex Nvidia) - capex spending is dramatically outpacing revenue growth. The four major hyperscalers are spending approximately $320 billion combined on AI infrastructure in 2025 - with public statements on how <a href="https://www.reuters.com/business/zuckerberg-says-meta-will-invest-hundreds-billions-superintelligence-2025-07-14/">this will likely continue in the coming years.</a>.</p>
 
     <div class="image-container">
             <img src="https://i.ibb.co/PZpQsh0X/1-Hyperscaler-Scaling.webp" alt="Hyperscaler AI Capex">
             <div class="image-caption">From <a href="https://www.exponentialview.co/p/is-ai-a-bubble?r=3dkp&utm_medium=ios&triedRedirect=true">Exponential View</a></div>
         </div>
 
-    <p>Using the current 22% capex-to-revenue ratio, every dollar of investment should generate roughly $4.50 in annual revenue to maintain historical return profiles. At the pre-AI norm of 15% capex-to-revenue, it's closer to $6.50. This means the market expects these investments to generate <strong>$1.4-2.1 trillion</strong> in incremental annual revenue — and we expect them to continue to invest in improved GPUs and AI infrastructure. For context: During the telecom boom of the late 1990s, the top carriers increased capex from 15-18% of revenue to 25-30%.</p>
+    <p>Using the current 22% capex-to-revenue ratio, every dollar of investment should generate roughly $4.5 in annual revenue to maintain historical return profiles. At the pre-AI norm of 15% capex-to-revenue, it's closer to $6.5. This means the market expects these investments to generate <strong>$1.4-2.1 trillion</strong> in incremental annual revenue. And as these playerscontinue to invest in improved GPUs and AI infrastructure, this number grows. For context: During the telecom boom of the late 1990s, the top carriers increased capex from 15-18% of revenue to 25-30%.</p>
 
     <p>This is even showing up in broader US GDP numbers! ~40% of the US real GDP growth last quarter was driven by tech capex.</p>
 
@@ -183,7 +215,7 @@
 
     <h3 id="seeing2">2. AI's P&L Impact Takes Time to Materialize</h3>
 
-    <p><a href="https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/" target="_blank">MIT's NANDA initiative</a> found that about 5% of AI pilot programs work in reality — and this report and a host of "takes" invaded our Linkedin Feeds for a few weeks. The core issue isn't model quality but the integration needed into existing workflows. Separately, a friend who runs an SMB roll-up and is investing in AI-led operational improvements concurs - it isn't showing up in P&Ls yet.</p>
+    <p><a href="https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/" target="_blank">MIT's NANDA initiative</a> found that about 5% of AI pilot programs work in reality — and this report and a host of "takes" invaded our Linkedin Feeds for a few weeks. The core issue isn't model quality but the integration needed into existing workflows. A friend who runs an SMB roll-up and is investing in AI-led operational improvements concurs - it isn't showing up in P&Ls yet. Traditional tech stacks are not built with deterministic ideas - the stack will either need to change to handle probabilistic black-box LLMs or the platforms need to hide this complexity from customers. Either way - these things will take time.</p>
 
     <p>While this means opportunity remains, it will take time for the scale of the incremental revenue needed ($1.4T+ annualized) to actually translate.</p>
 
@@ -241,13 +273,13 @@
 
     <p><em>On headcount</em>: The other area of enterprise PMF  We're already seeing software engineering hiring slow - companies will accomplish more, faster with fewer FTEs. This also means that MAG7 and the broader Tech sector will benefit dramatically. We should then start seeing this show up in labor markets, starting  (more layoffs?).</p>
 
-    <h3 id="thinking2">2. A Soft Landing with Longer Timelines</h3>
+    <h3 id="thinking2">2. A Short-Term Correction but Long-Term Trend Continues</h3>
 
-    <p>The $1.4-2.1T in incremental annual revenue will materialize, but just not in 3-5 years. Which means we will likely see a period of flat-to-modest growth while P&L impact catches up to infrastructure capacity. Stock multiples will compress but don't crash. Some capex gets cut in 2026-2027, then resumes when we start seeing traction.</p>
+    <p>The $1.4-2.1T in incremental annual revenue will materialize, but just not in 3-5 years. Which means we will likely see a period of flat-to-modest growth while P&L impact catches up to infrastructure capacity. Stock multiples will compress, and maybe even crash. Some capex gets cut in 2026-2027, then resumes when we start seeing traction.</p>
 
     <p>Cloud computing took a decade to justify its infrastructure buildout -- as did mobile to gain adoption. AI will likely follow the same path. As Tyler Cowen <a href="https://marginalrevolution.com/marginalrevolution/2025/02/why-i-think-ai-take-off-is-relatively-slow.html">notes</a>, the O-Ring model will imply that the bottleneck will move to other parts of a sector. Even electricity arguably took half a decade to fully diffuse.</p>
 
-    <p>My sense is that the correction will start with something banal - reports of MAG7 not meeting market expectations of incremental cloud revenue from AI investments, a leaked insider view of how retention is low. I would heavily discount data points in earnings statements of performance stats from AI launches - the key requirement is incremental revenue, which will take longer than a publicly shareable stat.</p>
+    <p>My bet is that the correction will start with something banal - reports of MAG7 not meeting market expectations of incremental cloud revenue from AI investments, a leaked insider view of how retention is low, the hyperscalers renegotiating their private credit obligations.</p>
 
     <h3 id="thinking3">3. Spend Reallocations are Not Incremental</h3>
 
@@ -261,13 +293,15 @@
 
     <h3 id="thinking4">4. The Big Unknown: New Categories We Can't See</h3>
 
-    <p>In 2007, no one predicted the App Store would create a $200B+ economy. It's almost certain that AI will enable entirely new categories of value creation we can't predict.</p>
+    <p>In 2007, no one predicted the App Store would create a $200B+ economy. It's almost certain that AI will enable entirely new categories of value creation we can't predict. That said, I would be surprised if at-scale adoption happens sooner than 2028 given historical adoption curves (2028 implies 4 years from when the capex scaling began).</p>
 
-    <p>I wonder if this will be a new player or the two new AI platforms (OpenAI and Anthropic). Will antitrust regulations allow the MAG7 to acquire these companies?</p>
+    <p>I wonder if this will be a new player or the two new AI platforms (OpenAI and Anthropic). The answer likely depends on whether foundation models become commoditized. Will antitrust regulations allow the MAG7 to acquire these companies?</p>
 
     <h2>In Close</h2>
 
-    <p>We live in fascinating times - I like how Philippe Laffont framed it at EMW earlier this year: it's such an interesting set of questions - why is Amazon investing less than their peers in capex? Will that impact AWS's competitiveness versus Azure and Google Cloud? What is Apple's bet likely to be? What happens to online search? How will the digital ads ecosystem change?</p>
+    <p>The bull case rests on the hyperscalers executing perfectly and adoption to accelerate with visible traction in 2026, with the MAG7 able to take a share of this upside. I find that the probability of all this happening low. But hey - I might be wrong!</p>
+    
+    <p>>Overall - we live in fascinating times. I like how Philippe Laffont framed it at EMW earlier this year: it's such an interesting set of questions - why is Amazon investing less than their peers in capex? Will that impact AWS's competitiveness versus Azure and Google Cloud? What is Apple's bet likely to be? What happens to online search? How will the digital ads ecosystem change?</p>
 
     <p>I plan to update this article as more perspectives emerge. Overall - I'm convinced the current state cannot continue for longer - something significant will have to change in 2026.</p>
 </body>
