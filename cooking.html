@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .photo-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .photo-item img:hover {
+            opacity: 0.9;
+        }
+
+        .photo-description {
+            color: #666;
+            font-style: italic;
+            font-size: 0.8em;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 2rem;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            margin: auto;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .close-button {
+            position: absolute;
+            top: -2rem;
+            right: 0;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .cooking-reflections {
+            margin-bottom: 2rem;
+        }
+
+        .cooking-reflections h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cooking-reflections ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+        }
+
+        .cooking-reflections li {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body> 
+    <p><a href="index.html">Back to Home</a></p>  
+    <h1>Cooking</h1>
+
+    <p>I learned to cook in 2018 after spending two years in the US. I did not have access to good South Indian food in Boston, and learned to cook out of desperation (a fab Sri Lankan restaurant in Cambridge closed shop a few months after I moved). There were many failed attempts - including a week where I kept adding fennel instead of jeera to dishes and wondered why everything tasted like toothpaste.</p>
+
+    <p>I find cooking meditative and often listen to a podcast while making dinner. Pictures of some of my favorite dishes are below and some reflections on what I’ve learned along the way. Note - I largely eat vegetarian food, and have no idea how to cook meat.</p>
+
+    <div class="cooking-reflections">
+        <h2>Reflections on Cooking</h2>
+            <ul>
+                <li>I basically cook to recreate food I grew up eating. I rarely have the energy to invent new recipes (although one of my greatest hits was a truffle oil chinna vengayam sambar - it was fire!). On most days, my goal is usually fidelity to memory, not creativity. I wonder if this is the difference between a craftsman and an artist.</li>
+
+                <li>It is pivotal to understand your ingredients, especially vegetables. AFAIK, there isn't a helpful list of these rules in one place so it's usually learned by trial and error. For example, cooking cut okra with water makes it sticky and soggy. The ridges in ridge gourds are bitter - always worth scraping off. Potatoes boiled with baking soda get crispier. This is a huge factor in making food that tastes good.</li>
+
+                <li>Regional Indian cuisines are defined by their tadkas. What makes Tamil food Tamil is usually a combination of coconut oil, mustard seeds, hing and curry leaves. <em>Masala Lab</em> by Krish Ashok taught me a lot of this, I highly recommend it.</li>
+
+                <li>Each family has its own variant of a dish - there is no universal way to cook a dish. Don't let anyone splain you on the right way to cook something. It does not exist (as Anthony Bourdain used to remind us).</li>
+
+                <li>I'm still learning to better layer acids. Tamarind, tomatoes and lemon all add sharpness, but have distinctive flavor profiles. Combining them often creates the complexity I remember from childhood.</li>
+
+                <li>Language shows up in unexpected ways. The word I use for vegetables displays my polyglossic upbringing - if my mother discovered a word growing up in Tamil Nadu, I use the Tamil word. If she started using the vegetable in her 40s in Bangalore, I know the Kannada word. If I encounter the vegetable in restaurants, I end up using the English word. The captions for these pictures illustrate this well - I promise I wasn't trying!</li>
+
+                <li>Baking requires precision and patience that I don't have. Cooking, on the other hand, forgives your lack of precision as long as you're generally following guidelines. In contrast, I know fabulous bakers who are not great cooks. I wonder if there's something deeper that is predictive of these preferences.</li>
+            </ul>
+    </div>
+    <br> </br>
+
+    <div class="photo-grid">
+        <div class="photo-item">
+            <img src="/images/cooking/1_venpongal.jpeg" 
+                 alt="Ven Pongal" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Ven Pongal with Kerala Mushroom Curry</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/2_ThayirSadham.jpeg" 
+                 alt="Curd Rice" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Snake Gourd Kootu, Curd Rice (with More Molaga) and Sweet Potato Vatha Kuzhambu</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/3_DondekaiCurry.jpeg" 
+                 alt="Dondekai Curry" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Dondekai curry, Palak Paneer and Phulkas</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/4_NombuAdai.jpeg" 
+                 alt="Nombu Adai" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Sweet and Kara Nombu Adai with butter (my all time favorite festival food)</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/5_BBB.jpeg" 
+                 alt="BBB" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">BBB or Bisi Bele Bath, Kosambari, Masala Vadai and Boondi Raita</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/6_ChinnaVengayam.jpeg" 
+                 alt="Chinna Vengayam Sambar" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Not so Chinna Vengayam Sambar, Parippu Podi sadham, potato and beetroot curries</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/7_Kathirikai.jpg" 
+                 alt="Kathirikai" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Podi Potta Kathirikai, Vendakkai Mor Kozhambu, Keerai Kootu</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/8_Thiruvadharai.jpeg" 
+                 alt="Kali Kootu" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Thiruvadharai Kali Kootu</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/9_Mor Kozhambu.jpeg" 
+                 alt="Mor Kozhambu" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Poosanikai Mor kozhambu, potato curry, snake gourd Kootu with Dhaniya Podi and Quinoa</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/10_Usili.jpeg" 
+                 alt="Usili" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Beans parippu usili with pumpkin sambar</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/11_Brinji.jpeg" 
+                 alt="Brinji" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Brinji with a generic North Indian Paneer dish</p>
+        </div>
+
+        <div class="photo-item">
+            <img src="/images/cooking/12_KaraBath.jpeg" 
+                 alt="Kara Bath" 
+                 onclick="openModal(this.src)">
+            <p class="photo-description">Karnataka Kara Bath and Coconut Chutney</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <img class="modal-image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalImage = document.querySelector('.modal-image');
+
+        function openModal(imgSrc) {
+            modal.style.display = 'flex';
+            modalImage.src = imgSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Prevent modal from closing when clicking on the image itself
+        document.querySelector('.modal-content').onclick = function(event) {
+            event.stopPropagation();
+        };
+    </script>
+</body>
+</html>
