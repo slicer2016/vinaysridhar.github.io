@@ -1,0 +1,160 @@
+"""
+Tabula Rasa Webhook Service
+Receives entries via Telegram bot and updates GitHub repository
+"""
+
+from flask import Flask, request, jsonify
+import os
+import json
+from datetime import datetime
+import requests
+from urllib.parse import urlparse
+
+app = Flask(__name__)
+
+# Configuration - Set these as environment variables
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
+GITHUB_REPO = os.environ.get('GITHUB_REPO')  # Format: "username/repo"
+TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
+ALLOWED_CHAT_IDS = os.environ.get('ALLOWED_CHAT_IDS', '').split(',')  # Your Telegram chat ID(s)
+
+def extract_url(text):
+    """Extract URL from text"""
+    words = text.split()
+    for word in words:
+        if word.startswith('http://') or word.startswith('https://'):
+            return word
+    return None
+
+def extract_title_from_url(url):
+    """Try to get a readable title from URL"""
+    parsed = urlparse(url)
+    # Remove common suffixes and clean up
+    path = parsed.path.rstrip('/')
+    if path:
+        title = path.split('/')[-1]
+        title = title.replace('-', ' ').replace('_', ' ')
+        return title.title()
+    return parsed.netloc
+
+def update_github_json(new_entry):
+    """Update the JSON file in GitHub repository"""
+    
+    # Get current file content
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/tabula-rasa-data.json"
+    headers = {
+        'Authorization': f'token {GITHUB_TOKEN}',
+        'Accept': 'application/vnd.github.v3+json'
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        file_data = response.json()
+        current_content = json.loads(
+            requests.get(file_data['download_url']).text
+        )
+        sha = file_data['sha']
+    else:
+        # File doesn't exist, create new structure
+        current_content = {"entries": []}
+        sha = None
+    
+    # Add new entry
+    current_content['entries'].insert(0, new_entry)  # Add to beginning
+    
+    # Update file in GitHub
+    import base64
+    content = json.dumps(current_content, indent=2)
+    encoded_content = base64.b64encode(content.encode()).decode()
+    
+    data = {
+        'message': f'Add entry: {new_entry["title"][:50]}',
+        'content': encoded_content,
+    }
+    
+    if sha:
+        data['sha'] = sha
+    
+    response = requests.put(url, headers=headers, json=data)
+    return response.status_code == 200 or response.status_code == 201
+
+@app.route('/webhook/telegram', methods=['POST'])
+def telegram_webhook():
+    """Handle incoming Telegram messages"""
+    try:
+        data = request.json
+        
+        # Verify it's a message from allowed user
+        chat_id = str(data['message']['chat']['id'])
+        if chat_id not in ALLOWED_CHAT_IDS:
+            return jsonify({'status': 'unauthorized'}), 403
+        
+        message_text = data['message'].get('text', '')
+        
+        # Parse message format: URL + Note (rest of the message)
+        url = extract_url(message_text)
+        
+        if not url:
+            # Send error message back
+            send_telegram_message(
+                chat_id, 
+                "⚠️ No URL found. Please include a URL in your message."
+            )
+            return jsonify({'status': 'no_url'}), 400
+        
+        # Everything else is the note
+        note = message_text.replace(url, '').strip()
+        
+        if not note:
+            send_telegram_message(
+                chat_id,
+                "⚠️ Please add your thoughts about this link."
+            )
+            return jsonify({'status': 'no_note'}), 400
+        
+        # Try to extract title from URL
+        title = extract_title_from_url(url)
+        
+        # Create entry
+        entry = {
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'url': url,
+            'title': title,
+            'note': note
+        }
+        
+        # Update GitHub
+        if update_github_json(entry):
+            send_telegram_message(
+                chat_id,
+                f"✅ Added to Tabula Rasa!\n\n{title}\n{note}"
+            )
+            return jsonify({'status': 'success', 'entry': entry})
+        else:
+            send_telegram_message(
+                chat_id,
+                "❌ Failed to add entry. Please try again."
+            )
+            return jsonify({'status': 'github_error'}), 500
+            
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+def send_telegram_message(chat_id, text):
+    """Send a message via Telegram bot"""
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    data = {
+        'chat_id': chat_id,
+        'text': text
+    }
+    requests.post(url, json=data)
+
+@app.route('/health', methods=['GET'])
+def health():
+    """Health check endpoint"""
+    return jsonify({'status': 'ok'})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)

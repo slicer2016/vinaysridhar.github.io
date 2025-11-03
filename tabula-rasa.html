@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabula Rasa</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        .intro {
+            margin-bottom: 2em;
+            color: #666;
+        }
+
+        .entries {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .entry {
+            margin-bottom: 2em;
+            padding-bottom: 1.5em;
+            border-bottom: 1px solid #eee;
+        }
+
+        .entry:last-child {
+            border-bottom: none;
+        }
+
+        .date {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 0.5em;
+        }
+
+        .link {
+            margin-bottom: 0.5em;
+        }
+
+        .link a {
+            color: #000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-weight: 500;
+        }
+
+        .link a:hover {
+            color: #666;
+        }
+
+        .note {
+            color: #333;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            color: #000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html" class="back-link">Back to Home</a></p>
+    
+    <h1>Tabula Rasa</h1>
+    
+    <div class="intro">
+        <p>John McPhee - a fantastic and inspiring writer - started a series called <i>Tabula Rasa</i> where he "compiles 50 bits of prose, from a single paragraph to 10 or more pages, that McPhee never published or, in many cases, even completed".</p> 
+        
+        <p>I love that idea. I come across things that really make me think -- and prompts the time and energy investment of writing an essay. Often, however, I come across mildly interesting ideas that never form a fully formed POV. This is a running list of things I'm consuming and thinking about. Links to podcasts, articles, videos, tweets, and other content with brief thoughts.</p>
+    </div>
+
+    <ul class="entries" id="entries-list">
+        <li class="loading">Loading entries...</li>
+    </ul>
+
+    <script>
+        async function loadEntries() {
+            try {
+                const response = await fetch('tabula-rasa-data.json');
+                const data = await response.json();
+                
+                const entriesList = document.getElementById('entries-list');
+                
+                if (!data.entries || data.entries.length === 0) {
+                    entriesList.innerHTML = '<li class="entry"><p class="note">No entries yet. Check back soon!</p></li>';
+                    return;
+                }
+                
+                // Sort entries by date (newest first)
+                const sortedEntries = data.entries.sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                
+                entriesList.innerHTML = sortedEntries.map(entry => `
+                    <li class="entry">
+                        <div class="date">${formatDate(entry.date)}</div>
+                        <div class="link">
+                            <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>
+                        </div>
+                        <div class="note">${entry.note}</div>
+                    </li>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading entries:', error);
+                document.getElementById('entries-list').innerHTML = 
+                    '<li class="entry"><p class="note">Error loading entries. Please try again later.</p></li>';
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Load entries when page loads
+        loadEntries();
+    </script>
+</body>
+</html>
