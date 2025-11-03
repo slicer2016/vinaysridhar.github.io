@@ -2,10 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Copy files from telegram-bot subdirectory
+COPY telegram-bot/requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY telegram-bot/webhook.py .
 
 EXPOSE 8080
 
