@@ -24,6 +24,12 @@ print(f"GITHUB_TOKEN exists: {bool(GITHUB_TOKEN)}")
 print(f"GITHUB_REPO exists: {bool(GITHUB_REPO)}")
 print(f"TELEGRAM_TOKEN exists: {bool(TELEGRAM_TOKEN)}")
 print(f"ALLOWED_CHAT_IDS exists: {bool(ALLOWED_CHAT_IDS)}")
+print(f"ALLOWED_CHAT_IDS value: {ALLOWED_CHAT_IDS}")
+print("Flask app initialization complete")
+
+@app.route('/')
+def root():
+    return jsonify({'status': 'webhook service running', 'timestamp': datetime.now().isoformat()})
 
 def extract_url(text):
     """Extract URL from text"""
@@ -210,4 +216,10 @@ def health():
     return jsonify({'status': 'ok'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    try:
+        print("Starting Flask app in main...")
+        app.run(debug=True, port=5000)
+    except Exception as e:
+        print(f"Failed to start Flask app: {e}")
+        import traceback
+        traceback.print_exc()
