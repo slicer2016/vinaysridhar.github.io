@@ -27,6 +27,16 @@ print(f"ALLOWED_CHAT_IDS exists: {bool(ALLOWED_CHAT_IDS)}")
 print(f"ALLOWED_CHAT_IDS value: {ALLOWED_CHAT_IDS}")
 print("Flask app initialization complete")
 
+# Test that we can create a simple response
+try:
+    with app.test_request_context('/'):
+        test_response = root()
+        print(f"Test response successful: {test_response}")
+except Exception as e:
+    print(f"Test response failed: {e}")
+    import traceback
+    traceback.print_exc()
+
 @app.route('/')
 def root():
     return jsonify({'status': 'webhook service running', 'timestamp': datetime.now().isoformat()})
