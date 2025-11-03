@@ -18,6 +18,13 @@ GITHUB_REPO = os.environ.get('GITHUB_REPO')  # Format: "username/repo"
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
 ALLOWED_CHAT_IDS = os.environ.get('ALLOWED_CHAT_IDS', '').split(',')  # Your Telegram chat ID(s)
 
+# Debug logging
+print("Starting webhook service...")
+print(f"GITHUB_TOKEN exists: {bool(GITHUB_TOKEN)}")
+print(f"GITHUB_REPO exists: {bool(GITHUB_REPO)}")
+print(f"TELEGRAM_TOKEN exists: {bool(TELEGRAM_TOKEN)}")
+print(f"ALLOWED_CHAT_IDS exists: {bool(ALLOWED_CHAT_IDS)}")
+
 def extract_url(text):
     """Extract URL from text"""
     words = text.split()
