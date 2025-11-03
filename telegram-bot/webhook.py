@@ -227,8 +227,10 @@ def health():
 
 if __name__ == '__main__':
     try:
-        print("Starting Flask app in main...")
-        app.run(debug=True, port=5000)
+        import os
+        port = int(os.environ.get('PORT', 5000))
+        print(f"Starting Flask app on port {port}...")
+        app.run(host='0.0.0.0', port=port, debug=False)
     except Exception as e:
         print(f"Failed to start Flask app: {e}")
         import traceback
