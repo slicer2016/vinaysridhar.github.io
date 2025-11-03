@@ -16,7 +16,7 @@ app = Flask(__name__)
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_REPO = os.environ.get('GITHUB_REPO')  # Format: "username/repo"
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
-ALLOWED_CHAT_IDS = os.environ.get('ALLOWED_CHAT_IDS', '').split(',')  # Your Telegram chat ID(s)
+ALLOWED_CHAT_IDS = [id.strip() for id in os.environ.get('ALLOWED_CHAT_IDS', '').split(',') if id.strip()]  # Your Telegram chat ID(s)
 
 # Debug logging
 print("Starting webhook service...")
@@ -91,9 +91,15 @@ def telegram_webhook():
     """Handle incoming Telegram messages"""
     try:
         data = request.json
+        print(f"Received webhook data: {json.dumps(data, indent=2)}")
         
+        # Check if message exists
+        if not data or 'message' not in data:
+            return jsonify({'status': 'no_message'}), 400
+            
         # Verify it's a message from allowed user
         chat_id = str(data['message']['chat']['id'])
+        print(f"Chat ID: {chat_id}, Allowed: {ALLOWED_CHAT_IDS}")
         if chat_id not in ALLOWED_CHAT_IDS:
             return jsonify({'status': 'unauthorized'}), 403
         
