@@ -31,6 +31,35 @@ print("Flask app initialization complete")
 def root():
     return jsonify({'status': 'webhook service running', 'timestamp': datetime.now().isoformat()})
 
+# Validate environment variables
+print("=== VALIDATING ENVIRONMENT VARIABLES ===")
+env_issues = []
+
+if not GITHUB_TOKEN:
+    env_issues.append("GITHUB_TOKEN is missing")
+elif len(GITHUB_TOKEN) < 10:
+    env_issues.append("GITHUB_TOKEN appears invalid (too short)")
+
+if not GITHUB_REPO:
+    env_issues.append("GITHUB_REPO is missing")
+elif '/' not in GITHUB_REPO:
+    env_issues.append(f"GITHUB_REPO format invalid: '{GITHUB_REPO}' (should be 'username/repo')")
+
+if not TELEGRAM_TOKEN:
+    env_issues.append("TELEGRAM_TOKEN is missing")
+elif not TELEGRAM_TOKEN.endswith('bot') and len(TELEGRAM_TOKEN) < 20:
+    env_issues.append("TELEGRAM_TOKEN appears invalid")
+
+if not ALLOWED_CHAT_IDS:
+    env_issues.append("ALLOWED_CHAT_IDS is empty")
+
+if env_issues:
+    print("ENVIRONMENT VARIABLE ISSUES:")
+    for issue in env_issues:
+        print(f"  ❌ {issue}")
+else:
+    print("✅ All environment variables appear valid")
+
 # Test that we can create a simple response
 try:
     with app.test_request_context('/'):
