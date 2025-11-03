@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["python", "webhook.py"]
+CMD ["sh", "-c", "gunicorn webhook:app --bind 0.0.0.0:${PORT:-8080} --workers 1 --timeout 120 --log-level info"]
