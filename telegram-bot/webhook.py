@@ -90,26 +90,57 @@ def update_github_json(new_entry):
 def telegram_webhook():
     """Handle incoming Telegram messages"""
     try:
+        print("=== WEBHOOK CALLED ===")
+        print(f"Request method: {request.method}")
+        print(f"Content-Type: {request.content_type}")
+        
         data = request.json
-        print(f"Received webhook data: {json.dumps(data, indent=2)}")
+        print(f"Raw request data: {data}")
+        
+        if not data:
+            print("ERROR: No JSON data received")
+            return jsonify({'status': 'no_data'}), 400
         
         # Check if message exists
-        if not data or 'message' not in data:
+        if 'message' not in data:
+            print(f"ERROR: No 'message' key in data. Keys: {list(data.keys())}")
             return jsonify({'status': 'no_message'}), 400
+        
+        message = data['message']
+        print(f"Message data: {message}")
+        
+        # Check if chat exists
+        if 'chat' not in message:
+            print(f"ERROR: No 'chat' key in message. Keys: {list(message.keys())}")
+            return jsonify({'status': 'no_chat'}), 400
             
         # Verify it's a message from allowed user
-        chat_id = str(data['message']['chat']['id'])
-        print(f"Chat ID: {chat_id}, Allowed: {ALLOWED_CHAT_IDS}")
+        chat_id = str(message['chat']['id'])
+        print(f"Chat ID: {chat_id}")
+        print(f"Allowed chat IDs: {ALLOWED_CHAT_IDS}")
+        
+        if not ALLOWED_CHAT_IDS:
+            print("ERROR: No allowed chat IDs configured")
+            return jsonify({'status': 'no_allowed_chats'}), 400
+            
         if chat_id not in ALLOWED_CHAT_IDS:
+            print(f"ERROR: Unauthorized chat ID {chat_id}")
             return jsonify({'status': 'unauthorized'}), 403
         
-        message_text = data['message'].get('text', '')
+        message_text = message.get('text', '')
+        print(f"Message text: {message_text}")
+        
+        if not message_text:
+            print("ERROR: No text in message")
+            return jsonify({'status': 'no_text'}), 400
         
         # Parse message format: URL + Note (rest of the message)
         url = extract_url(message_text)
+        print(f"Extracted URL: {url}")
         
         if not url:
             # Send error message back
+            print("Sending error message: no URL")
             send_telegram_message(
                 chat_id, 
                 "⚠️ No URL found. Please include a URL in your message."
@@ -118,8 +149,10 @@ def telegram_webhook():
         
         # Everything else is the note
         note = message_text.replace(url, '').strip()
+        print(f"Note: {note}")
         
         if not note:
+            print("Sending error message: no note")
             send_telegram_message(
                 chat_id,
                 "⚠️ Please add your thoughts about this link."
@@ -128,6 +161,7 @@ def telegram_webhook():
         
         # Try to extract title from URL
         title = extract_title_from_url(url)
+        print(f"Title: {title}")
         
         # Create entry
         entry = {
@@ -136,15 +170,19 @@ def telegram_webhook():
             'title': title,
             'note': note
         }
+        print(f"Entry created: {entry}")
         
         # Update GitHub
+        print("Updating GitHub...")
         if update_github_json(entry):
+            print("GitHub update successful")
             send_telegram_message(
                 chat_id,
                 f"✅ Added to Tabula Rasa!\n\n{title}\n{note}"
             )
             return jsonify({'status': 'success', 'entry': entry})
         else:
+            print("GitHub update failed")
             send_telegram_message(
                 chat_id,
                 "❌ Failed to add entry. Please try again."
@@ -152,7 +190,9 @@ def telegram_webhook():
             return jsonify({'status': 'github_error'}), 500
             
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"EXCEPTION: {type(e).__name__}: {e}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 def send_telegram_message(chat_id, text):
