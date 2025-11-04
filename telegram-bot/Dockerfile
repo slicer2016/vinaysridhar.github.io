@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 
 COPY webhook.py .
 
-CMD gunicorn --bind 0.0.0.0:$PORT webhook:app
+CMD gunicorn --bind 0.0.0.0:8080 webhook:app
