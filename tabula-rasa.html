@@ -74,6 +74,16 @@
             line-height: 1.6;
         }
 
+        .entry::marker {
+            color: #000;
+        }
+
+        .date {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+
         .note {
             font-size: 0.9em;
         }
@@ -168,7 +178,7 @@
             
             entriesList.innerHTML = filteredEntries.map(entry => `
                 <li class="entry" data-category="${entry.category || 'article'}">
-                    [${formatDate(entry.date)}] <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: <span class="note">${entry.note}</span>
+                    <span class="date">[${formatDate(entry.date)}]</span> <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: <span class="note">${entry.note}</span>
                 </li>
             `).join('');
         }
