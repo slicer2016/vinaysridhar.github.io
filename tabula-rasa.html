@@ -65,13 +65,17 @@
         }
 
         .entries {
-            list-style-type: none;
-            padding: 0;
+            list-style-type: circle;
+            padding-left: 20px;
         }
 
         .entry {
             margin-bottom: 0.75em;
             line-height: 1.6;
+        }
+
+        .note {
+            font-size: 0.9em;
         }
 
         .entry.hidden {
@@ -164,7 +168,7 @@
             
             entriesList.innerHTML = filteredEntries.map(entry => `
                 <li class="entry" data-category="${entry.category || 'article'}">
-                    [${formatDate(entry.date)}] <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: ${entry.note}
+                    [${formatDate(entry.date)}] <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: <span class="note">${entry.note}</span>
                 </li>
             `).join('');
         }
