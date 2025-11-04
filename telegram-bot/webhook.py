@@ -53,12 +53,39 @@ def categorize_url(url):
 
 def parse_message(text):
     """
-    Parse message in format: URL + Title + Note
+    Parse message in format:
+    - Newline-separated: URL\nTitle\nNote
+    - Or with + signs: URL + Title + Note
     Returns: (url, title, note)
     """
-    # Split by + sign
+    # First try newline-separated format
+    lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
+
+    if len(lines) >= 3:
+        # Format: URL\nTitle\nNote (or more lines in note)
+        url = lines[0]
+        title = lines[1]
+        note = '\n'.join(lines[2:])  # Join remaining lines as note
+        # Verify first line is a URL
+        if url.startswith('http://') or url.startswith('https://'):
+            return url, title, note
+    elif len(lines) == 2:
+        # Format: URL\nNote (auto-extract title)
+        url = lines[0]
+        note = lines[1]
+        if url.startswith('http://') or url.startswith('https://'):
+            # Extract title from URL as fallback
+            parsed = urlparse(url)
+            path = parsed.path.rstrip('/')
+            if path:
+                title = path.split('/')[-1].replace('-', ' ').replace('_', ' ').title()
+            else:
+                title = parsed.netloc
+            return url, title, note
+
+    # Fall back to + separator for backwards compatibility
     parts = text.split('+')
-    
+
     if len(parts) >= 3:
         # Format: URL + Title + Note
         url = parts[0].strip()
@@ -90,7 +117,7 @@ def parse_message(text):
             else:
                 title = parsed.netloc
             return url, title, note
-    
+
     return None, None, None
 
 def update_github_json(new_entry):
@@ -166,8 +193,14 @@ def telegram_webhook():
         
         if not url:
             send_telegram_message(
-                chat_id, 
-                "⚠️ No URL found. Please use format:\n\nURL + Title + Your thoughts\n\nExample:\nhttps://example.com + Great Article + This is my take"
+                chat_id,
+                "⚠️ No URL found. Please use one of these formats:\n\n"
+                "Format 1 (newlines):\n"
+                "https://example.com\n"
+                "Great Article\n"
+                "This is my take\n\n"
+                "Format 2 (+ signs):\n"
+                "https://example.com + Great Article + This is my take"
             )
             return jsonify({'status': 'no_url'}), 400
         
