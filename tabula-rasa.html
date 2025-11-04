@@ -24,46 +24,71 @@
             color: #666;
         }
 
+        .filters {
+            margin-bottom: 2em;
+            display: flex;
+            gap: 0.5em;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4em 0.8em;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 16px;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .filter-btn.active {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+
         .entries {
             list-style-type: none;
             padding: 0;
         }
 
         .entry {
-            margin-bottom: 2em;
-            padding-bottom: 1.5em;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 0.75em;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5em;
         }
 
-        .entry:last-child {
-            border-bottom: none;
+        .entry.hidden {
+            display: none;
         }
 
         .date {
             color: #999;
-            font-size: 0.85em;
-            margin-bottom: 0.5em;
+            font-size: 0.9em;
+            flex-shrink: 0;
         }
 
         .link {
-            margin-bottom: 0.5em;
-        }
-
-        .link a {
             color: #000;
             text-decoration: underline;
             text-underline-offset: 3px;
-            font-weight: 500;
         }
 
-        .link a:hover {
+        .link:hover {
             color: #666;
+        }
+
+        .separator {
+            color: #333;
         }
 
         .note {
             color: #333;
-            font-size: 0.95em;
-            line-height: 1.5;
         }
 
         .back-link {
@@ -94,11 +119,22 @@
         <p>I love that idea. I come across things that really make me think -- and prompts the time and energy investment of writing an essay. Often, however, I come across mildly interesting ideas that never form a fully formed POV. This is a running list of things I'm consuming and thinking about. Links to podcasts, articles, videos, tweets, and other content with brief thoughts.</p>
     </div>
 
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="article">Articles</button>
+        <button class="filter-btn" data-filter="podcast">Podcasts</button>
+        <button class="filter-btn" data-filter="video">Videos</button>
+        <button class="filter-btn" data-filter="tweet">Tweets</button>
+    </div>
+
     <ul class="entries" id="entries-list">
         <li class="loading">Loading entries...</li>
     </ul>
 
     <script>
+        let allEntries = [];
+        let currentFilter = 'all';
+
         async function loadEntries() {
             try {
                 const response = await fetch('tabula-rasa-data.json');
@@ -107,30 +143,44 @@
                 const entriesList = document.getElementById('entries-list');
                 
                 if (!data.entries || data.entries.length === 0) {
-                    entriesList.innerHTML = '<li class="entry"><p class="note">No entries yet. Check back soon!</p></li>';
+                    entriesList.innerHTML = '<li class="entry"><span class="note">No entries yet. Check back soon!</span></li>';
                     return;
                 }
                 
                 // Sort entries by date (newest first)
-                const sortedEntries = data.entries.sort((a, b) => 
+                allEntries = data.entries.sort((a, b) => 
                     new Date(b.date) - new Date(a.date)
                 );
                 
-                entriesList.innerHTML = sortedEntries.map(entry => `
-                    <li class="entry">
-                        <div class="date">${formatDate(entry.date)}</div>
-                        <div class="link">
-                            <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>
-                        </div>
-                        <div class="note">${entry.note}</div>
-                    </li>
-                `).join('');
+                renderEntries();
                 
             } catch (error) {
                 console.error('Error loading entries:', error);
                 document.getElementById('entries-list').innerHTML = 
-                    '<li class="entry"><p class="note">Error loading entries. Please try again later.</p></li>';
+                    '<li class="entry"><span class="note">Error loading entries. Please try again later.</span></li>';
             }
+        }
+        
+        function renderEntries() {
+            const entriesList = document.getElementById('entries-list');
+            
+            const filteredEntries = currentFilter === 'all' 
+                ? allEntries 
+                : allEntries.filter(entry => entry.category === currentFilter);
+            
+            if (filteredEntries.length === 0) {
+                entriesList.innerHTML = '<li class="entry"><span class="note">No entries in this category.</span></li>';
+                return;
+            }
+            
+            entriesList.innerHTML = filteredEntries.map(entry => `
+                <li class="entry" data-category="${entry.category || 'article'}">
+                    <span class="date">${formatDate(entry.date)}</span>
+                    <a href="${entry.url}" target="_blank" rel="noopener noreferrer" class="link">${entry.title || entry.url}</a>
+                    <span class="separator">:</span>
+                    <span class="note">${entry.note}</span>
+                </li>
+            `).join('');
         }
         
         function formatDate(dateString) {
@@ -138,6 +188,19 @@
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return date.toLocaleDateString('en-US', options);
         }
+        
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update filter and re-render
+                currentFilter = btn.dataset.filter;
+                renderEntries();
+            });
+        });
         
         // Load entries when page loads
         loadEntries();

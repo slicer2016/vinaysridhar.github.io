@@ -16,59 +16,7 @@ app = Flask(__name__)
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_REPO = os.environ.get('GITHUB_REPO')  # Format: "username/repo"
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
-ALLOWED_CHAT_IDS = [id.strip() for id in os.environ.get('ALLOWED_CHAT_IDS', '').split(',') if id.strip()]  # Your Telegram chat ID(s)
-
-# Debug logging
-print("Starting webhook service...")
-print(f"GITHUB_TOKEN exists: {bool(GITHUB_TOKEN)}")
-print(f"GITHUB_REPO exists: {bool(GITHUB_REPO)}")
-print(f"TELEGRAM_TOKEN exists: {bool(TELEGRAM_TOKEN)}")
-print(f"ALLOWED_CHAT_IDS exists: {bool(ALLOWED_CHAT_IDS)}")
-print(f"ALLOWED_CHAT_IDS value: {ALLOWED_CHAT_IDS}")
-print("Flask app initialization complete")
-
-@app.route('/')
-def root():
-    return jsonify({'status': 'webhook service running', 'timestamp': datetime.now().isoformat()})
-
-# Validate environment variables
-print("=== VALIDATING ENVIRONMENT VARIABLES ===")
-env_issues = []
-
-if not GITHUB_TOKEN:
-    env_issues.append("GITHUB_TOKEN is missing")
-elif len(GITHUB_TOKEN) < 10:
-    env_issues.append("GITHUB_TOKEN appears invalid (too short)")
-
-if not GITHUB_REPO:
-    env_issues.append("GITHUB_REPO is missing")
-elif '/' not in GITHUB_REPO:
-    env_issues.append(f"GITHUB_REPO format invalid: '{GITHUB_REPO}' (should be 'username/repo')")
-
-if not TELEGRAM_TOKEN:
-    env_issues.append("TELEGRAM_TOKEN is missing")
-elif not TELEGRAM_TOKEN.endswith('bot') and len(TELEGRAM_TOKEN) < 20:
-    env_issues.append("TELEGRAM_TOKEN appears invalid")
-
-if not ALLOWED_CHAT_IDS:
-    env_issues.append("ALLOWED_CHAT_IDS is empty")
-
-if env_issues:
-    print("ENVIRONMENT VARIABLE ISSUES:")
-    for issue in env_issues:
-        print(f"  ❌ {issue}")
-else:
-    print("✅ All environment variables appear valid")
-
-# Test that we can create a simple response
-try:
-    with app.test_request_context('/'):
-        test_response = root()
-        print(f"Test response successful: {test_response}")
-except Exception as e:
-    print(f"Test response failed: {e}")
-    import traceback
-    traceback.print_exc()
+ALLOWED_CHAT_IDS = [id.strip() for id in os.environ.get('ALLOWED_CHAT_IDS', '').split(',') if id.strip()]
 
 def extract_url(text):
     """Extract URL from text"""
@@ -78,21 +26,76 @@ def extract_url(text):
             return word
     return None
 
-def extract_title_from_url(url):
-    """Try to get a readable title from URL"""
-    parsed = urlparse(url)
-    # Remove common suffixes and clean up
-    path = parsed.path.rstrip('/')
-    if path:
-        title = path.split('/')[-1]
-        title = title.replace('-', ' ').replace('_', ' ')
-        return title.title()
-    return parsed.netloc
+def categorize_url(url):
+    """Categorize URL by domain"""
+    url_lower = url.lower()
+    
+    # Podcast platforms
+    if 'spotify.com/episode' in url_lower or 'spotify.com/show' in url_lower:
+        return 'podcast'
+    if 'podcasts.apple.com' in url_lower:
+        return 'podcast'
+    if 'overcast.fm' in url_lower:
+        return 'podcast'
+    
+    # Video platforms
+    if 'youtube.com' in url_lower or 'youtu.be' in url_lower:
+        return 'video'
+    if 'vimeo.com' in url_lower:
+        return 'video'
+    
+    # Social media
+    if 'twitter.com' in url_lower or 'x.com' in url_lower:
+        return 'tweet'
+    
+    # Default to article
+    return 'article'
+
+def parse_message(text):
+    """
+    Parse message in format: URL + Title + Note
+    Returns: (url, title, note)
+    """
+    # Split by + sign
+    parts = text.split('+')
+    
+    if len(parts) >= 3:
+        # Format: URL + Title + Note
+        url = parts[0].strip()
+        title = parts[1].strip()
+        note = '+'.join(parts[2:]).strip()  # Rejoin in case note has + signs
+        return url, title, note
+    elif len(parts) == 2:
+        # Format: URL + Note (no explicit title)
+        url = parts[0].strip()
+        note = parts[1].strip()
+        # Extract title from URL as fallback
+        parsed = urlparse(url)
+        path = parsed.path.rstrip('/')
+        if path:
+            title = path.split('/')[-1].replace('-', ' ').replace('_', ' ').title()
+        else:
+            title = parsed.netloc
+        return url, title, note
+    else:
+        # Old format: URL Note (space-separated)
+        url = extract_url(text)
+        if url:
+            note = text.replace(url, '').strip()
+            # Extract title from URL
+            parsed = urlparse(url)
+            path = parsed.path.rstrip('/')
+            if path:
+                title = path.split('/')[-1].replace('-', ' ').replace('_', ' ').title()
+            else:
+                title = parsed.netloc
+            return url, title, note
+    
+    return None, None, None
 
 def update_github_json(new_entry):
     """Update the JSON file in GitHub repository"""
     
-    # Get current file content
     url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/tabula-rasa-data.json"
     headers = {
         'Authorization': f'token {GITHUB_TOKEN}',
@@ -108,12 +111,11 @@ def update_github_json(new_entry):
         )
         sha = file_data['sha']
     else:
-        # File doesn't exist, create new structure
         current_content = {"entries": []}
         sha = None
     
-    # Add new entry
-    current_content['entries'].insert(0, new_entry)  # Add to beginning
+    # Add new entry at the beginning
+    current_content['entries'].insert(0, new_entry)
     
     # Update file in GitHub
     import base64
@@ -131,103 +133,71 @@ def update_github_json(new_entry):
     response = requests.put(url, headers=headers, json=data)
     return response.status_code == 200 or response.status_code == 201
 
+@app.route('/')
+def root():
+    return jsonify({'status': 'webhook service running', 'timestamp': datetime.now().isoformat()})
+
 @app.route('/webhook/telegram', methods=['POST'])
 def telegram_webhook():
     """Handle incoming Telegram messages"""
     try:
-        print("=== WEBHOOK CALLED ===")
-        print(f"Request method: {request.method}")
-        print(f"Content-Type: {request.content_type}")
-        
         data = request.json
-        print(f"Raw request data: {data}")
         
-        if not data:
-            print("ERROR: No JSON data received")
+        if not data or 'message' not in data:
             return jsonify({'status': 'no_data'}), 400
         
-        # Check if message exists
-        if 'message' not in data:
-            print(f"ERROR: No 'message' key in data. Keys: {list(data.keys())}")
-            return jsonify({'status': 'no_message'}), 400
-        
         message = data['message']
-        print(f"Message data: {message}")
         
-        # Check if chat exists
         if 'chat' not in message:
-            print(f"ERROR: No 'chat' key in message. Keys: {list(message.keys())}")
             return jsonify({'status': 'no_chat'}), 400
             
-        # Verify it's a message from allowed user
         chat_id = str(message['chat']['id'])
-        print(f"Chat ID: {chat_id}")
-        print(f"Allowed chat IDs: {ALLOWED_CHAT_IDS}")
         
-        if not ALLOWED_CHAT_IDS:
-            print("ERROR: No allowed chat IDs configured")
-            return jsonify({'status': 'no_allowed_chats'}), 400
-            
-        if chat_id not in ALLOWED_CHAT_IDS:
-            print(f"ERROR: Unauthorized chat ID {chat_id}")
+        if not ALLOWED_CHAT_IDS or chat_id not in ALLOWED_CHAT_IDS:
             return jsonify({'status': 'unauthorized'}), 403
         
         message_text = message.get('text', '')
-        print(f"Message text: {message_text}")
         
         if not message_text:
-            print("ERROR: No text in message")
             return jsonify({'status': 'no_text'}), 400
         
-        # Parse message format: URL + Note (rest of the message)
-        url = extract_url(message_text)
-        print(f"Extracted URL: {url}")
+        # Parse message (supports both old and new format)
+        url, title, note = parse_message(message_text)
         
         if not url:
-            # Send error message back
-            print("Sending error message: no URL")
             send_telegram_message(
                 chat_id, 
-                "⚠️ No URL found. Please include a URL in your message."
+                "⚠️ No URL found. Please use format:\n\nURL + Title + Your thoughts\n\nExample:\nhttps://example.com + Great Article + This is my take"
             )
             return jsonify({'status': 'no_url'}), 400
         
-        # Everything else is the note
-        note = message_text.replace(url, '').strip()
-        print(f"Note: {note}")
-        
         if not note:
-            print("Sending error message: no note")
             send_telegram_message(
                 chat_id,
                 "⚠️ Please add your thoughts about this link."
             )
             return jsonify({'status': 'no_note'}), 400
         
-        # Try to extract title from URL
-        title = extract_title_from_url(url)
-        print(f"Title: {title}")
+        # Categorize the URL
+        category = categorize_url(url)
         
         # Create entry
         entry = {
             'date': datetime.now().strftime('%Y-%m-%d'),
             'url': url,
             'title': title,
-            'note': note
+            'note': note,
+            'category': category
         }
-        print(f"Entry created: {entry}")
         
         # Update GitHub
-        print("Updating GitHub...")
         if update_github_json(entry):
-            print("GitHub update successful")
             send_telegram_message(
                 chat_id,
-                f"✅ Added to Tabula Rasa!\n\n{title}\n{note}"
+                f"✅ Added to Tabula Rasa!\n\n{title}\n{note}\n\nCategory: {category}"
             )
             return jsonify({'status': 'success', 'entry': entry})
         else:
-            print("GitHub update failed")
             send_telegram_message(
                 chat_id,
                 "❌ Failed to add entry. Please try again."
@@ -235,9 +205,7 @@ def telegram_webhook():
             return jsonify({'status': 'github_error'}), 500
             
     except Exception as e:
-        print(f"EXCEPTION: {type(e).__name__}: {e}")
-        import traceback
-        print(f"Traceback: {traceback.format_exc()}")
+        print(f"Error: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 def send_telegram_message(chat_id, text):
@@ -255,20 +223,5 @@ def health():
     return jsonify({'status': 'ok'})
 
 if __name__ == '__main__':
-    try:
-        import os
-        port_str = os.environ.get('PORT', '5000')
-        print(f"PORT environment variable: {repr(port_str)}")
-        
-        try:
-            port = int(port_str)
-        except ValueError as e:
-            print(f"Invalid PORT value '{port_str}', using default 5000")
-            port = 5000
-            
-        print(f"Starting Flask app on port {port}...")
-        app.run(host='0.0.0.0', port=port, debug=False)
-    except Exception as e:
-        print(f"Failed to start Flask app: {e}")
-        import traceback
-        traceback.print_exc()
+    port = int(os.environ.get('PORT', '5000'))
+    app.run(host='0.0.0.0', port=port, debug=False)
