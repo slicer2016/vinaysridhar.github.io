@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0 20px;
             line-height: 1.6;
+            color: #333333;
         }
 
         h1 {
@@ -21,7 +22,19 @@
 
         .intro {
             margin-bottom: 2em;
-            color: #666;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: inherit;
+            text-decoration-color: cornflowerblue;
+            font-weight: medium;
         }
 
         .filters {
@@ -58,53 +71,29 @@
 
         .entry {
             margin-bottom: 0.75em;
-            display: flex;
-            align-items: baseline;
-            gap: 0.5em;
+            line-height: 1.6;
         }
 
         .entry.hidden {
             display: none;
         }
 
-        .date {
-            color: #999;
-            font-size: 0.9em;
-            flex-shrink: 0;
-        }
-
-        .link {
-            color: #000;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
-
-        .link:hover {
-            color: #666;
-        }
-
-        .separator {
-            color: #333;
-        }
-
-        .note {
-            color: #333;
-        }
-
-        .back-link {
-            color: #000;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
-
-        .back-link:hover {
-            color: #666;
-        }
-
         .loading {
             text-align: center;
             padding: 2em;
             color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .filter-btn {
+                flex-shrink: 0;
+            }
         }
     </style>
 </head>
@@ -143,7 +132,7 @@
                 const entriesList = document.getElementById('entries-list');
                 
                 if (!data.entries || data.entries.length === 0) {
-                    entriesList.innerHTML = '<li class="entry"><span class="note">No entries yet. Check back soon!</span></li>';
+                    entriesList.innerHTML = '<li class="entry">No entries yet. Check back soon!</li>';
                     return;
                 }
                 
@@ -156,8 +145,8 @@
                 
             } catch (error) {
                 console.error('Error loading entries:', error);
-                document.getElementById('entries-list').innerHTML = 
-                    '<li class="entry"><span class="note">Error loading entries. Please try again later.</span></li>';
+                document.getElementById('entries-list').innerHTML =
+                    '<li class="entry">Error loading entries. Please try again later.</li>';
             }
         }
         
@@ -169,24 +158,23 @@
                 : allEntries.filter(entry => entry.category === currentFilter);
             
             if (filteredEntries.length === 0) {
-                entriesList.innerHTML = '<li class="entry"><span class="note">No entries in this category.</span></li>';
+                entriesList.innerHTML = '<li class="entry">No entries in this category.</li>';
                 return;
             }
             
             entriesList.innerHTML = filteredEntries.map(entry => `
                 <li class="entry" data-category="${entry.category || 'article'}">
-                    <span class="date">${formatDate(entry.date)}</span>
-                    <a href="${entry.url}" target="_blank" rel="noopener noreferrer" class="link">${entry.title || entry.url}</a>
-                    <span class="separator">:</span>
-                    <span class="note">${entry.note}</span>
+                    [${formatDate(entry.date)}] <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: ${entry.note}
                 </li>
             `).join('');
         }
         
         function formatDate(dateString) {
             const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = date.toLocaleDateString('en-US', { month: 'short' });
+            const year = String(date.getFullYear()).slice(-2);
+            return `${day}-${month}-${year}`;
         }
         
         // Filter functionality
