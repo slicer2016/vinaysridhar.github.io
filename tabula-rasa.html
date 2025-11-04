@@ -167,21 +167,31 @@
             }
         }
         
+        function getCategoryIcon(category) {
+            const icons = {
+                'article': '📰',
+                'podcast': '🎙️',
+                'video': '🎥',
+                'tweet': '🐦'
+            };
+            return icons[category] || '📰';
+        }
+
         function renderEntries() {
             const entriesList = document.getElementById('entries-list');
-            
-            const filteredEntries = currentFilter === 'all' 
-                ? allEntries 
+
+            const filteredEntries = currentFilter === 'all'
+                ? allEntries
                 : allEntries.filter(entry => entry.category === currentFilter);
-            
+
             if (filteredEntries.length === 0) {
                 entriesList.innerHTML = '<li class="entry">No entries in this category.</li>';
                 return;
             }
-            
+
             entriesList.innerHTML = filteredEntries.map(entry => `
                 <li class="entry" data-category="${entry.category || 'article'}">
-                    <span class="date">[${formatDate(entry.date)}]</span> <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: <span class="note">${entry.note}</span>
+                    <span class="date">[${formatDate(entry.date)}]</span> ${getCategoryIcon(entry.category || 'article')} <a href="${entry.url}" target="_blank" rel="noopener noreferrer">${entry.title || entry.url}</a>: <span class="note">${entry.note}</span>
                 </li>
             `).join('');
         }
