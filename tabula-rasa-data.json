@@ -1,6 +1,13 @@
 {
   "entries": [
     {
+      "date": "2025-11-11",
+      "url": "https://www.nytimes.com/interactive/2025/11/07/us/flight-cancellations-airports.html?smid=nytcore-ios-share&referringSource=articleShare",
+      "title": "On flight cancellations",
+      "note": "Test",
+      "category": "article"
+    },
+    {
       "date": "2025-11-10",
       "url": "https://www.newyorker.com/magazine/2025/11/03/some-people-cant-see-mental-images-the-consequences-are-profound",
       "title": "On Aphantasia",
