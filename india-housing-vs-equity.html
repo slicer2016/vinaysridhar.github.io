@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Housing vs Equity: Did Real Estate Beat the Market?</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 1.5em;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 1.3em;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            padding-bottom: 0.5em;
+            font-weight: bold;
+            color: #000;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h3 {
+            font-size: 1em;
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            font-weight: bold;
+            color: #3d3a3a;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        ol {
+            padding-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        ol li {
+            margin-bottom: 0.75em;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: inherit;
+            text-decoration-color: cornflowerblue;
+            font-weight: medium;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.85em;
+            background-color: #f5f5f5;
+            padding: 0.15em 0.3em;
+            border-radius: 3px;
+        }
+
+        .explorer {
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin: 1em 0;
+            color: #555;
+            padding: 1em 0;
+            border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
+        }
+
+        @media screen and (min-width: 769px) {
+            .explorer {
+                position: sticky;
+                top: 0;
+                background-color: white;
+                z-index: 100;
+            }
+        }
+
+        .explorer h3 {
+            margin-top: 0;
+            font-size: 0.9em;
+            margin-bottom: 0.5em;
+        }
+
+        .explorer p {
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .explorer a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .explorer a:hover {
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;
+        }
+
+        @media screen and (max-width: 768px) {
+            .explorer {
+                position: static;
+                background-color: transparent;
+                z-index: auto;
+            }
+        }
+
+        .explorer a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: cornflowerblue;
+            text-underline-offset: 3px;
+        }
+
+        .explorer a:hover {
+            text-decoration-color: cornflowerblue;
+            font-weight: medium;
+        }
+
+        .explorer p {
+            margin: 0.5em 0;
+        }
+
+        [id] {
+            scroll-margin-top: 200px;
+        }
+        
+        @media screen and (max-width: 768px) {
+            [id] {
+                scroll-margin-top: 250px;
+            }
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5em 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        th, td {
+            padding: 0.5em 0.75em;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+
+        thead tr:first-child th {
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        tr.highlight-blue {
+            font-weight: bold;
+            background-color: #dce8f7;
+        }
+
+        tr.highlight-orange {
+            font-weight: bold;
+            background-color: #fdecd2;
+        }
+
+    </style>
+</head>
+<body>
+    <p><a href="index.html">Back to Home</a></p>
+    <h1>India Housing vs Equity: Did Real Estate Beat the Market?</h1>
+
+    <p>My mother-in-law has recently been trying to convince me to purchase land in India. As an advocate of the equity markets for retail investors, I have always refused - it's hard to beat the capital appreciation, liquidity, and long-term stability one gets from equities. She then proceeded to tell me that land appreciates faster than equities. Admittedly, I was skeptical, but I hadn't ever seen this data myself.</p>
+
+    <p>I asked around but nobody I knew had seen an analysis comparing these options. Being highly petty (and a tiny bit curious), I decided to attempt my own using the Reserve Bank of India's <a href="https://data.rbi.org.in/DBIE/#/dbie/reports/Statistics/Real%20Sector/Prices%20&%20Wages:~:text=ice-,Index,-Quarterly" target="_blank">Housing Price Index</a> (starts 2010) and comparing it to the <a href="https://www.google.com/search?q=nifty+50&rlz=1C5GCCM_en&oq=nifty+50&gs_lcrp=EgZjaHJvbWUyFQgAEEUYORiDARiRAhixAxiABBiKBTINCAEQABiRAhiABBiKBTIMCAIQABhDGIAEGIoFMhMIAxAAGIMBGJECGLEDGIAEGIoFMg0IBBAAGJECGIAEGIoFMgwIBRAAGEMYgAQYigUyEggGEAAYQxiDARixAxiABBiKBTIMCAcQABhDGIAEGIoFMg8ICBAAGBQYhwIYsQMYgAQyCggJEAAYsQMYgATSAQgxNTk3ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8#:~:text=NIFTY%2050%20%2D%20NSE,tracker%20%E2%80%BA%20NIFTY%2050" target="_blank">Nifty 50</a> (with assistance from my very fast and painfully literal analyst, Claude Opus). Dataset <a href="appendix_quarterly_data.csv" target="_blank">here</a> for anyone wanting to build on this.</p>
+
+    <p>Findings below, but TL;DR: My mother-in-law was wrong, but as an old friend said to me on a Whatsapp group: "No data gonna win over an MIL anecdote". Ah well.</p>
+
+    <div class="explorer">
+        <p><a href="#leaderboard">Overview of Cities vs Equities</a>; <a href="#insights">Insights & Take-Aways</a>; <a href="#appendix">Appendix: Data Sources</a></p>
+
+        <p><strong>Caveats:</strong> <a href="#hpi-works">How the RBI HPI Works</a>; <a href="#housing-vs-land">1. Housing Prices vs Land Prices</a>; <a href="#black-money">2. Black Money and Data Quality</a>; <a href="#adjustments">3. Additional Adjustments Not Made</a></p>
+    </div>
+
+    <h2 id="leaderboard">Overview of India Housing vs Equities</h2>
+    <h3>Comparison of Returns of Housing in Top 10 Cities vs Nifty 50 (2010-2024)</h3>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    <th colspan="2" style="text-align: center;">Returns</th>
+                    <th colspan="2" style="text-align: center;">Land Decomposition</th>
+                    <th style="text-align: center;">Leverage</th>
+                </tr>
+                <tr>
+                    <th>Rank</th>
+                    <th>Asset</th>
+                    <th>Nominal CAGR</th>
+                    <th>Real CAGR</th>
+                    <th>Implied Land CAGR</th>
+                    <th>Land Share</th>
+                    <th>Levered ROE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Lucknow</td>
+                    <td>11.3%</td>
+                    <td>5.2%</td>
+                    <td><strong>16.4%</strong></td>
+                    <td>40%</td>
+                    <td><strong>28.5%</strong></td>
+                </tr>
+                <tr class="highlight-blue">
+                    <td>2</td>
+                    <td>NIFTY 50 (Price)</td>
+                    <td>10.8%</td>
+                    <td>4.8%</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Kolkata</td>
+                    <td>10.8%</td>
+                    <td>4.7%</td>
+                    <td><strong>14.9%</strong></td>
+                    <td>45%</td>
+                    <td><strong>26.0%</strong></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Kochi</td>
+                    <td>9.6%</td>
+                    <td>3.6%</td>
+                    <td><strong>12.7%</strong></td>
+                    <td>50%</td>
+                    <td><strong>19.9%</strong></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Ahmedabad</td>
+                    <td>9.6%</td>
+                    <td>3.6%</td>
+                    <td><strong>13.2%</strong></td>
+                    <td>45%</td>
+                    <td><strong>19.9%</strong></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Bengaluru</td>
+                    <td>9.4%</td>
+                    <td>3.4%</td>
+                    <td><strong>12.4%</strong></td>
+                    <td>50%</td>
+                    <td><strong>19.0%</strong></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Delhi</td>
+                    <td>8.9%</td>
+                    <td>2.9%</td>
+                    <td><strong>10.5%</strong></td>
+                    <td>65%</td>
+                    <td><strong>16.4%</strong></td>
+                </tr>
+                <tr class="highlight-orange">
+                    <td>8</td>
+                    <td>All India</td>
+                    <td>8.9%</td>
+                    <td>2.9%</td>
+                    <td><strong>11.2%</strong></td>
+                    <td>55%</td>
+                    <td><strong>16.4%</strong></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Mumbai</td>
+                    <td>8.7%</td>
+                    <td>2.8%</td>
+                    <td><strong>10.0%</strong></td>
+                    <td>70%</td>
+                    <td><strong>15.6%</strong></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Chennai</td>
+                    <td>8.0%</td>
+                    <td>2.1%</td>
+                    <td><strong>10.5%</strong></td>
+                    <td>50%</td>
+                    <td><strong>12.2%</strong></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Kanpur</td>
+                    <td>4.8%</td>
+                    <td>-1.0%</td>
+                    <td><strong>5.2%</strong></td>
+                    <td>35%</td>
+                    <td><strong>-4.2%</strong></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>Jaipur</td>
+                    <td>4.4%</td>
+                    <td>-1.3%</td>
+                    <td><strong>4.2%</strong></td>
+                    <td>40%</td>
+                    <td><strong>-6.1%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 id="modeling-assumptions">Modeling Assumptions</h3>
+
+    <p>
+        <em><strong>Period:</strong> Jun 2010 – Dec 2024 (14.5 years, 59 quarters)</em><br>
+        <em><strong>Housing:</strong> RBI House Price Index, 10 cities + All India (base 2010-11 = 100)</em><br>
+        <em><strong>Equity:</strong> NIFTY 50 Price Index (dividends excluded — true equity CAGR ~1.5 pp higher)</em>
+    </p>
+
+    <ul>
+        <li><strong>Nominal CAGR</strong>: <code>(end_index / start_index)^(1/14.5) − 1</code> on the RBI HPI (land + structure composite)</li>
+        <li><strong>Real CAGR</strong>: nominal deflated by avg CPI of ~5.8% pa (derived from BIS/FRED real vs nominal India HPI). NIFTY 50 TRI (not shown) would add ~1.5 pp → ~12.3% nominal, ~6.1% real</li>
+        <li><strong>Land Share</strong>: estimated share of land in initial property value. Metros with severe land constraints (Mumbai 70%, Delhi 65%) have higher shares; Tier-2 cities with horizontal sprawl (Kanpur 35%, Lucknow/Jaipur 40%) have lower shares. Order-of-magnitude estimates — actual shares will vary</li>
+        <li><strong>Implied Land CAGR</strong>: backsolves into land value assuming <code>(1+g)^T = α(1+l)^T + (1-α)(1+s)^T</code> where <code>g</code> = HPI CAGR, <code>α</code> = land share, <code>s</code> = net structure appreciation at 4.5% pa (= ~6% construction cost inflation per JLL India − ~1.5% physical depreciation for concrete residential structures), <code>l</code> = implied land appreciation</li>
+        <li><strong>Levered ROE for Real Estate</strong>: <code>(CAGR × 100% − 7% × 80%) / 20%</code>. Assumes 20% down payment, 80% home loan at 7% pa. Simplified annual calculation — ignores EMI amortisation and declining LTV as principal is repaid. Does not include rental yield or property costs</li>
+    </ul>
+
+    <h2 id="insights">Insights & Take-Aways</h2>
+
+    <p style="background-color: #e6f4e8; padding: 0.4em 0.6em; display: inline-block;"><strong>Did housing outperform NIFTY 50?</strong> <strong>No.</strong></p>
+
+    <ul>
+        <li>9 of 10 cities underperformed the NIFTY 50 price index (10.8% CAGR). Adjusting for dividends (TRI ~12.3%), all 10 underperformed</li>
+        <li>On a real (inflation-adjusted) basis the gap widens: All India housing earned 2.9% real vs NIFTY 50 TRI at ~6.1%</li>
+        <li>The common Indian intuition that "property always beats shares" is wrong for this period</li>
+    </ul>
+
+    <p style="margin-top: 1.5em;"><span style="background-color: #e6f4e8; padding: 0.2em 0.4em;"><strong>Did COVID change the picture?</strong> <strong>Yes</strong>.</span> Pre-COVID, housing and equities tracked roughly together. Post-COVID, equities surged (NIFTY doubled 2020-2024) while housing slowed to 2-4% YoY. Rolling 5-year CAGR chart shows this divergence — equity sits at 15%+ while housing compressed to 2-5%.</p>
+
+    <ol>
+        <li><strong>HPI (land + structure combined): All India earned 8.9% nominal, 2.9% real.</strong> The RBI HPI tracks composite property transaction prices — it blends appreciating land with depreciating structure. Only Lucknow (11.3%) beat NIFTY 50 price; <strong>no city beat TRI-adjusted equity</strong>. Kanpur (4.8%) and Jaipur (4.4%) delivered negative real returns — property buyers in these cities lost purchasing power over 14.5 years</li>
+        <li><strong>Implied land-only: All India earned ~11.2% nominal, ~5.1% real.</strong> Decomposing the HPI into land and structure (assuming land = 35-70% of initial value by city; structure appreciates at net 4.5% pa) reveals land CAGR runs 1-5 pp above the headline. <strong>Even so, only Lucknow (16.4%) and Kolkata (14.9%) land returns exceeded NIFTY 50 TRI (~12.3%).</strong> Land in 8 of 10 cities underperformed equities</li>
+        <li><strong>Leverage is housing's strongest card — and it flips the ranking.</strong> A 20% down payment on a 9% appreciating All India asset produces ~16% levered ROE; Lucknow buyers earned 28.5% on their equity, beating any unleveraged equity return. Bengaluru ~19%, Mumbai ~16%. This is housing's real advantage — home loans at 7-9% are the cheapest leverage retail investors can access. But leverage amplifies losses too: Kanpur (-4.2%) and Jaipur (-6.1%) levered buyers destroyed capital faster than if they'd bought outright</li>
+        <li><strong>City selection mattered enormously.</strong> Lucknow (11.3% CAGR) outperformed Jaipur (4.4%) by 2.6x over the same period. The All India average hides this dispersion. Anyone who bought in Lucknow in 2010 and held, did well. Anyone who bought in Jaipur or Kanpur lost to inflation</li>
+        <li><strong>Is the data clean?</strong> Reasonably so. Our data matches three independent sources within tight margins (see Data Validation). The main systematic bias:
+            <ol type="a">
+                <li>Pre-2017 black money underreporting likely means the HPI slightly overstates post-2017 appreciation as registrations converged toward true market prices</li>
+                <li>Post-RERA data is more reliable. The Real Estate (Regulation and Development) Act is a 2016 law designed to regulate the real estate sector, boost transparency, and protect homebuyers. It mandates registration of projects/agents, requires 70% of funds to be kept in a separate account for construction, and ensures sale on carpet area.</li>
+            </ol>
+        </li>
+    </ol>
+
+    <h2 id="caveats">Caveats: What the HPI Does and Doesn't Capture</h2>
+
+    <h3 id="hpi-works">How the RBI HPI Works</h3>
+
+    <p>The RBI compiles its HPI using a <strong>Laspeyres index</strong> (basically compares the cost of a base-year basket of goods to current prices) applied to transaction-level registration data from 10 cities (expanded to 18 in 2025). The data comes from sub-registrar offices — actual property sale deeds, not surveys or listings.</p>
+
+    <p>Key properties:</p>
+
+    <ul>
+        <li><strong>Transaction-weighted, not value-weighted.</strong> A ₹20L flat in Kanpur and a ₹5Cr flat in Mumbai each count as one transaction</li>
+        <li><strong>No quality or hedonic adjustment.</strong> If the mix of properties sold shifts toward smaller/cheaper units (as it did during COVID), the index falls — even if per-square-foot prices held steady</li>
+        <li><strong>Quarterly frequency</strong> inherently smooths volatility vs daily-priced assets. Comparing HPI volatility to equity volatility is like comparing a heart rate measured once per hour vs continuously — the underlying risk isn't different, just the measurement frequency</li>
+    </ul>
+
+    <h3 id="housing-vs-land">1. Housing Prices vs Land Prices</h3>
+
+    <p>The HPI captures the <strong>composite property transaction price</strong> (land + structure). It does not isolate the land component. We decompose it in the leaderboard table above.</p>
+
+    <p>A residential property is two assets in a trenchcoat: land (appreciates) and structure (depreciates physically, but replacement cost rises with construction inflation). The HPI blends both. Implied land CAGR runs 1-5 pp above the headline HPI CAGR in every city — the structure component dilutes pure land returns.</p>
+
+    <p>Land-constrained metros (Mumbai, Delhi) show a smaller gap because land is already ~65-70% of value. Tier-2 cities show a larger gap because structure is a bigger share: Lucknow land (16.4%) vs Lucknow HPI (11.3%) is a +5.1 pp difference.</p>
+
+    <p><strong>Research context:</strong> <a href="https://www.epw.in/journal/2013/17/special-articles/new-price-regime.html" target="_blank">Chakravorty (2013, EPW)</a> documented Indian urban land prices rising ~5x in the decade to 2013, driven by credit expansion, income growth, and artificial scarcity from low FSI/FAR regulations. India's Development Control Regulations (Mumbai's FSI of 1.33-2.0 vs Singapore's 25+) restrict vertical development, creating land scarcity that inflates the land component disproportionately. Our implied estimates are consistent with this for the early period, but the post-2017 slowdown compressed land returns significantly.</p>
+
+    <h3 id="black-money">2. Black Money and Data Quality</h3>
+
+    <p>India's real estate sector has historically been the largest sink for undisclosed income. A 2024 LocalCircles survey found <strong>two-thirds of property buyers paid part of the transaction in cash</strong>, with 26% paying over half in cash. Reuters (2013) documented cash components of 30-50% in high-value transactions.</p>
+
+    <p>This creates a specific bias in the HPI: <strong>registered values systematically understate actual transaction prices.</strong> The gap between "circle rate" (government valuation) and "market rate" has historically been 30-60% in many cities.</p>
+
+    <p>Three regulatory shifts have narrowed this gap: Demonetization (Nov 2016), RERA (May 2017) and the Benami Act enforcement (2016 onwards). I could not find a study that estimates the reduction in cash share post these regulatory shifts.</p>
+
+    <p><strong>What this means for the index:</strong> Pre-2017 HPI likely understates actual prices (cash component unregistered). Post-2017, registrations more closely reflect true market prices. This creates an <strong>artificial upward trend</strong> in the index around 2016-2018 — not because prices rose, but because the <em>recorded</em> share of actual prices increased. The HPI may overstate post-2017 appreciation and understate pre-2017 levels.</p>
+
+    <h3 id="adjustments">3. Additional Adjustments Not Made</h3>
+
+    <p>Couple of other adjustments one could make if you <s>were even more petty</s> had more time.</p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Direction</th>
+                    <th>Magnitude</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rental yield</td>
+                    <td>Adds to housing</td>
+                    <td>+2-3% pa</td>
+                    <td>Gross yield; net of maintenance/vacancy ~1.5-2%</td>
+                </tr>
+                <tr>
+                    <td>Transaction costs</td>
+                    <td>Subtracts from housing</td>
+                    <td>-6-8% round-trip</td>
+                    <td>Stamp duty 5-7%, brokerage 1-2%, registration</td>
+                </tr>
+                <tr>
+                    <td>Property tax</td>
+                    <td>Subtracts from housing</td>
+                    <td>-0.1-0.5% pa</td>
+                    <td>Varies widely by city</td>
+                </tr>
+                <tr>
+                    <td>Maintenance/depreciation</td>
+                    <td>Subtracts from housing</td>
+                    <td>-0.5-1% pa</td>
+                    <td>Structure depreciates; periodic renovation required</td>
+                </tr>
+                <tr>
+                    <td>Equity dividends (TRI)</td>
+                    <td>Adds to equity</td>
+                    <td>+1.2-1.5% pa</td>
+                    <td>Already reflected in TRI; not in our price index</td>
+                </tr>
+                <tr>
+                    <td>Equity STT/brokerage</td>
+                    <td>Subtracts from equity</td>
+                    <td>&lt;0.1% pa</td>
+                    <td>Negligible for buy-and-hold</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>On an all-in basis, incorporating rental yield, transaction costs, maintenance, and taxes, housing returns and equity returns diverge further in favour of equities — unless you factor in leverage, which most home buyers use.</p>
+
+    <h2 id="appendix">Appendix: Data Sources</h2>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dataset</th>
+                    <th>Source</th>
+                    <th>Coverage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RBI HPI (10 cities + All India)</td>
+                    <td>360 Analytika (mirrors RBI DBIE)</td>
+                    <td>Q1:2010-11 to Q3:2024-25</td>
+                </tr>
+                <tr>
+                    <td>NIFTY 50 Price Index</td>
+                    <td>Yahoo Finance (yfinance)</td>
+                    <td>Apr 2010 – Dec 2024</td>
+                </tr>
+                <tr>
+                    <td>BIS Real HPI (triangulation)</td>
+                    <td>FRED series QINR628BIS</td>
+                    <td>Q1 2010 – Q3 2025</td>
+                </tr>
+                <tr>
+                    <td>BIS Nominal HPI (triangulation)</td>
+                    <td>FRED series QINN628BIS</td>
+                    <td>Q1 2010 – Q3 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
