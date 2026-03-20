@@ -851,7 +851,7 @@
 
 <header>
   <h1>API-first Search vs. Agentic Commerce</h1>
-  <p>I built this to explore the practical difference between traditional keyword-based search and the emerging <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a> — a new spec that lets AI agents interact directly with merchant systems. The same query runs through both approaches simultaneously, using the same live product catalog fetched from Google Shopping. Beyond checkout, ACP opens up a much wider design space: because there's an LLM reasoning through catalogs, you can build genuinely interesting products on top — this demo illustrates one, a shopping agent with distinct personas that interpret the same query very differently.</p>
+  <p>I built this to explore the practical difference between traditional keyword-based search and the emerging <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a> — a new spec that lets AI agents interact directly with merchant systems. The same query runs through both approaches simultaneously, using the same live product catalog fetched from free catalog APIs. Beyond checkout, ACP opens up a much wider design space with easier opt-ins for the entire ecosystem: because there's an LLM reasoning through catalogs, you can build genuinely interesting products on top — this demo illustrates one, an "ACP-like" shopping agent with distinct personas that interpret the same query very differently. <i>Technically</i>, you can do all this without the ACP</p>
 </header>
 
 <div class="search-section">
@@ -864,7 +864,7 @@
 <div id="fetch-banner" class="fetch-banner" style="display:none">
   <div id="fetch-banner-spinner" class="spinner"></div>
   <span id="fetch-banner-icon" style="display:none;color:var(--teal-500);font-size:1rem;line-height:1">✓</span>
-  <span id="fetch-banner-text">Fetching catalog from Google Shopping...</span>
+  <span id="fetch-banner-text">Fetching catalog...</span>
 </div>
 
 <div class="columns">
@@ -916,8 +916,8 @@
         </button>
       </div>
       <div class="methodology">
-        <p>The same Google Shopping catalog is fetched live for each query and passed in full to a Claude model (50 products, with ratings, reviews, and delivery info). Claude reasons over it and selects the top 5 matches. Clicking <strong>Buy Now</strong> on any pick opens an ACP-compliant checkout session — no redirect required.</p>
-        <p class="stack">Stack: Claude (claude-sonnet-4-6) → catalog reasoning → ACP checkout → Stripe (test)</p>
+        <p>The same product catalog is fetched live for each query and passed in full to a Claude model (50 products, with ratings, reviews, and delivery info). Claude reasons over it and selects the top 5 matches. Clicking <strong>Buy Now</strong> on any pick opens an ACP-compliant checkout session — no redirect required.</p>
+        <p class="stack">Stack: Claude (claude-sonnet-4-6) → catalog reasoning → ACP-like checkout → Stripe (test)</p>
       </div>
     </div>
 
@@ -942,7 +942,7 @@
         <button class="persona-btn" id="persona-btn-mom" data-persona="mom" onclick="selectPersona('mom')" disabled>🛒 Middle Class Mom</button>
       </div>
       <div class="persona-footnotes">
-        <span>Learn more about SoBo influencers (<a href="https://www.instagram.com/p/DT6zHZjjvxm/" target="_blank" rel="noopener">here</a> and <a href="https://www.instagram.com/p/DE1ZspwthQh/" target="_blank" rel="noopener">here</a>) and Middle Class Moms (<a href="https://www.instagram.com/p/CwcLT6rNeQs/" target="_blank" rel="noopener">here</a>).</span>
+        <span>Learn more about South Bombay influencers (<a href="https://www.instagram.com/p/DT6zHZjjvxm/" target="_blank" rel="noopener">here</a> and <a href="https://www.instagram.com/p/DE1ZspwthQh/" target="_blank" rel="noopener">here</a>) and Middle Class Moms (<a href="https://www.instagram.com/p/CwcLT6rNeQs/" target="_blank" rel="noopener">here</a>).</span>
       </div>
     </div>
 
