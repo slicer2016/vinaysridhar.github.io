@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACP Demo — API-first vs. Agentic Commerce</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --teal-50: #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: var(--gray-900);
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 2rem 2rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    header p a {
+      color: var(--gray-700);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    header p a:hover {
+      color: var(--gray-900);
+    }
+
+    /* ── Search bar ── */
+    .search-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 1rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    #query-input {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 0.9375rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    #query-input:focus { border-color: var(--blue-500); }
+
+    #search-btn {
+      padding: 0.625rem 1.25rem;
+      background: var(--gray-900);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    #search-btn:hover { background: var(--gray-700); }
+    #search-btn:disabled { background: var(--gray-400); cursor: not-allowed; }
+
+
+    .fetch-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.625rem 1.5rem;
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    /* ── Two-column layout ── */
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .pane {
+      padding: 1.5rem 2rem 3rem;
+    }
+
+    .pane-left { border-right: 1px solid var(--gray-200); }
+
+    /* ── Pane headers ── */
+    .pane-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .pane-left .pane-label { color: var(--gray-500); }
+    .pane-right .pane-label { color: var(--teal-600); }
+
+    /* ── Persona color tokens ── */
+    .pane-right[data-persona="neutral"] {
+      --persona-500: var(--teal-500);
+      --persona-600: var(--teal-600);
+      --persona-50:  var(--teal-50);
+      --persona-100: var(--teal-100);
+    }
+    .pane-right[data-persona="sobo"] {
+      --persona-500: #f472b6;
+      --persona-600: #db2777;
+      --persona-50:  #fdf2f8;
+      --persona-100: #fce7f3;
+    }
+    .pane-right[data-persona="mom"] {
+      --persona-500: #38bdf8;
+      --persona-600: #0284c7;
+      --persona-50:  #f0f9ff;
+      --persona-100: #e0f2fe;
+    }
+
+    .pane-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.875rem;
+    }
+
+    /* ── Methodology box ── */
+    .methodology-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .methodology-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px 6px 0 0;
+      padding: 0.5rem 0.75rem 0.5rem 1.125rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .methodology-wrap.collapsed .methodology-header {
+      border-radius: 6px;
+    }
+    .methodology-header:hover { background: var(--gray-100); }
+
+    .pane-right .methodology-header {
+      background: var(--persona-50, var(--teal-50));
+      border-color: var(--persona-100, var(--teal-100));
+    }
+    .pane-right .methodology-header:hover {
+      filter: brightness(0.97);
+    }
+
+    .methodology-header-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      letter-spacing: 0.03em;
+    }
+    .pane-right .methodology-header-label {
+      color: var(--persona-600, var(--teal-600));
+    }
+
+    .methodology-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.125rem 0.25rem;
+      color: var(--gray-400);
+      font-size: 0.875rem;
+      line-height: 1;
+      transition: transform 0.25s ease, color 0.15s;
+      display: flex;
+      align-items: center;
+    }
+    .methodology-toggle svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.25s ease;
+    }
+    .methodology-wrap.collapsed .methodology-toggle svg {
+      transform: rotate(-90deg);
+    }
+
+    .methodology {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 0.875rem 1.125rem 1rem;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    .pane-right .methodology {
+      background: var(--persona-50, var(--teal-50));
+      border-color: var(--persona-100, var(--teal-100));
+    }
+
+    .methodology-wrap.collapsed .methodology {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .methodology p {
+      font-size: 0.8125rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 0.625rem;
+    }
+
+    .methodology p:last-child { margin-bottom: 0; }
+
+    .methodology .stack {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gray-500);
+    }
+
+    .pane-right .methodology .stack { color: var(--persona-600, var(--teal-600)); }
+
+    /* ── Loading state ── */
+    .acp-status-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 3rem; /* holds space so button appears on same line even after loading hides */
+    }
+
+    .loading {
+      display: none;
+      align-items: center;
+      gap: 0.625rem;
+      padding: 1rem 0;
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    .acp-status-row .loading {
+      padding: 0;
+    }
+
+    .loading.visible { display: flex; }
+
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--gray-200);
+      border-top-color: var(--gray-500);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .pane-right .spinner { border-top-color: var(--teal-500); }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Product cards ── */
+    .results { display: flex; flex-direction: column; gap: 1rem; }
+
+    .card {
+      display: flex;
+      gap: 0.875rem;
+      padding: 0.875rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+      flex-shrink: 0;
+      background: var(--gray-100);
+    }
+
+    .card-body { flex: 1; min-width: 0; }
+
+    .card-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Disabled "buy" button (left pane) ── */
+    .btn-disabled {
+      display: inline-block;
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      padding: 0.25rem 0.625rem;
+      cursor: not-allowed;
+      position: relative;
+    }
+
+    .btn-disabled:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 0;
+      white-space: nowrap;
+      background: var(--gray-800);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* ── Active "buy" link (left pane) ── */
+    .btn-link {
+      display: inline-block;
+      font-size: 0.8125rem;
+      color: var(--gray-700);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 5px;
+      padding: 0.25rem 0.625rem;
+      text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+
+    .btn-link:hover {
+      background: var(--gray-200);
+      border-color: var(--gray-400);
+    }
+
+    /* ── Reasoning steps ── */
+    .reasoning-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .reasoning-step {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .reasoning-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step-icon {
+      color: var(--teal-500);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── ACP picks list (right pane) ── */
+    .acp-picks { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; }
+
+    .pick-card {
+      display: flex;
+      gap: 0.875rem;
+      padding: 0.875rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .pick-card.visible { opacity: 1; transform: translateY(0); }
+
+    .pick-card.pick-top {
+      border-color: var(--persona-100, var(--teal-100));
+      background: var(--persona-50, var(--teal-50));
+    }
+
+    .pick-card img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 5px;
+      flex-shrink: 0;
+      background: var(--gray-100);
+    }
+
+    .pick-card .card-body { flex: 1; min-width: 0; }
+
+    .pick-rank {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .pick-top .pick-rank { color: var(--persona-600, var(--teal-600)); }
+    .pick-card:not(.pick-top) .pick-rank { color: var(--gray-400); }
+
+    .pick-highlight {
+      font-size: 0.8125rem;
+      color: var(--gray-600);
+      margin-top: 0.3rem;
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.375rem;
+    }
+
+    .pick-top .pick-highlight { color: var(--persona-600, var(--teal-600)); }
+
+    .pick-check {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--persona-500, var(--teal-500));
+    }
+
+    /* ── ACP checkout panel ── */
+    .acp-panel {
+      display: none;
+      margin-top: 1.25rem;
+      border: 1px solid var(--teal-100);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .acp-panel.visible { display: block; }
+
+    .acp-panel-header {
+      background: var(--teal-50);
+      border-bottom: 1px solid var(--teal-100);
+      padding: 0.625rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--teal-600);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .acp-stage-badge {
+      font-size: 0.6875rem;
+      background: var(--teal-600);
+      color: #fff;
+      padding: 0.125rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .acp-panel-body { padding: 1rem; }
+
+    .acp-shipping {
+      margin-bottom: 1rem;
+    }
+
+    .acp-shipping label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: 0.375rem;
+      color: var(--gray-700);
+    }
+
+    .shipping-options {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .shipping-option {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      background: #fff;
+      transition: border-color 0.12s, background 0.12s;
+      text-align: left;
+    }
+
+    .shipping-option:hover { border-color: var(--teal-500); }
+    .shipping-option.selected { border-color: var(--teal-500); background: var(--teal-50); }
+
+    .shipping-option .ship-label { font-weight: 500; color: var(--gray-800); }
+    .shipping-option .ship-price { color: var(--gray-500); margin-top: 0.125rem; }
+
+    .acp-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-complete {
+      padding: 0.4375rem 1rem;
+      background: var(--gray-900);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .btn-complete:hover { background: var(--gray-700); }
+    .btn-complete:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .stripe-note {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      font-style: italic;
+    }
+
+    /* ── JSON viewer ── */
+    .json-viewer {
+      display: none;
+      background: var(--gray-900);
+      border-radius: 6px;
+      padding: 1rem;
+      overflow-x: auto;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .json-viewer.visible { display: block; }
+
+    .btn-show-json {
+      font-size: 0.75rem;
+      color: var(--teal-600);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 0.5rem;
+      text-decoration: underline;
+    }
+
+    .btn-show-thinking {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .json-viewer pre {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+      white-space: pre;
+    }
+
+    /* JSON syntax highlighting */
+    .json-key { color: #93c5fd; }
+    .json-string { color: #86efac; }
+    .json-number { color: #fca5a5; }
+    .json-bool { color: #fde68a; }
+    .json-null { color: #d1d5db; }
+
+    /* ── Pagination (left pane) ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+    }
+
+    .pagination-btns { display: flex; gap: 0.375rem; }
+
+    .btn-page {
+      padding: 0.25rem 0.625rem;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 5px;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .btn-page:hover:not(:disabled) { background: var(--gray-200); }
+    .btn-page:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Error state ── */
+    .error-state {
+      display: none;
+      padding: 1rem;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: #b91c1c;
+    }
+
+    .error-state.visible { display: block; }
+
+    /* ── Success state ── */
+    .success-banner {
+      display: none;
+      padding: 0.75rem 1rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: #15803d;
+      font-weight: 500;
+      margin-bottom: 0.875rem;
+    }
+
+    .success-banner.visible { display: block; }
+
+    /* ── Checkout with ACP button (top pick card) ── */
+    .btn-checkout-acp {
+      margin-top: 0.5rem;
+      padding: 0.375rem 0.875rem;
+      background: var(--teal-600);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .btn-checkout-acp:hover { background: var(--teal-500); }
+
+    /* ── Persona toggle ── */
+    .persona-selector {
+      background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+      border-radius: 10px;
+      padding: 1rem 1.125rem 1.125rem;
+      margin-bottom: 1rem;
+    }
+    .persona-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.625rem;
+    }
+    .persona-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .persona-footnotes {
+      margin-top: 0.625rem;
+      font-size: 0.6875rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .persona-footnotes a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: underline;
+    }
+    .persona-footnotes a:hover {
+      color: rgba(255,255,255,0.9);
+    }
+    .persona-btn {
+      padding: 0.5rem 1rem;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.75);
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .persona-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.45);
+      color: #fff;
+    }
+    .persona-btn.active {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 0 0 3px rgba(20,184,166,0.3);
+    }
+    .pane-right[data-persona="sobo"] .persona-btn[data-persona="sobo"].active {
+      background: #f472b6;
+      border-color: #f472b6;
+      box-shadow: 0 0 0 3px rgba(244,114,182,0.3);
+    }
+    .pane-right[data-persona="mom"] .persona-btn[data-persona="mom"].active {
+      background: #38bdf8;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.3);
+    }
+
+.persona-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .persona-btn:disabled:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.75);
+    }
+    .persona-gate {
+      padding: 0.875rem 1rem;
+      border: 2px dashed var(--teal-200);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: var(--teal-600);
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: pulse-border 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-border { 0%,100% { border-color: var(--teal-200); } 50% { border-color: var(--teal-500); } }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      header, .search-section { padding-left: 1rem; padding-right: 1rem; }
+      .columns { grid-template-columns: 1fr; }
+      .pane-left { border-right: none; border-bottom: 1px solid var(--gray-200); }
+      .pane { padding: 1.25rem 1rem 2rem; }
+      .shipping-options { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>API-first Search vs. Agentic Commerce</h1>
+  <p>I built this to explore the practical difference between traditional keyword-based search and the emerging <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a> — a new spec that lets AI agents interact directly with merchant systems. The same query runs through both approaches simultaneously, using the same live product catalog fetched from Google Shopping. Beyond checkout, ACP opens up a much wider design space: because there's an LLM reasoning through catalogs, you can build genuinely interesting products on top — this demo illustrates one, a shopping agent with distinct personas that interpret the same query very differently.</p>
+</header>
+
+<div class="search-section">
+  <div class="search-row">
+    <input id="query-input" type="text" placeholder="" autocomplete="off" />
+    <button id="search-btn" onclick="runSearch()">Search</button>
+  </div>
+</div>
+
+<div id="fetch-banner" class="fetch-banner" style="display:none">
+  <div id="fetch-banner-spinner" class="spinner"></div>
+  <span id="fetch-banner-icon" style="display:none;color:var(--teal-500);font-size:1rem;line-height:1">✓</span>
+  <span id="fetch-banner-text">Fetching catalog from Google Shopping...</span>
+</div>
+
+<div class="columns">
+
+  <!-- LEFT PANE -->
+  <div class="pane pane-left">
+    <div class="pane-label">API-first</div>
+    <div class="pane-title">API Search</div>
+
+    <div class="methodology-wrap" id="methodology-wrap-old">
+      <div class="methodology-header" onclick="toggleMethodology('old')">
+        <span class="methodology-header-label">How it works</span>
+        <button class="methodology-toggle" tabindex="-1" aria-label="Toggle methodology">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 7,10 12,4"/></svg>
+        </button>
+      </div>
+      <div class="methodology">
+        <p>Products are fetched live from Google Shopping (via SerpAPI) for each query. Results are ranked by a simple popularity score: rating × log(1 + review_count). This rewards items that are both highly rated and widely reviewed — a product with 4.8★ from 3 reviews ranks below one with 4.6★ from 800 reviews.</p>
+        <p class="stack">Stack: Google Shopping → rating × log(1 + reviews) → ranked list</p>
+      </div>
+    </div>
+
+    <div id="old-loading" class="loading">
+      <div class="spinner"></div>
+      <span>Searching catalog...</span>
+    </div>
+
+    <div id="old-error" class="error-state"></div>
+    <div id="old-results" class="results"></div>
+    <div id="old-pagination" class="pagination" style="display:none">
+      <span id="old-page-label"></span>
+      <div class="pagination-btns">
+        <button class="btn-page" id="btn-prev" onclick="changePage(-1)">← Prev</button>
+        <button class="btn-page" id="btn-next" onclick="changePage(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANE -->
+  <div class="pane pane-right">
+    <div class="pane-label">ACP World</div>
+    <div class="pane-title">Agentic Commerce</div>
+
+    <div class="methodology-wrap" id="methodology-wrap-acp">
+      <div class="methodology-header" onclick="toggleMethodology('acp')">
+        <span class="methodology-header-label">How it works</span>
+        <button class="methodology-toggle" tabindex="-1" aria-label="Toggle methodology">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 7,10 12,4"/></svg>
+        </button>
+      </div>
+      <div class="methodology">
+        <p>The same Google Shopping catalog is fetched live for each query and passed in full to a Claude model (50 products, with ratings, reviews, and delivery info). Claude reasons over it and selects the top 5 matches. Clicking <strong>Buy Now</strong> on any pick opens an ACP-compliant checkout session — no redirect required.</p>
+        <p class="stack">Stack: Claude (claude-sonnet-4-6) → catalog reasoning → ACP checkout → Stripe (test)</p>
+      </div>
+    </div>
+
+    <div class="acp-status-row">
+      <div id="acp-loading" class="loading">
+        <div class="spinner"></div>
+        <span>Agent is reasoning over catalog...</span>
+      </div>
+      <button class="btn-show-thinking" id="btn-show-thinking" onclick="toggleThinking()" style="display:none">Show thinking ↓</button>
+    </div>
+
+    <div id="acp-error" class="error-state"></div>
+
+    <!-- Reasoning steps (animated) -->
+    <div id="acp-reasoning" class="reasoning-steps" style="display:none"></div>
+
+    <div class="persona-selector" id="persona-selector" style="visibility:hidden">
+      <div class="persona-label">Choose Your Shopper</div>
+      <div class="persona-options">
+        <button class="persona-btn active" id="persona-btn-neutral" data-persona="neutral" onclick="selectPersona('neutral')">🤖 Neutral</button>
+        <button class="persona-btn" id="persona-btn-sobo" data-persona="sobo" onclick="selectPersona('sobo')" disabled>💅 SoBo Influencer</button>
+        <button class="persona-btn" id="persona-btn-mom" data-persona="mom" onclick="selectPersona('mom')" disabled>🛒 Middle Class Mom</button>
+      </div>
+      <div class="persona-footnotes">
+        <span>Learn more about SoBo influencers (<a href="https://www.instagram.com/p/DT6zHZjjvxm/" target="_blank" rel="noopener">here</a> and <a href="https://www.instagram.com/p/DE1ZspwthQh/" target="_blank" rel="noopener">here</a>) and Middle Class Moms (<a href="https://www.instagram.com/p/CwcLT6rNeQs/" target="_blank" rel="noopener">here</a>).</span>
+      </div>
+    </div>
+
+    <!-- ACP picks list -->
+    <div id="acp-picks" class="acp-picks" style="display:none"></div>
+
+    <!-- ACP Checkout Panel (auto-opened by agent) -->
+    <div id="acp-checkout-panel" class="acp-panel">
+      <div class="acp-panel-header">
+        ACP Checkout Session
+        <span id="acp-stage-badge" class="acp-stage-badge">incomplete</span>
+      </div>
+      <div class="acp-panel-body">
+        <div id="acp-success-banner" class="success-banner"></div>
+
+        <div id="acp-shipping-section" class="acp-shipping">
+          <label>Shipping</label>
+          <div class="shipping-options">
+            <button class="shipping-option selected" id="ship-standard" onclick="selectShipping('ship_standard')">
+              <div class="ship-label">Standard</div>
+              <div class="ship-price">$5.99 · 5–7 days</div>
+            </button>
+            <button class="shipping-option" id="ship-express" onclick="selectShipping('ship_express')">
+              <div class="ship-label">Express</div>
+              <div class="ship-price">$12.99 · 2 days</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="acp-actions">
+          <button id="btn-complete" class="btn-complete" onclick="completeCheckout()">Complete Checkout</button>
+          <span class="stripe-note">Stripe test mode — no real payment is processed.</span>
+        </div>
+
+        <button class="btn-show-json" onclick="toggleJSON()">Show ACP protocol ↓</button>
+        <div class="json-viewer" id="json-viewer">
+          <pre id="json-display"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Config ──────────────────────────────────────────────────
+  const API_BASE = 'https://api.vinaysridhar.com/acp-api';
+  const MERCHANT_BASE = 'https://api.vinaysridhar.com/acp-merchant';
+
+  // ── State ────────────────────────────────────────────────────
+  let currentCheckoutId = null;
+  let allListings = [];
+  let currentPage = 0;
+  const PAGE_SIZE = 6;
+  let _stopThinking = false;
+  let personaData = { neutral: null, sobo: null, mom: null };
+  let activePersona = 'neutral';
+
+  // ── Rotating placeholder ─────────────────────────────────────
+  const PLACEHOLDER_QUERIES = [
+    // Electronics
+    'best wireless earbuds under $100',
+    'mechanical keyboard for programming',
+    'monitor for graphic design work',
+    'smart home starter kit',
+    'portable charger for travel',
+    // Health & Beauty
+    'something to help me sleep better',
+    'skincare routine for dry skin',
+    'resistance bands for home workouts',
+    'electric toothbrush worth buying',
+    'supplements for energy and focus',
+    // Home & Garden
+    'I want to get into coffee',
+    'cozy throw blanket for winter',
+    'indoor plants that are hard to kill',
+    'small air purifier for a bedroom',
+    'cast iron pan for a beginner cook',
+    // Gifting & lifestyle
+    'gift for a ceramics lover under $80',
+    'best laptop for a college student',
+    'gear for someone getting into hiking',
+    'desk accessories to improve my setup',
+    'what should I get a new dog owner',
+  ];
+
+  (function rotatePlaceholder() {
+    const input = document.getElementById('query-input');
+    let idx = 0;
+    setInterval(() => {
+      if (document.activeElement !== input) {
+        idx = (idx + 1) % PLACEHOLDER_QUERIES.length;
+        input.placeholder = PLACEHOLDER_QUERIES[idx];
+      }
+    }, 1500);
+    input.placeholder = PLACEHOLDER_QUERIES[0];
+  })();
+
+
+  // ── Persona switcher (post-results) ─────────────────────────
+  function selectPersona(p) {
+    if (!personaData[p] || activePersona === p) return;
+    activePersona = p;
+    document.querySelectorAll('.persona-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.persona === p));
+    _stopThinking = true;
+    renderACP(personaData[p], p);
+  }
+
+  function _enablePersonaBtn(p) {
+    const btn = document.getElementById(`persona-btn-${p}`);
+    if (btn) btn.disabled = false;
+  }
+
+  // ── Utilities ────────────────────────────────────────────────
+
+  function syntaxHighlight(json) {
+    const str = typeof json === 'string' ? json : JSON.stringify(json, null, 2);
+    return str.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
+      let cls = 'json-number';
+      if (/^"/.test(match)) {
+        cls = /:$/.test(match) ? 'json-key' : 'json-string';
+      } else if (/true|false/.test(match)) {
+        cls = 'json-bool';
+      } else if (/null/.test(match)) {
+        cls = 'json-null';
+      }
+      return `<span class="${cls}">${match}</span>`;
+    });
+  }
+
+  function showJSON(obj) {
+    document.getElementById('json-display').innerHTML = syntaxHighlight(obj);
+    // Don't force-open; viewer state is user-controlled
+  }
+
+  function toggleThinking() {
+    const el = document.getElementById('acp-reasoning');
+    const btn = document.getElementById('btn-show-thinking');
+    const isVisible = el.style.display !== 'none';
+    el.style.display = isVisible ? 'none' : 'flex';
+    btn.textContent = isVisible ? 'Show thinking ↓' : 'Hide thinking ↑';
+  }
+
+  function toggleMethodology(pane) {
+    document.getElementById('methodology-wrap-' + pane).classList.toggle('collapsed');
+  }
+
+  function toggleJSON() {
+    const viewer = document.getElementById('json-viewer');
+    const btn = document.querySelector('.btn-show-json');
+    const isVisible = viewer.classList.toggle('visible');
+    btn.textContent = isVisible ? 'Hide ACP protocol ↑' : 'Show ACP protocol ↓';
+  }
+
+  function setLoading(pane, visible, text) {
+    const el = document.getElementById(pane + '-loading');
+    el.classList.toggle('visible', visible);
+    if (text) {
+      const textEl = el.querySelector('span');
+      if (textEl) textEl.textContent = text;
+    }
+  }
+
+  function showError(pane, msg) {
+    const el = document.getElementById(pane + '-error');
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  function clearPane(pane) {
+    document.getElementById(pane + '-error').classList.remove('visible');
+    document.querySelectorAll('.methodology-wrap').forEach(el => el.classList.remove('collapsed'));
+    if (pane === 'old') {
+      allListings = [];
+      currentPage = 0;
+      document.getElementById('old-results').innerHTML = '';
+      document.getElementById('old-pagination').style.display = 'none';
+    } else {
+      _stopThinking = true;
+      personaData = { neutral: null, sobo: null, mom: null };
+      activePersona = 'neutral';
+      // Reset persona selector — hide it, disable sobo+mom, activate neutral
+      document.getElementById('persona-selector').style.visibility = 'hidden';
+      delete document.querySelector('.pane-right').dataset.persona;
+      document.querySelectorAll('.persona-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.persona === 'neutral'));
+      document.getElementById('persona-btn-sobo').disabled = true;
+      document.getElementById('persona-btn-mom').disabled = true;
+      document.getElementById('btn-show-thinking').style.display = 'none';
+      document.getElementById('btn-show-thinking').textContent = 'Show thinking ↓';
+      document.getElementById('acp-reasoning').style.display = 'none';
+      document.getElementById('acp-reasoning').innerHTML = '';
+      document.getElementById('acp-picks').style.display = 'none';
+      document.getElementById('acp-picks').innerHTML = '';
+      document.getElementById('acp-checkout-panel').classList.remove('visible');
+      document.getElementById('json-display').innerHTML = '';
+      document.getElementById('json-viewer').classList.remove('visible');
+      document.querySelector('.btn-show-json').textContent = 'Show ACP protocol ↓';
+    }
+  }
+
+  // ── Animate reasoning steps ───────────────────────────────────
+  async function animateReasoningSteps(steps, interruptible = false) {
+    const container = document.getElementById('acp-reasoning');
+    container.style.display = 'none';
+    container.innerHTML = '';
+
+    for (const step of steps) {
+      if (interruptible && _stopThinking) return;
+      const cleaned = step.replace(/^Step\s*\d+:\s*/i, '');
+      const el = document.createElement('div');
+      el.className = 'reasoning-step';
+      el.innerHTML = `<span class="step-icon">›</span><span>${cleaned}</span>`;
+      container.appendChild(el);
+      // Trigger transition on next frame
+      await new Promise(r => requestAnimationFrame(r));
+      await new Promise(r => setTimeout(r, 20));
+      el.classList.add('visible');
+      await new Promise(r => setTimeout(r, 500));
+      if (interruptible && _stopThinking) return;
+    }
+    // Show toggle button; reasoning container stays hidden until user clicks
+    document.getElementById('btn-show-thinking').style.display = '';
+  }
+
+  // ── API-first results (paginated) ────────────────────────────
+  function renderOldWorld(data) {
+    allListings = data.results || data;
+    currentPage = 0;
+    renderPage();
+  }
+
+  function renderPage() {
+    const container = document.getElementById('old-results');
+    container.innerHTML = '';
+
+    if (!allListings || allListings.length === 0) {
+      container.innerHTML = '<p style="color:var(--gray-400);font-size:.875rem">No results found.</p>';
+      document.getElementById('old-pagination').style.display = 'none';
+      return;
+    }
+
+    const totalPages = Math.ceil(allListings.length / PAGE_SIZE);
+    const start = currentPage * PAGE_SIZE;
+    const pageItems = allListings.slice(start, start + PAGE_SIZE);
+
+    pageItems.forEach(item => {
+      const title = item.title.length > 60 ? item.title.slice(0, 57) + '…' : item.title;
+      const buyBtn = item.product_url
+        ? `<a href="${item.product_url}" target="_blank" rel="noopener" class="btn-link">Buy →</a>`
+        : `<span class="btn-disabled" data-tooltip="No product URL available">Buy →</span>`;
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${item.image_url || ''}" alt="${title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23e5e7eb%22/%3E%3C/svg%3E'" />
+        <div class="card-body">
+          <div class="card-title" title="${item.title}">${title}</div>
+          <div class="card-meta">${item.price}${item.category ? ' · ' + item.category : ''}</div>
+          ${buyBtn}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    const pag = document.getElementById('old-pagination');
+    pag.style.display = totalPages > 1 ? 'flex' : 'none';
+    document.getElementById('old-page-label').textContent =
+      `Page ${currentPage + 1} of ${totalPages} · ${allListings.length} products`;
+    document.getElementById('btn-prev').disabled = currentPage === 0;
+    document.getElementById('btn-next').disabled = currentPage >= totalPages - 1;
+  }
+
+  function changePage(delta) {
+    currentPage += delta;
+    renderPage();
+    document.getElementById('old-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── ACP flow ──────────────────────────────────────────────────
+  async function renderACP(data, persona) {
+    const picks = data.picks || [];
+
+    // Step 1: Animate reasoning steps (real steps replace thinking steps)
+    const allSteps = (data.reasoning_steps || []).slice();
+    if (picks.length) {
+      allSteps.push(`Ranked ${picks.length} best matches.`);
+    }
+    await animateReasoningSteps(allSteps);
+
+    // Apply persona color only now — after reranker animation, as cards appear
+    if (persona) {
+      document.querySelector('.pane-right').dataset.persona = persona;
+    }
+
+    // Step 2: Animate picks list
+    if (picks.length) {
+      const picksEl = document.getElementById('acp-picks');
+      picksEl.style.display = 'flex';
+      picksEl.innerHTML = '';
+
+      for (let i = 0; i < picks.length; i++) {
+        const pick = picks[i];
+        const isTop = i === 0;
+        const rankLabel = isTop ? 'Top pick' : `#${i + 1}`;
+        const title = pick.title.length > 60 ? pick.title.slice(0, 57) + '…' : pick.title;
+        const buyBtn = pick.product_url
+          ? `<a href="${pick.product_url}" target="_blank" rel="noopener" class="btn-link" style="margin-top:0.375rem">Buy →</a>`
+          : '';
+        const checkoutBtn = `<button class="btn-checkout-acp" onclick="openCheckout(event, '${pick.sku}')">Buy Now</button>`;
+
+        const card = document.createElement('div');
+        card.className = 'pick-card' + (isTop ? ' pick-top' : '');
+        card.innerHTML = `
+          <img src="${pick.image_url || ''}" alt="${title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2272%22 height=%2272%22%3E%3Crect width=%2272%22 height=%2272%22 fill=%22%23${isTop ? 'ccfbf1' : 'e5e7eb'}%22/%3E%3C/svg%3E'" />
+          <div class="card-body">
+            <div class="pick-rank">${rankLabel}</div>
+            <div class="card-title" title="${pick.title}">${title}</div>
+            <div class="card-meta">${pick.price}</div>
+            <div class="pick-highlight">
+              <span class="pick-check">✓</span>
+              <span>${pick.highlight || ''}</span>
+            </div>
+            ${buyBtn}
+            ${checkoutBtn}
+          </div>
+        `;
+        picksEl.appendChild(card);
+
+        // Staggered entrance
+        await new Promise(r => requestAnimationFrame(r));
+        await new Promise(r => setTimeout(r, 20));
+        card.classList.add('visible');
+        await new Promise(r => setTimeout(r, 120));
+      }
+
+      // Hover-to-highlight: hovered card gets pick-top; mouseout restores card 0
+      const cards = picksEl.querySelectorAll('.pick-card');
+      cards.forEach((card, i) => {
+        card.addEventListener('mouseenter', () => {
+          cards.forEach((c, j) => c.classList.toggle('pick-top', j === i));
+        });
+        card.addEventListener('mouseleave', () => {
+          cards.forEach((c, j) => c.classList.toggle('pick-top', j === 0));
+        });
+      });
+    }
+
+  }
+
+  // ── Open checkout panel on demand for the clicked pick ────────
+  async function openCheckout(event, sku) {
+    const btn = event.currentTarget;
+    btn.disabled = true;
+    btn.textContent = 'Opening...';
+    try {
+      const res = await fetch(`${MERCHANT_BASE}/checkouts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          line_items: [{ sku, quantity: 1 }],
+          buyer: { email: 'agent@acp-demo.com' },
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to create checkout');
+      const checkout = await res.json();
+      currentCheckoutId = checkout.id;
+      document.getElementById('acp-success-banner').classList.remove('visible');
+      document.getElementById('acp-stage-badge').textContent = checkout.status;
+      document.getElementById('btn-complete').disabled = false;
+      document.getElementById('btn-complete').textContent = 'Complete Checkout';
+      document.getElementById('acp-shipping-section').style.display = '';
+      selectShipping('ship_standard', false);
+      const panel = document.getElementById('acp-checkout-panel');
+      panel.classList.add('visible');
+      showJSON(checkout);
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Buy Now';
+      alert(e.message);
+    }
+  }
+
+  // ── ACP Checkout controls ──────────────────────────────────────
+  async function selectShipping(shippingId, callApi = true) {
+    document.getElementById('ship-standard').classList.toggle('selected', shippingId === 'ship_standard');
+    document.getElementById('ship-express').classList.toggle('selected', shippingId === 'ship_express');
+
+    if (!callApi || !currentCheckoutId) return;
+
+    try {
+      const res = await fetch(`${MERCHANT_BASE}/checkouts/${currentCheckoutId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ shipping_option_id: shippingId }),
+      });
+      if (!res.ok) throw new Error('Failed to update shipping');
+      const data = await res.json();
+      document.getElementById('acp-stage-badge').textContent = data.status;
+      showJSON(data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function completeCheckout() {
+    if (!currentCheckoutId) return;
+
+    const btn = document.getElementById('btn-complete');
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    try {
+      const res = await fetch(`${MERCHANT_BASE}/checkouts/${currentCheckoutId}/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ payment_token: 'tok_visa' }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Checkout failed');
+      }
+
+      const data = await res.json();
+      document.getElementById('acp-stage-badge').textContent = data.status;
+      showJSON(data);
+
+      if (data.status === 'completed') {
+        const banner = document.getElementById('acp-success-banner');
+        banner.textContent = `Order ${data.order?.id} confirmed · Stripe PaymentIntent ${data.stripe_payment_intent_id}`;
+        banner.classList.add('visible');
+        document.getElementById('acp-shipping-section').style.display = 'none';
+        btn.textContent = 'Paid ✓';
+      }
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Complete Checkout';
+      alert(e.message);
+    }
+  }
+
+  // ── Main search ───────────────────────────────────────────────
+  async function runSearch() {
+    const query = document.getElementById('query-input').value.trim();
+    if (!query) return;
+
+    const btn = document.getElementById('search-btn');
+    btn.disabled = true;
+
+    clearPane('old');
+    clearPane('acp');
+    document.getElementById('acp-checkout-panel').classList.remove('visible');
+    currentCheckoutId = null;
+    document.querySelectorAll('.methodology-wrap').forEach(el => el.classList.add('collapsed'));
+
+    // ── Step 1: Fetch catalog (shared) ──────────────────────────
+    const banner = document.getElementById('fetch-banner');
+    const bannerText = document.getElementById('fetch-banner-text');
+    banner.style.display = 'flex';
+    bannerText.textContent = 'Fetching catalog from Google Shopping...';
+
+    try {
+      const refreshRes = await fetch(`${API_BASE}/search/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+      if (!refreshRes.ok) {
+        const err = await refreshRes.json().catch(() => ({}));
+        throw new Error(err.detail || `HTTP ${refreshRes.status}`);
+      }
+      const { catalog_size } = await refreshRes.json();
+      document.getElementById('fetch-banner-spinner').style.display = 'none';
+      document.getElementById('fetch-banner-icon').style.display = '';
+      bannerText.textContent = `Catalog ready — ${catalog_size} products from Google Shopping`;
+    } catch (err) {
+      banner.style.display = 'none';
+      const msg = err.message === 'Failed to fetch'
+        ? 'Could not reach the proxy server (localhost:8001). Make sure it is running.'
+        : `Catalog fetch failed: ${err.message}`;
+      showError('old', msg);
+      showError('acp', msg);
+      btn.disabled = false;
+      return;
+    }
+
+    // ── Step 2: Left pane + all 3 personas in parallel ───────────
+    setLoading('old', true, 'Ranking results...');
+    setLoading('acp', true, 'Agent is reasoning over catalog...');
+    _stopThinking = false;
+    animateReasoningSteps([
+      'Reading merchant catalog...',
+      'Interpreting query intent...',
+      'Scanning catalog for relevant products...',
+    ], true);
+
+    function acpFetch(persona) {
+      return fetch(`${API_BASE}/search/acp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, persona }),
+      }).then(async r => {
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({}));
+          throw new Error(err.detail || `HTTP ${r.status}`);
+        }
+        return r.json();
+      });
+    }
+
+    const oldWorldPromise = fetch(`${API_BASE}/search/oldworld`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    }).then(async r => {
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        throw new Error(err.detail || `HTTP ${r.status}`);
+      }
+      return r.json();
+    });
+
+    const neutralPromise = acpFetch('neutral');
+    const soboPromise = acpFetch('sobo');
+    const momPromise = acpFetch('mom');
+
+    oldWorldPromise
+      .then(data => { setLoading('old', false); renderOldWorld(data); })
+      .catch(err => { setLoading('old', false); showError('old', `Search failed: ${err.message}`); });
+
+    // Neutral renders first and reveals the persona selector
+    neutralPromise
+      .then(async data => {
+        personaData.neutral = data;
+        setLoading('acp', false);
+        _stopThinking = true;
+        await renderACP(data, 'neutral');
+        document.getElementById('persona-selector').style.visibility = '';
+      })
+      .catch(err => {
+        setLoading('acp', false);
+        showError('acp', `ACP search failed: ${err.message}`);
+      });
+
+    // SoBo and Mom enable their buttons when ready
+    soboPromise
+      .then(data => { personaData.sobo = data; _enablePersonaBtn('sobo'); })
+      .catch(() => { /* button stays disabled */ });
+
+    momPromise
+      .then(data => { personaData.mom = data; _enablePersonaBtn('mom'); })
+      .catch(() => { /* button stays disabled */ });
+
+    Promise.allSettled([oldWorldPromise, neutralPromise, soboPromise, momPromise]).then(() => {
+      banner.style.display = 'none';
+      document.getElementById('fetch-banner-spinner').style.display = '';
+      document.getElementById('fetch-banner-icon').style.display = 'none';
+      btn.disabled = false;
+    });
+  }
+
+  // Allow Enter key to trigger search
+  document.getElementById('query-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') runSearch();
+  });
+</script>
+
+</body>
+</html>
