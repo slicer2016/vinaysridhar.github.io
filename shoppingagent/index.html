@@ -616,13 +616,13 @@
     }
 
     .btn-show-thinking {
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       color: var(--gray-500);
       background: none;
       border: none;
       cursor: pointer;
       padding: 0;
-      text-decoration: underline;
+      text-decoration: none;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -851,7 +851,7 @@
 
 <header>
   <h1>API-first Search vs. Agentic Commerce</h1>
-  <p>I built this to explore the practical difference between how online shopping works today and what might be possible with the emerging <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a> — a new spec that lets AI agents interact directly with merchant systems. This prototype tries to illustrate what the ACP can unlock with a <s>unnecessary</s> funny shopping assistants selecting products for you. The same query runs through both approaches, retrieving ~40 products fetched from free catalog API. We're likely going to see a plethora of new "ACP-enabled" shopping experiences - which I find exciting. <i>Technically</i>, you don't need such protocols to build these experiences, but it is going to set up the shopping ecosystem to innovate faster. Note: the checkout functionality is illustrative.</p>
+  <p>I built this to explore how online shopping can change with emerging frameworks like the <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a>. This prototype illustrates what the ACP can unlock with a set of <s>unnecessary</s> funny shopping assistants with different personas selecting products for you. <i>Technically</i>, you don't need such protocols to build these experiences, but it is going to set up the shopping ecosystem to innovate faster. Note: the checkout functionality is illustrative.</p>
 </header>
 
 <div class="search-section">
@@ -882,8 +882,8 @@
         </button>
       </div>
       <div class="methodology">
-        <p>Products are fetched live from Google Shopping (via SerpAPI) for each query. Results are ranked by a simple popularity score: rating × log(1 + review_count). This rewards items that are both highly rated and widely reviewed — a product with 4.8★ from 3 reviews ranks below one with 4.6★ from 800 reviews.</p>
-        <p class="stack">Stack: Google Shopping → rating × log(1 + reviews) → ranked list</p>
+        <p>Products are fetched live via SerpAPI for each query. Results are ranked by a simple popularity score: rating × log(1 + review_count). This rewards items that are both highly rated and widely reviewed — a product with 4.8★ from 3 reviews ranks below one with 4.6★ from 800 reviews.</p>
+        <p class="stack">Stack: SerpAPI → rating × log(1 + reviews) → ranked list</p>
       </div>
     </div>
 
@@ -1404,7 +1404,7 @@
     const banner = document.getElementById('fetch-banner');
     const bannerText = document.getElementById('fetch-banner-text');
     banner.style.display = 'flex';
-    bannerText.textContent = 'Fetching catalog from Google Shopping...';
+    bannerText.textContent = 'Fetching catalog...';
 
     try {
       const refreshRes = await fetch(`${API_BASE}/search/refresh`, {
@@ -1419,7 +1419,7 @@
       const { catalog_size } = await refreshRes.json();
       document.getElementById('fetch-banner-spinner').style.display = 'none';
       document.getElementById('fetch-banner-icon').style.display = '';
-      bannerText.textContent = `Catalog ready — ${catalog_size} products from Google Shopping`;
+      bannerText.textContent = `Catalog ready — ${catalog_size} products`;
     } catch (err) {
       banner.style.display = 'none';
       const msg = err.message === 'Failed to fetch'
