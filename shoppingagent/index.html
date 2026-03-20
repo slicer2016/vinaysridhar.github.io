@@ -713,17 +713,17 @@
     /* ── Persona toggle ── */
     .persona-selector {
       background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
-      border-radius: 10px;
-      padding: 1rem 1.125rem 1.125rem;
-      margin-bottom: 1rem;
+      padding: 1.25rem 2rem 1.375rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-radius: 12px;
     }
     .persona-label {
-      font-size: 0.6875rem;
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 0.625rem;
+      letter-spacing: 0.02em;
+      color: #fff;
+      margin-bottom: 0.75rem;
     }
     .persona-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .persona-footnotes {
@@ -747,14 +747,26 @@
       background: rgba(255,255,255,0.07);
       color: rgba(255,255,255,0.75);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s;
       letter-spacing: 0.01em;
     }
-    .persona-btn:hover {
+    .persona-btn:not(:disabled):hover {
       background: rgba(255,255,255,0.15);
       border-color: rgba(255,255,255,0.45);
       color: #fff;
     }
+    .persona-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    /* Pre-search selection: subtle white highlight, no persona color */
+    .persona-btn.selected {
+      border-color: rgba(255,255,255,0.7);
+      color: #fff;
+      background: rgba(255,255,255,0.13);
+      font-weight: 600;
+    }
+    /* Post-results: full persona color */
     .persona-btn.active {
       background: var(--teal-500);
       border-color: var(--teal-500);
@@ -762,26 +774,17 @@
       font-weight: 600;
       box-shadow: 0 0 0 3px rgba(20,184,166,0.3);
     }
-    .pane-right[data-persona="sobo"] .persona-btn[data-persona="sobo"].active {
+    .persona-btn[data-persona="sobo"].active {
       background: #f472b6;
       border-color: #f472b6;
       box-shadow: 0 0 0 3px rgba(244,114,182,0.3);
     }
-    .pane-right[data-persona="mom"] .persona-btn[data-persona="mom"].active {
+    .persona-btn[data-persona="mom"].active {
       background: #38bdf8;
       border-color: #38bdf8;
       box-shadow: 0 0 0 3px rgba(56,189,248,0.3);
     }
 
-.persona-btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-    .persona-btn:disabled:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.75);
-    }
     .persona-gate {
       padding: 0.875rem 1rem;
       border: 2px dashed var(--teal-200);
@@ -851,8 +854,20 @@
 
 <header>
   <h1>AI Shopping Assistants: SoBo Influencers & Middle Class Moms</h1>
-  <p>I built this to explore how online shopping can change with emerging frameworks like the <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a>. This prototype illustrates what the ACP can unlock with a set of <s>unnecessary</s> funny shopping assistants with different personas selecting products for you. <i>Technically</i>, you don't need such protocols to build these experiences, but it is going to set up the shopping ecosystem to innovate faster. Note: the checkout functionality is illustrative.</p>
+  <p>I built this to explore how online shopping can change with emerging frameworks like the <a href="https://developers.openai.com/commerce/guides/get-started" target="_blank" rel="noopener">Agent Commerce Protocol (ACP)</a>. This prototype illustrates what the ACP can unlock with a set of <s>unnecessary</s> funny shopping assistants with different personas selecting products for you. <i>Technically</i>, you don't need such protocols to build these experiences, but it is going to set up the shopping ecosystem to build such experiences faster. Note: the checkout functionality is illustrative.</p>
 </header>
+
+<div class="persona-selector" id="persona-selector">
+  <div class="persona-label">Choose Your Shopper</div>
+  <div class="persona-options">
+    <button class="persona-btn selected" id="persona-btn-neutral" data-persona="neutral" onclick="pickPersona('neutral')">🤖 Neutral</button>
+    <button class="persona-btn" id="persona-btn-sobo" data-persona="sobo" onclick="pickPersona('sobo')">💅 SoBo Influencer</button>
+    <button class="persona-btn" id="persona-btn-mom" data-persona="mom" onclick="pickPersona('mom')">🛒 Middle Class Mom</button>
+  </div>
+  <div class="persona-footnotes">
+    <span>Learn more about South Bombay influencers (<a href="https://www.instagram.com/p/DT6zHZjjvxm/" target="_blank" rel="noopener">here</a> and <a href="https://www.instagram.com/p/DE1ZspwthQh/" target="_blank" rel="noopener">here</a>) and Middle Class Moms (<a href="https://www.instagram.com/p/CwcLT6rNeQs/" target="_blank" rel="noopener">here</a>).</span>
+  </div>
+</div>
 
 <div class="search-section">
   <div class="search-row">
@@ -882,8 +897,8 @@
         </button>
       </div>
       <div class="methodology">
-        <p>Products are fetched live via SerpAPI for each query. Results are ranked by a simple popularity score: rating × log(1 + review_count). This rewards items that are both highly rated and widely reviewed — a product with 4.8★ from 3 reviews ranks below one with 4.6★ from 800 reviews.</p>
-        <p class="stack">Stack: SerpAPI → rating × log(1 + reviews) → ranked list</p>
+        <p>Products are fetched live via a catalog API for each query. Results are ranked by a simple popularity score: rating × log(1 + review_count). This rewards items that are both highly rated and widely reviewed — a product with 4.8★ from 3 reviews ranks below one with 4.6★ from 800 reviews.</p>
+        <p class="stack">Stack: Catalog API → rating × log(1 + reviews) → ranked list</p>
       </div>
     </div>
 
@@ -917,7 +932,7 @@
       </div>
       <div class="methodology">
         <p>The same product catalog is fetched live for each query and passed in full to a Claude model (50 products, with ratings, reviews, and delivery info). Claude reasons over it and selects the top 5 matches. Clicking <strong>Buy Now</strong> on any pick opens an ACP-compliant checkout session — no redirect required.</p>
-        <p class="stack">Stack: Claude (claude-sonnet-4-6) → catalog reasoning → ACP-like checkout → Stripe (test)</p>
+        <p class="stack">Stack: catalog API → LLM catalog reasoning → ACP-like Stripe checkout (test)</p>
       </div>
     </div>
 
@@ -933,18 +948,6 @@
 
     <!-- Reasoning steps (animated) -->
     <div id="acp-reasoning" class="reasoning-steps" style="display:none"></div>
-
-    <div class="persona-selector" id="persona-selector" style="visibility:hidden">
-      <div class="persona-label">Choose Your Shopper</div>
-      <div class="persona-options">
-        <button class="persona-btn active" id="persona-btn-neutral" data-persona="neutral" onclick="selectPersona('neutral')">🤖 Neutral</button>
-        <button class="persona-btn" id="persona-btn-sobo" data-persona="sobo" onclick="selectPersona('sobo')" disabled>💅 SoBo Influencer</button>
-        <button class="persona-btn" id="persona-btn-mom" data-persona="mom" onclick="selectPersona('mom')" disabled>🛒 Middle Class Mom</button>
-      </div>
-      <div class="persona-footnotes">
-        <span>Learn more about South Bombay influencers (<a href="https://www.instagram.com/p/DT6zHZjjvxm/" target="_blank" rel="noopener">here</a> and <a href="https://www.instagram.com/p/DE1ZspwthQh/" target="_blank" rel="noopener">here</a>) and Middle Class Moms (<a href="https://www.instagram.com/p/CwcLT6rNeQs/" target="_blank" rel="noopener">here</a>).</span>
-      </div>
-    </div>
 
     <!-- ACP picks list -->
     <div id="acp-picks" class="acp-picks" style="display:none"></div>
@@ -1042,14 +1045,27 @@
   })();
 
 
-  // ── Persona switcher (post-results) ─────────────────────────
-  function selectPersona(p) {
-    if (!personaData[p] || activePersona === p) return;
+  // ── Persona picker (pre-search) & switcher (post-search) ─────
+  function pickPersona(p) {
+    if (document.getElementById(`persona-btn-${p}`).disabled) return;
     activePersona = p;
-    document.querySelectorAll('.persona-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.persona === p));
-    _stopThinking = true;
-    renderACP(personaData[p], p);
+    // Pre-search: just move the selected highlight
+    document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById(`persona-btn-${p}`).classList.add('selected');
+    // Post-search: if results exist, apply full color and render
+    if (personaData[p]) {
+      document.querySelectorAll('.persona-btn').forEach(b => {
+        b.classList.remove('selected', 'active');
+        if (b.dataset.persona === p) b.classList.add('active');
+      });
+      document.querySelector('.pane-right').dataset.persona = p;
+      _stopThinking = true;
+      renderACP(personaData[p], p);
+    }
+  }
+
+  function selectPersona(p) {
+    pickPersona(p);
   }
 
   function _enablePersonaBtn(p) {
@@ -1124,14 +1140,14 @@
     } else {
       _stopThinking = true;
       personaData = { neutral: null, sobo: null, mom: null };
-      activePersona = 'neutral';
-      // Reset persona selector — hide it, disable sobo+mom, activate neutral
-      document.getElementById('persona-selector').style.visibility = 'hidden';
+      // Reset persona selector — disable all, keep selected highlight on chosen, clear colors
       delete document.querySelector('.pane-right').dataset.persona;
-      document.querySelectorAll('.persona-btn').forEach(b =>
-        b.classList.toggle('active', b.dataset.persona === 'neutral'));
-      document.getElementById('persona-btn-sobo').disabled = true;
-      document.getElementById('persona-btn-mom').disabled = true;
+      document.querySelectorAll('.persona-btn').forEach(b => {
+        b.classList.remove('active', 'selected');
+        b.disabled = true;
+      });
+      const chosenBtn = document.getElementById(`persona-btn-${activePersona}`);
+      if (chosenBtn) { chosenBtn.disabled = false; chosenBtn.classList.add('selected'); }
       document.getElementById('btn-show-thinking').style.display = 'none';
       document.getElementById('btn-show-thinking').textContent = 'Show thinking ↓';
       document.getElementById('acp-reasoning').style.display = 'none';
@@ -1233,7 +1249,7 @@
     }
     await animateReasoningSteps(allSteps);
 
-    // Apply persona color only now — after reranker animation, as cards appear
+    // Apply persona color before cards render, so pick-top uses correct CSS vars
     if (persona) {
       document.querySelector('.pane-right').dataset.persona = persona;
     }
@@ -1467,38 +1483,42 @@
       return r.json();
     });
 
-    const neutralPromise = acpFetch('neutral');
-    const soboPromise = acpFetch('sobo');
-    const momPromise = acpFetch('mom');
+    const personas = ['neutral', 'sobo', 'mom'];
+    const chosen = activePersona || 'neutral';
+    const others = personas.filter(p => p !== chosen);
+
+    const chosenPromise = acpFetch(chosen);
+    const otherPromises = others.map(p => ({ p, promise: acpFetch(p) }));
 
     oldWorldPromise
       .then(data => { setLoading('old', false); renderOldWorld(data); })
       .catch(err => { setLoading('old', false); showError('old', `Search failed: ${err.message}`); });
 
-    // Neutral renders first and reveals the persona selector
-    neutralPromise
+    // Chosen persona renders first; apply full color only after data arrives
+    chosenPromise
       .then(async data => {
-        personaData.neutral = data;
+        personaData[chosen] = data;
         setLoading('acp', false);
         _stopThinking = true;
-        await renderACP(data, 'neutral');
-        document.getElementById('persona-selector').style.visibility = '';
+        _enablePersonaBtn(chosen);
+        await renderACP(data, chosen);
+        const chosenBtn = document.getElementById(`persona-btn-${chosen}`);
+        chosenBtn.classList.remove('selected');
+        chosenBtn.classList.add('active');
       })
       .catch(err => {
         setLoading('acp', false);
         showError('acp', `ACP search failed: ${err.message}`);
       });
 
-    // SoBo and Mom enable their buttons when ready
-    soboPromise
-      .then(data => { personaData.sobo = data; _enablePersonaBtn('sobo'); })
-      .catch(() => { /* button stays disabled */ });
+    // Other personas: re-enable button when data ready, apply color only if it becomes active
+    otherPromises.forEach(({ p, promise }) => {
+      promise
+        .then(data => { personaData[p] = data; _enablePersonaBtn(p); })
+        .catch(() => { /* stays disabled */ });
+    });
 
-    momPromise
-      .then(data => { personaData.mom = data; _enablePersonaBtn('mom'); })
-      .catch(() => { /* button stays disabled */ });
-
-    Promise.allSettled([oldWorldPromise, neutralPromise, soboPromise, momPromise]).then(() => {
+    Promise.allSettled([oldWorldPromise, chosenPromise, ...otherPromises.map(x => x.promise)]).then(() => {
       banner.style.display = 'none';
       document.getElementById('fetch-banner-spinner').style.display = '';
       document.getElementById('fetch-banner-icon').style.display = 'none';
