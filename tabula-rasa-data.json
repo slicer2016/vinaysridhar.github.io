@@ -1,6 +1,13 @@
 {
   "entries": [
     {
+      "date": "2026-05-07",
+      "url": "https://open.spotify.com/episode/24xF8YGra2w3HXZYbhgVKU?si=BOok6MdfTNKV24Afag6QbQ",
+      "title": "On Math and AI",
+      "note": "\u201cWas Kepler basically a low temperature LLM?\u201d is a very funny sentence. I do think the precision of language around AI and its limitations is giving folks new language to describe natural intelligence. We\u2019ve had intuitions about context windows for a while - we just never called it that.",
+      "category": "podcast"
+    },
+    {
       "date": "2026-04-15",
       "url": "https://www.nytimes.com/video/opinion/100000010826243/ben-sasse-on-how-to-live-while-dying.html?smid=nytcore-ios-share",
       "title": "Ben Sasse and Ross Douthat",
