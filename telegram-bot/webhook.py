@@ -3,6 +3,7 @@ Tabula Rasa Webhook Service
 Receives entries via Telegram bot and updates GitHub repository
 """
 
+from collections import OrderedDict
 from flask import Flask, request, jsonify
 import os
 import json
@@ -11,6 +12,9 @@ import requests
 from urllib.parse import urlparse
 
 app = Flask(__name__)
+
+SEEN_UPDATE_IDS_MAX = 1000
+_seen_update_ids = OrderedDict()
 
 # Configuration - Set these as environment variables
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
@@ -170,23 +174,31 @@ def telegram_webhook():
     try:
         data = request.json
         
+        update_id = data.get('update_id') if data else None
+        if update_id is not None:
+            if update_id in _seen_update_ids:
+                return jsonify({'status': 'duplicate'}), 200
+            _seen_update_ids[update_id] = True
+            if len(_seen_update_ids) > SEEN_UPDATE_IDS_MAX:
+                _seen_update_ids.popitem(last=False)
+        
         if not data or 'message' not in data:
-            return jsonify({'status': 'no_data'}), 400
+            return jsonify({'status': 'no_data'}), 200
         
         message = data['message']
         
         if 'chat' not in message:
-            return jsonify({'status': 'no_chat'}), 400
+            return jsonify({'status': 'no_chat'}), 200
             
         chat_id = str(message['chat']['id'])
         
         if not ALLOWED_CHAT_IDS or chat_id not in ALLOWED_CHAT_IDS:
-            return jsonify({'status': 'unauthorized'}), 403
+            return jsonify({'status': 'unauthorized'}), 200
         
         message_text = message.get('text', '')
         
         if not message_text:
-            return jsonify({'status': 'no_text'}), 400
+            return jsonify({'status': 'no_text'}), 200
         
         # Parse message (supports both old and new format)
         url, title, note = parse_message(message_text)
@@ -202,14 +214,14 @@ def telegram_webhook():
                 "Format 2 (+ signs):\n"
                 "https://example.com + Great Article + This is my take"
             )
-            return jsonify({'status': 'no_url'}), 400
+            return jsonify({'status': 'no_url'}), 200
         
         if not note:
             send_telegram_message(
                 chat_id,
                 "⚠️ Please add your thoughts about this link."
             )
-            return jsonify({'status': 'no_note'}), 400
+            return jsonify({'status': 'no_note'}), 200
         
         # Categorize the URL
         category = categorize_url(url)
@@ -235,11 +247,11 @@ def telegram_webhook():
                 chat_id,
                 "❌ Failed to add entry. Please try again."
             )
-            return jsonify({'status': 'github_error'}), 500
+            return jsonify({'status': 'github_error'}), 200
             
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({'status': 'error', 'message': str(e)}), 200
 
 def send_telegram_message(chat_id, text):
     """Send a message via Telegram bot"""
